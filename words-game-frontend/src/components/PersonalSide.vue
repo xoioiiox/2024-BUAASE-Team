@@ -15,7 +15,7 @@
           <el-icon><icon-menu /></el-icon>
           <span>当前词书</span>
         </el-menu-item>
-        <el-menu-item index="2" @click="toStatistic()">
+        <el-menu-item index="2" @click="">
           <el-icon><document /></el-icon>
           <span>统计信息</span>
         </el-menu-item>
@@ -23,7 +23,7 @@
           <el-icon><setting /></el-icon>
           <span>生词本记录</span>
         </el-menu-item>
-        <el-menu-item index="4" @click="">
+        <el-menu-item index="4" @click="toEditInfo()">
           <el-icon><setting /></el-icon>
           <span>修改个人信息</span>
         </el-menu-item>
@@ -52,11 +52,11 @@
 			toChooseBook() {
         this.$router.push({path:'/PersonalBook/'})
       },
-			toStatistic() {
-        this.$router.push({path:'/PersonalStatistic/'})
+			toEditInfo() {
+        this.$router.push({path:'/PersonalInfo/'})
       },
 			toSetting() {
-        this.$router.push({path:'/StudySetting/'})
+        this.$router.push({path:'/PersonalSetting/'})
       },
 		}
 	}
