@@ -1,6 +1,6 @@
 <template>
   <el-row>
-		<el-col>
+    <el-col>
       <h5 class="mb-2">Default colors</h5>
       <el-menu
         default-active="1"
@@ -19,7 +19,7 @@
           <el-icon><document /></el-icon>
           <span>统计信息</span>
         </el-menu-item>
-        <el-menu-item index="3" @click="">
+        <el-menu-item index="3" @click="toSavedWords()">
           <el-icon><setting /></el-icon>
           <span>生词本记录</span>
         </el-menu-item>
@@ -41,25 +41,26 @@
 </template>
 
 <script>
-	export default {
-		name: "PersonalSide",
-		data() {
-			return {
-
-			};
-		},
-		methods: {
-			toChooseBook() {
-        this.$router.push({path:'/PersonalBook/'})
-      },
-			toEditInfo() {
-        this.$router.push({path:'/PersonalInfo/'})
-      },
-			toSetting() {
-        this.$router.push({path:'/PersonalSetting/'})
-      },
-		}
-	}
+export default {
+  name: "PersonalSide",
+  data() {
+    return {};
+  },
+  methods: {
+    toChooseBook() {
+      this.$router.push({ path: "/PersonalBook/" });
+    },
+    toEditInfo() {
+      this.$router.push({ path: "/PersonalInfo/" });
+    },
+    toSetting() {
+      this.$router.push({ path: "/PersonalSetting/" });
+    },
+    toSavedWords() {
+      this.$router.push({ path: "/SavedWords" });
+    },
+  },
+};
 </script>
 
 <style scoped>
