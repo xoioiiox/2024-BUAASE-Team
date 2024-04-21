@@ -5,7 +5,7 @@ import WordDetail from '@/components/WordDetail.vue'
 import PersonalInfo from '../views/PersonalFunc/PersonalInfo.vue'
 import Home from "@/views/Home.vue";
 import SavedWords from "../views/PersonalFunc/SavedWords.vue";
-
+import StartWordHome from "@/views/StartWordHome.vue";
 
 
 
@@ -16,6 +16,11 @@ const router = createRouter({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/StartWordHome',
+      name: 'StartWordHome',
+      component: StartWordHome
     },
     {
       path: '/PersonalBook',
