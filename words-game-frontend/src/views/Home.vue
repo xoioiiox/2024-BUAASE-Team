@@ -16,7 +16,7 @@ export default {
       <el-row :gutter="180">
         <el-col :span="8"><div class="grid-content ep-bg-purple" />
           <el-card style="max-width: 480px">
-            <router-link to="/PersonalBook">
+            <router-link to="/StartWordHome">
               <img class="image"
                   src="../assets/learn.png"
               />
@@ -24,7 +24,7 @@ export default {
             </router-link>
 
           </el-card>
-          <router-link to="/PersonalBook">
+          <router-link to="/StartWordHome">
             <el-button type="primary" round>开始背单词</el-button>
 
           </router-link>

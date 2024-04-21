@@ -21,7 +21,9 @@ export default {
       />
     </el-menu-item>
     <div class="flex-grow" />
+    <router-link to="/PersonalBook">
     <el-menu-item index="1">个人中心</el-menu-item>
+    </router-link>
 
   </el-menu>
 </template>
