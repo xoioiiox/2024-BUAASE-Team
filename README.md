@@ -16,11 +16,12 @@ git checkout -b feature/my_name    // 基于dev分支创建属于自己任务的
 git checkout dev
 git pull       // 拉取最新的 dev 
 
+git checkout 自己的分支
 
 git add .
 git commit -m "自己的注释【要按格式写】"
 
-git checkout 自己的分支
+
 git rebase dev    // rebase 当前分支到 dev，并且解决 rebase 带来的问题
 
 git push     // rebase 完成后，将当前分支推到远端（TA注：请考虑一下这个推送的操作要在什么条件下进行）
