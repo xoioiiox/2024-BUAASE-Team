@@ -15,7 +15,7 @@
           <el-icon><icon-menu /></el-icon>
           <span>当前词书</span>
         </el-menu-item>
-        <el-menu-item index="2" @click="">
+        <el-menu-item index="2" @click="toStatistics()">
           <el-icon><document /></el-icon>
           <span>统计信息</span>
         </el-menu-item>
@@ -58,6 +58,9 @@ export default {
     },
     toSavedWords() {
       this.$router.push({ path: "/SavedWords" });
+    },
+    toStatistics() {
+      this.$router.push({ path: "/Statistics" });
     },
   },
 };
