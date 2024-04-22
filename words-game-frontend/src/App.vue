@@ -1,17 +1,11 @@
 <script setup>
-import {  RouterLink, RouterView } from 'vue-router'
-
-
 </script>
-
 <template>
-
-
-  <RouterView></RouterView>
-
+  <!--<el-button type=""primary>Primary</el-button>
+  <el-button type=""primary>success</el-button>-->
+  <router-view/>
 </template>
 
-<style scoped>
 
-
+<style scope>
 </style>
