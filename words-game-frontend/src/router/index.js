@@ -15,13 +15,19 @@ import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
 
 
+import { useUserStore } from '@/stores/userStore.js';
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: false // 表示需要登录权限
+      }
     },
     
     {
@@ -41,7 +47,9 @@ const router = createRouter({
     {
       path: '/StartWordHome',
       name: 'StartWordHome',
-      component: StartWordHome
+      component: StartWordHome,
+      meta: { requiresAuth: true }
+
     },
     {
       path: "/PersonalBook",
@@ -57,6 +65,7 @@ const router = createRouter({
       path: "/SavedWords",
       name: "SavedWords",
       component: SavedWords,
+
     },
     {
       path: "/Statistics",
@@ -75,6 +84,7 @@ const router = createRouter({
   ]
 })
 
+/*
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("userInfo");
   if (to.matched.some(record => record.meta.requiresAuth) && !isAuthenticated) {
@@ -87,6 +97,24 @@ router.beforeEach((to, from, next) => {
   } else {
       next();
   }
+});*/
+
+// 全局导航守卫
+router.beforeEach((to, from, next) => {
+
+  const userStore = useUserStore();
+
+  // 检查用户是否已登录
+  if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+    // 如果用户未登录且当前路由需要登录权限，则重定向到登录页面
+    next('/login');
+  } else {
+    // 允许导航
+    next();
+  }
+
+  console.log(userStore.isLoggedIn)
+  console.log(to.meta.requiresAuth )
 });
 
 export default router

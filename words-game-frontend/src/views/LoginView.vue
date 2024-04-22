@@ -56,7 +56,7 @@ import {useRouter} from "vue-router";
 import {login} from "@/apis/apis";
 //import axios from "axios";
 
-
+import {useUserStore} from "@/stores/userStore"
 
 interface Form {
   username: string;
@@ -98,6 +98,7 @@ interface LoginForm {
     password: string;
 }
 
+const userStore = useUserStore();   // 从stores中引入
 
 const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -105,7 +106,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate(async  (valid) => {
     if (valid) {
       try {
-          login(loginForm);
+          login(loginForm);  // 调用登录api
+
+        userStore.login(loginForm);   //  从stores中引入
         }catch (e){
         // 4. 处理注册失败情况
         console.error(e);
@@ -133,7 +136,7 @@ const register= ()=>{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("./src/assets/logoBG.jpg"); /* 背景图片路径 */
+  background-image: url("../assets/logoBG.jpg"); /* 背景图片路径 */
   background-size: cover;
   background-position: center;
 }
