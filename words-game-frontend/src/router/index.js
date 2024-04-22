@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import PersonalBook from '../views/PersonalFunc/PersonalBook.vue'
+import PersonalSetting from "@/views/PersonalFunc/PersonalSetting.vue"
+import WordDetail from '@/components/WordDetail.vue'
+import PersonalInfo from '../views/PersonalFunc/PersonalInfo.vue'
+import Home from "@/views/Home.vue";
+import SavedWords from "../views/PersonalFunc/SavedWords.vue";
+import StartWordHome from "@/views/StartWordHome.vue";
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
@@ -9,17 +15,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Home',
+      component: Home
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
+    
     {
       path: '/recite',
       component: ReciteView
@@ -33,6 +32,35 @@ const router = createRouter({
       path: '/register',
       component: RegisterView,
       meta: { requiresAuth: false }
+    },
+    {
+      path: '/StartWordHome',
+      name: 'StartWordHome',
+      component: StartWordHome
+    },
+    {
+      path: '/PersonalBook',
+      name: 'PersonalBook',
+      component: PersonalBook
+    },
+    {
+      path: "/PersonalSetting",
+      name: "PersonalSetting",
+      component: PersonalSetting,
+    },
+    {
+      path: "/SavedWords",
+      name: "SavedWords",
+      component: SavedWords,
+    },
+    {
+      path: "/WordDetail",
+      name: "WordDetail",
+      component: WordDetail,
+    },
+    { path: "/PersonalInfo", 
+      name: "PersonalInfo", 
+      component: PersonalInfo
     },
   ]
 })
