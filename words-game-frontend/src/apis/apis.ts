@@ -2,7 +2,7 @@ import axios from "axios";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 //登录表单
-interface LoginForm {
+export interface LoginForm {
     username: string;
     password: string;
 }
@@ -15,7 +15,7 @@ interface RegisterForm {
     phone:string
 }
 //用户信息
-interface UserInfo {
+export interface UserInfo {
     userId:number;//用户id（待定留不留）
     userName:string;//用户名
     userPhone:string;//用户手机号

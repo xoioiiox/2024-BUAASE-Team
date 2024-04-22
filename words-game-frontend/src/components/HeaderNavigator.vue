@@ -21,7 +21,11 @@ export default {
       />
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="1">登录 / 注册</el-menu-item>
+    <el-menu-item index="1">
+      <router-link to="/login">
+        登录 / 注册
+
+      </router-link></el-menu-item>
 
   </el-menu>
 </template>

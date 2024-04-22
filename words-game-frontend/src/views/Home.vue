@@ -1,15 +1,43 @@
 <script>
 import HeaderNavigator from "@/components/HeaderNavigator.vue";
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
+import {useUserStore} from "@/stores/userStore.js";
+
+
 
 export default {
   name: 'Home',
-  components: {AfterHeaderNavigator, HeaderNavigator}
+  components: {AfterHeaderNavigator, HeaderNavigator},
+
+  // 在Vue组件的生命周期钩子中使用store
+  created() {
+    this.userStore = useUserStore();
+    console.log(this.userStore.user);
+    console.log(this.userStore.isLoggedIn);
+  },
+
+  data() {
+    return {
+      userStore: null // 初始化为null
+    };
+  },
+
+  methods: {
+    goToWord() {
+      // 用户点击按钮时导航到需要登录权限的页面
+      this.$router.push({ name: 'StartWordHome', meta: { requiresAuth: true } });
+    }
+  }
+
 }
+
+
 </script>
 
 <template>
-    <HeaderNavigator></HeaderNavigator>
+
+    <HeaderNavigator  v-if="!userStore.isLoggedIn"></HeaderNavigator>
+    <AfterHeaderNavigator v-else></AfterHeaderNavigator>
 
     <div>
       
@@ -24,10 +52,10 @@ export default {
             </router-link>
 
           </el-card>
-          <router-link to="/StartWordHome">
-            <el-button type="primary" round>开始背单词</el-button>
+<!--          <router-link to="/StartWordHome">-->
+            <el-button type="primary" round @click="goToWord">开始背单词</el-button>
 
-          </router-link>
+<!--          </router-link>-->
 
 
         </el-col>
