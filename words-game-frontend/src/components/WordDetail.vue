@@ -1,14 +1,17 @@
 <template>
     <div class="word-detail">
         <h1>{{ word }}</h1>
+        
         <div class="word-pronunciation">
             <span>发音： </span>
             <span>{{ pronunciation }}</span>
         </div>
+
         <div class="word-meaning">
             <h2>释义：</h2>
             <p>{{ meaning }}</p>
         </div>
+
         <div class="word-examples">
             <h2>例句：</h2>
             <ul>
@@ -17,6 +20,7 @@
                 </li>
             </ul>
         </div>
+
         <div class="buttons">
             <button class="choise" @click="deleteWord">删除</button>
             <button class="choise" @click="correctWord">记错了</button>
@@ -41,18 +45,22 @@
 
     const deleteWord = () => {
         // 删除单词的逻辑
+        alert('删除单词功能尚未实现。');
     };
 
     const correctWord = () => {
         // 记错了单词的逻辑
+        alert('记错了单词功能尚未实现。');
     };
 
     const recognizeWord = () => {
         // 认识单词的逻辑
+        alert('认识单词功能尚未实现。');
     };
 
     const addToVocab = () => {
         // 添加到生词本的逻辑
+        alert('添加到生词本功能尚未实现。');
     };
 </script>
 
@@ -80,21 +88,21 @@
     }
 
     .choise {
-        margin-top: 20px; /* 按钮之间的垂直间距 */
-        padding: 10px 20px; /* 按钮内部的空间 */
-        border-radius: 5px; /* 边角半径为5px */
-        font-size: 16px; /* 按钮文字的大小 */
-        cursor: pointer; /* 鼠标悬停时显示手形图标 */
+        margin-top: 20px; 
+        padding: 10px 20px; 
+        border-radius: 5px; 
+        font-size: 16px; 
+        cursor: pointer; 
         border: none;
         flex: 1;
-        transition: background-color 0.1s ease; /* 背景颜色变化的过渡效果 */
+        transition: background-color 0.1s ease; 
         background-color: #0366d6;
         color: white;
     }
 
     .buttons {
-        display: flex; /* 使用flexbox布局 */
-        justify-content: center; /* 水平居中按钮 */
+        display: flex; 
+        justify-content: center; 
         margin-top: 50px; 
         margin-left: 50px;
         margin-right: 50px;

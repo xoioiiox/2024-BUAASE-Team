@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import PersonalBook from "../views/PersonalFunc/PersonalBook.vue";
-import PersonalSetting from "@/views/PersonalFunc/PersonalSetting.vue";
-import WordDetail from "@/components/WordDetail.vue";
+import PersonalSetting from "../views/PersonalFunc/PersonalSetting.vue";
+import WordDetail from "../components/WordDetail.vue";
 import PersonalInfo from "../views/PersonalFunc/PersonalInfo.vue";
 import Home from "@/views/Home.vue";
 import SavedWords from "../views/PersonalFunc/SavedWords.vue";
@@ -17,6 +17,7 @@ import ReciteView from '../views/ReciteView.vue'
 
 import { useUserStore } from '@/stores/userStore.js';
 
+import PunchIn from '../components/PunchIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +30,7 @@ const router = createRouter({
         requiresAuth: false // 表示需要登录权限
       }
     },
-    
+
     {
       path: '/recite',
       component: ReciteView
@@ -77,10 +78,17 @@ const router = createRouter({
       name: "WordDetail",
       component: WordDetail,
     },
-    { path: "/PersonalInfo", 
-      name: "PersonalInfo", 
+    {
+      path: "/PersonalInfo",
+      name: "PersonalInfo",
       component: PersonalInfo
     },
+    {
+      path: '/PunchIn',
+      name: 'PunchIn',
+      component: PunchIn
+      //component: () => import('../components/PunchIn.vue') 
+    }
   ]
 })
 
@@ -114,7 +122,7 @@ router.beforeEach((to, from, next) => {
   }
 
   console.log(userStore.isLoggedIn)
-  console.log(to.meta.requiresAuth )
+  console.log(to.meta.requiresAuth)
 });
 
 export default router
