@@ -13,7 +13,7 @@
         </div>
         <el-menu-item index="1" @click="toChooseBook()">
           <el-icon><icon-menu /></el-icon>
-          <span>当前词书</span>
+          <span>选择词书</span>
         </el-menu-item>
         <el-menu-item index="2" @click="toStatistics()">
           <el-icon><document /></el-icon>
@@ -25,7 +25,7 @@
         </el-menu-item>
         <el-menu-item index="4" @click="toEditInfo()">
           <el-icon><setting /></el-icon>
-          <span>修改个人信息</span>
+          <span>个人信息</span>
         </el-menu-item>
         <el-menu-item index="5" @click="">
           <el-icon><setting /></el-icon>
