@@ -10,13 +10,19 @@
                 </div>
                 <div class="ChooseBook">
                     <el-row>
-                        <el-col v-for="(item, index) in books" :key="index" :span="5">
+                        <el-col :span="5">
                             <el-card shadow="hover" @click="ChooseThisBook()" class="bookCard">
-                                <p>{{item.name}}</p>
-                                <p class="number">{{item.wordnum}}词</p>
+                                <p>{{this.curBook}}</p>
+                                <!--p class="number">{{item.wordnum}}词</p-->
                                 <p>
-                                    <el-tag type="primary" v-show="item.flag">当前词书</el-tag>
+                                    <el-tag type="primary" >当前词书</el-tag>
                                 </p>
+                            </el-card>
+                        </el-col>
+                        <el-col v-for="(item, index) in wordBooks" :key="index" :span="5">
+                            <el-card shadow="hover" @click="ChooseThisBook()" class="bookCard">
+                                <p>{{item}}</p>
+                                <!--p class="number">{{item.wordnum}}词</p-->
                             </el-card>
                         </el-col>
                     </el-row>
@@ -50,6 +56,17 @@
 import PersonalSide from "../../components/PersonalSide.vue"
 export default {
     components: {PersonalSide},
+    async created() {
+        await this.axios({
+            method: 'get',
+            url: '/api/word/profile/{username}',
+            //headers: {'Content-Type': 'multipart/form-data'}
+        }).then((res)=>{
+            console.log(res)
+            this.wordBooks = res.data.wordBooks,
+            this.curBook = res.data.curBook
+        })
+    },
     data() {
         return {
             settingDialog: false,
@@ -67,7 +84,9 @@ export default {
                 {name: "六级高频词汇", wordnum: "1526", flag: false},
                 {name: "四级高频词汇", wordnum:"1455", flag: false},
                 {name: "25考研英语红宝书", wordnum: "6592", flag: false},
-            ]
+            ],
+            wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书"],
+            curBook: "大学英语四级"
         }
     },
     methods: {
