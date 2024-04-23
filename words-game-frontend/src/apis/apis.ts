@@ -16,7 +16,6 @@ interface RegisterForm {
 }
 //用户信息
 export interface UserInfo {
-    userId:number;//用户id（待定留不留）
     userName:string;//用户名
     userPhone:string;//用户手机号
     userRole:string;//用户角色
@@ -25,7 +24,7 @@ export interface UserInfo {
 
 
 export async function login(data: LoginForm) {
-    const response = await axios.post('/userapi/login/', data);
+    const response = await axios.post('/api/word/login/', data);
     if (response.status === 200) {//状态码200，请求正确
         if (response.data.code === 0) {
             ElMessage({
@@ -58,7 +57,7 @@ export async function login(data: LoginForm) {
 }
 
 export async function register(data: RegisterForm) {
-    const response = await axios.post('/userapi/register/', data);
+    const response = await axios.post('/api/word/register/', data);
     if (response.status === 200) {//状态码200，请求正确
         if (response.data.code===200){
             ElMessage({
@@ -66,7 +65,6 @@ export async function register(data: RegisterForm) {
                 type: 'success'
             });
             const userinfo = {
-                userId:response.data.id,//待定留不留
                 userName:response.data.username,
                 userPhone:response.data.phone,
                 userRole:response.data.role,
