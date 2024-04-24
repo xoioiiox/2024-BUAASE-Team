@@ -13,8 +13,8 @@
             <div class="saved-word-card-body">
               {{ word }}
             </div>
-          </el-card> </el-scrollbar
-        >we
+          </el-card>
+        </el-scrollbar>
       </el-col>
     </el-row>
   </div>
@@ -34,7 +34,9 @@ export default {
   },
   methods: {
     async getSavedWords() {
-      const res = await axios.get("/api/word/get-favor-words/?begin=0&end=1");
+      const res = await axios.get("/api/word/get-favor-words/", {
+        data: { begin: 0, end: 1 },
+      });
       if (res.status == 200) {
         console.log("Success: ", res);
       } else {
