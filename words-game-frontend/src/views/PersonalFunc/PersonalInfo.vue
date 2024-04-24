@@ -13,16 +13,13 @@
                             </el-col>
                         </el-row>
                         <div class="infoForm">
-                            <el-descriptions title="User Info">
-                                <el-descriptions-item label="Username">kooriookami</el-descriptions-item>
-                                <el-descriptions-item label="Telephone">18100000000</el-descriptions-item>
-                                <el-descriptions-item label="Place">Suzhou</el-descriptions-item>
-                                <el-descriptions-item label="Remarks">
-                                    <el-tag size="small">School</el-tag>
+                            <el-descriptions title="个人信息" column="2">
+                                <el-descriptions-item label="用户名">{{this.infoForm.username}}</el-descriptions-item>
+                                <el-descriptions-item label="等级">
+                                    <el-tag size="small">{{this.infoForm.level}}</el-tag>
                                 </el-descriptions-item>
-                                <el-descriptions-item label="Address">
-                                    No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
-                                </el-descriptions-item>
+                                <el-descriptions-item label="绑定手机号">{{this.infoForm.phone}}</el-descriptions-item>
+                                <el-descriptions-item label="绑定微信">{{this.infoForm.wechat}}</el-descriptions-item>
                             </el-descriptions>
                         </div>
                         <div>
@@ -51,11 +48,14 @@
                         <div>
                             <el-dialog title="修改信息" v-model="infoDialog" width="30%">
                                 <el-form :model="infoForm" label-width="auto" :rules="rules">
-                                    <el-form-item label="昵称" prop="nickname">
-                                    <el-input v-model="infoForm.old_password" autocomplete="off"></el-input>
+                                    <el-form-item label="用户名" prop="username">
+                                    <el-input v-model="infoForm.username" autocomplete="off"></el-input>
                                     </el-form-item>
-                                    <el-form-item label="手机号" prop="phonenum">
-                                    <el-input v-model="infoForm.new_password" autocomplete="off"></el-input>
+                                    <el-form-item label="绑定手机号" prop="phone">
+                                    <el-input v-model="infoForm.phone" autocomplete="off"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="绑定微信" prop="wechat">
+                                    <el-input v-model="infoForm.wechat" autocomplete="off"></el-input>
                                     </el-form-item>
                                 </el-form>
                                 <div slot="footer" class="dialog-footer">
@@ -75,18 +75,34 @@
 import PersonalSide from "../../components/PersonalSide.vue"
 export default {
     components: {PersonalSide},
+    async created() {
+        await this.axios({
+            method: 'get',
+            url: '/api/word/get-info/',
+            //headers: {'Content-Type': 'multipart/form-data'}
+        }).then((res)=>{
+            console.log(res)
+            this.infoForm.avatar = res.data.avatar;
+            //this.infoForm.username = res.data.username;
+            this.infoForm.phone = res.data.phone;
+            this.infoForm.wechat = res.data.wechat;
+        })
+    },
     data() {
         return {
             passwordDialog: false,
             infoDialog: false,
+            infoForm: {
+                avatar: "",
+                username: "viola",
+                level: "12",
+                phone: "18000000000",
+                wechat: "12345"
+            },
             passwordForm: {
                 old_password: "",
                 new_password: "",
                 new_password_again: "",
-            },
-            infoForm: {
-                nickname: "",
-                phonenum: ""
             },
             rules: {
                 old_password: [
@@ -112,7 +128,24 @@ export default {
 
         },
         submitInfo() {
-
+            console.log(this.infoForm)
+            this.axios({
+                method: 'post',
+                url: '/api/word/change-info',
+                data: {
+                    username: this.infoForm.username,
+                    avatar: this.infoForm.avatar,
+                    phone: this.infoForm.phone,
+                    wechat: this.infoForm.wechat
+                }
+            }).then((res)=> {
+                if (res.data.status == 200) {
+                    this.$message({
+						type: 'success',
+						message: "修改个人信息成功"
+					});
+                }
+            })
         }
     }
 }
@@ -128,6 +161,7 @@ export default {
     height: 220px;
 }
 .infoForm {
+    width: 600px;
     margin-left: 10px;
     margin-top: 20px;
 }
