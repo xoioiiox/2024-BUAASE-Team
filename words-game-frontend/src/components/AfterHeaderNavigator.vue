@@ -14,11 +14,13 @@ export default {
       @select="handleSelect"
   >
     <el-menu-item index="0">
+      <router-link to="/">
       <img
-          style="width: 100px"
-          src="../assets/logo.svg"
+          style="width: 200px"
+          src="../assets/logo.png"
           alt="Element logo"
       />
+      </router-link>
     </el-menu-item>
     <div class="flex-grow" />
     <router-link to="/PersonalBook">

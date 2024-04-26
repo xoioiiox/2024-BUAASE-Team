@@ -16,7 +16,7 @@ export default {
     <el-menu-item index="0">
       <img
           style="width: 100px"
-          src="../assets/logo.svg"
+          src="../assets/logo.png"
           alt="Element logo"
       />
     </el-menu-item>
