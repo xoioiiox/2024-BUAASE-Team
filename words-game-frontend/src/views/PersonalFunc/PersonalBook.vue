@@ -54,13 +54,14 @@
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
+import {useUserStore} from "@/stores/userStore.js"
 export default {
     components: {PersonalSide},
     async created() {
+        this.username = useUserStore();
         await this.axios({
             method: 'get',
-            url: '/api/word/profile/{username}',
-            //headers: {'Content-Type': 'multipart/form-data'}
+            url: '/api/word/profile/{username}'
         }).then((res)=>{
             console.log(res)
             this.wordBooks = res.data.wordBooks,
@@ -69,6 +70,7 @@ export default {
     },
     data() {
         return {
+            username: "",
             settingDialog: false,
             settingForm: {
                 number: ""

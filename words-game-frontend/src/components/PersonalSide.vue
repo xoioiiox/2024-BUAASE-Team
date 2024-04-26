@@ -12,7 +12,7 @@
           <el-avatar :size="130" :src="circleUrl"></el-avatar>
         </div>
         <el-menu-item index="1" @click="toChooseBook()">
-          <el-icon><icon-menu /></el-icon>
+          <el-icon><Notebook /></el-icon>
           <span>选择词书</span>
         </el-menu-item>
         <el-menu-item index="2" @click="toStatistics()">

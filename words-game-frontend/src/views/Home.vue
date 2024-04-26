@@ -2,6 +2,7 @@
 import HeaderNavigator from "@/components/HeaderNavigator.vue";
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 import {useUserStore} from "@/stores/userStore.js";
+import {ElMessage} from "element-plus";
 
 
 
@@ -26,6 +27,13 @@ export default {
     goToWord() {
       // 用户点击按钮时导航到需要登录权限的页面
       this.$router.push({ name: 'StartWordHome', meta: { requiresAuth: true } });
+
+    },
+
+    goToGame(){
+      //this.$router.push({ name: 'StartWordHome', meta: { requiresAuth: true } });
+
+      ElMessage.error('暂未开发完成')
     }
   }
 
@@ -44,35 +52,31 @@ export default {
       <el-row :gutter="180">
         <el-col :span="8"><div class="grid-content ep-bg-purple" />
           <el-card style="max-width: 480px">
-            <router-link to="/StartWordHome">
-              <img class="image"
+<!--            <router-link to="/StartWordHome">-->
+              <img class="image" @click="goToWord"
                   src="../assets/learn.png"
               />
 
-            </router-link>
-
+<!--            </router-link>-->
           </el-card>
-<!--          <router-link to="/StartWordHome">-->
             <el-button type="primary" round @click="goToWord">开始背单词</el-button>
-
-<!--          </router-link>-->
 
 
         </el-col>
         <el-col :span="8"><div class="grid-content ep-bg-purple" />
           <el-card style="max-width: 480px">
-            <router-link to="/WordDetail">
-              <img class="image"
+<!--            <router-link to="/WordDetail">-->
+              <img class="image" @click="goToGame"
                   src="../assets/chess.png"
 
               />
-            </router-link>
+<!--            </router-link>-->
           </el-card>
-          <router-link to="/PersonalBook">
-            <el-button type="primary" round>Around the Words
+<!--          <router-link to="/PersonalBook">-->
+            <el-button type="primary" round @click="goToGame">Around the Words
             ——在游戏中学单词</el-button>
 
-          </router-link>
+<!--          </router-link>-->
 
         </el-col>
 
