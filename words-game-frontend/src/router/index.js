@@ -65,11 +65,6 @@ const router = createRouter({
       component: SavedWords,
     },
     {
-      path: "/SavedWords/:wordID",
-      name: "SavedWord",
-      component: SavedWord,
-    },
-    {
       path: "/Statistics",
       name: "Statistics",
       component: PersonalStats,

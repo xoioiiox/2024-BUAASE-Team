@@ -45,7 +45,7 @@ export default {
   components: { PersonalSide, IconStar, IconSpeaker },
   methods: {
     onShowWord(word) {
-      this.$router.push(`/SavedWords/${word}`);
+      this.$router.push(`/WordDetail/`);
     },
     onListenWord(word) {
       ElMessage({
@@ -82,7 +82,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 * {
   box-sizing: border-box;
 }
@@ -148,14 +148,3 @@ export default {
   /* border: 1px solid red; */
 }
 </style>
-
-<!-- // try {
-  //   const { data } = await axios.get("/api/word/get-favor-words/", {
-  //     params: { begin: 0, end: 3 },
-  //   });
-  //   console.log("Get data: ", data);
-  //   // this.words = data;
-  // } catch (error) {
-  //   this.words = ["error", "testing"];
-  //   console.log("Error get words: ", error);
-  // } -->
