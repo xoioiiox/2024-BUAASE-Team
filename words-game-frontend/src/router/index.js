@@ -5,52 +5,49 @@ import WordDetail from "../components/WordDetail.vue";
 import PersonalInfo from "../views/PersonalFunc/PersonalInfo.vue";
 import Home from "@/views/Home.vue";
 import SavedWords from "../views/PersonalFunc/SavedWords.vue";
-
+import SavedWord from "../views/PersonalFunc/SavedWord.vue";
 import StartWordHome from "@/views/StartWordHome.vue";
 import PersonalStats from "../views/PersonalFunc/PersonalStats.vue";
 
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import ReciteView from "../views/ReciteView.vue";
 
-import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
-import ReciteView from '../views/ReciteView.vue'
+import { useUserStore } from "@/stores/userStore.js";
 
-
-import { useUserStore } from '@/stores/userStore.js';
-
-import PunchIn from '../components/PunchIn.vue'
+import PunchIn from "../components/PunchIn.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'Home',
+      path: "/",
+      name: "Home",
       component: Home,
       meta: {
-        requiresAuth: false // 表示需要登录权限
-      }
+        requiresAuth: false, // 表示需要登录权限
+      },
     },
 
     {
-      path: '/recite',
-      component: ReciteView
+      path: "/recite",
+      component: ReciteView,
     },
     {
-      path: '/login',
+      path: "/login",
       component: LoginView,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: false },
     },
     {
-      path: '/register',
+      path: "/register",
       component: RegisterView,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: false },
     },
     {
-      path: '/StartWordHome',
-      name: 'StartWordHome',
+      path: "/StartWordHome",
+      name: "StartWordHome",
       component: StartWordHome,
-      meta: { requiresAuth: true }
-
+      meta: { requiresAuth: true },
     },
     {
       path: "/PersonalBook",
@@ -66,7 +63,11 @@ const router = createRouter({
       path: "/SavedWords",
       name: "SavedWords",
       component: SavedWords,
-
+    },
+    {
+      path: "/SavedWords/:wordID",
+      name: "SavedWord",
+      component: SavedWord,
     },
     {
       path: "/Statistics",
@@ -81,16 +82,16 @@ const router = createRouter({
     {
       path: "/PersonalInfo",
       name: "PersonalInfo",
-      component: PersonalInfo
+      component: PersonalInfo,
     },
     {
-      path: '/PunchIn',
-      name: 'PunchIn',
-      component: PunchIn
-      //component: () => import('../components/PunchIn.vue') 
-    }
-  ]
-})
+      path: "/PunchIn",
+      name: "PunchIn",
+      component: PunchIn,
+      //component: () => import('../components/PunchIn.vue')
+    },
+  ],
+});
 
 /*
 router.beforeEach((to, from, next) => {
@@ -109,20 +110,19 @@ router.beforeEach((to, from, next) => {
 
 // 全局导航守卫
 router.beforeEach((to, from, next) => {
-
   const userStore = useUserStore();
 
   // 检查用户是否已登录
   if (to.meta.requiresAuth && !userStore.isLoggedIn) {
     // 如果用户未登录且当前路由需要登录权限，则重定向到登录页面
-    next('/login');
+    next("/login");
   } else {
     // 允许导航
     next();
   }
 
-  console.log(userStore.isLoggedIn)
-  console.log(to.meta.requiresAuth)
+  console.log(userStore.isLoggedIn);
+  console.log(to.meta.requiresAuth);
 });
 
-export default router
+export default router;

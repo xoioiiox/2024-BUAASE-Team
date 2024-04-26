@@ -40,26 +40,12 @@ import IconStar from "@/components/icons/IconStar.vue";
 import IconSpeaker from "@/components/icons/IconSpeaker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import PersonalSide from "../../components/PersonalSide.vue";
-// import axios from "axios";
 
 export default {
   components: { PersonalSide, IconStar, IconSpeaker },
-  // async created() {
-  //   await axios({
-  //     method: "get",
-  //     url: "/api/word/get-favor-words/",
-  //     params: {
-  //       begin: 2,
-  //       end: 6,
-  //     },
-  //   }).then((res) => console.log("res", res));
-  // },
   methods: {
     onShowWord(word) {
-      ElMessage({
-        type: "info",
-        message: `Go to ${word} detail`,
-      });
+      this.$router.push(`/SavedWords/${word}`);
     },
     onListenWord(word) {
       ElMessage({
