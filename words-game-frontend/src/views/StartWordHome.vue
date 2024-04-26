@@ -2,22 +2,30 @@
 import HeaderNavigator from "@/components/HeaderNavigator.vue";
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 import {useUserStore} from "@/stores/userStore.js";
-
+import axios from "axios";
 
 export default {
   name: 'StartWordHome',
   components: {AfterHeaderNavigator, HeaderNavigator},
 
   // 在Vue组件的生命周期钩子中使用store
-  created() {
+  async created() {
     this.userStore = useUserStore();
     console.log(this.userStore.user);
     console.log(this.userStore.isLoggedIn);
+    await axios({
+      method: 'get',
+      url: '/api/word/now-book-ratio'
+    }).then((res)=>{
+      console.log(res)
+      this.ratio = res.data.ratio
+    })
   },
 
   data() {
     return {
-      userStore: null // 初始化为null
+      userStore: null, // 初始化为null
+      ratio: 0
     };
   },
 
@@ -39,7 +47,7 @@ export default {
     <el-row>
       <el-col :span="24">
         <div class="progress-wrapper">
-        <el-progress type="circle" :percentage="50" />
+        <el-progress type="circle" :percentage="ratio" />
         </div>
       </el-col>
 
