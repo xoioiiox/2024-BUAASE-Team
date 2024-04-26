@@ -73,13 +73,15 @@
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
+import {useUserStore} from "@/stores/userStore.js"
 export default {
     components: {PersonalSide},
     async created() {
+        this.username = useUserStore();
+        console.log("username:" + this.username)
         await this.axios({
             method: 'get',
-            url: '/api/word/get-info/',
-            //headers: {'Content-Type': 'multipart/form-data'}
+            url: '/api/word/get-info/'
         }).then((res)=>{
             console.log(res)
             this.infoForm.avatar = res.data.avatar;
@@ -90,6 +92,7 @@ export default {
     },
     data() {
         return {
+            username: "",
             passwordDialog: false,
             infoDialog: false,
             infoForm: {
