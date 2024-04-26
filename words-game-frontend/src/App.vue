@@ -6,12 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 
-  <nav>
-    <router-link to="/PunchIn">PunchIn</router-link>
-  </nav>
-  <nav>
-    <router-link to="/WordDetail">WordDetail</router-link>
-  </nav>
+  
   <RouterView></RouterView>
 
 </template>
