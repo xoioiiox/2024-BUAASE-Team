@@ -3,7 +3,8 @@
     <div class="modal-mask">
       <div class="modal-wrapper" @click.self="close">
         <div class="modal-container">
-          <canvas id="canvas" width="500" height="750"></canvas>
+          <!-- <canvas id="canvas" width="550" height="750"></canvas> -->
+          <img src="" alt="Canvas Image" id="canvas2img" />
         </div>
       </div>
     </div>
@@ -11,71 +12,86 @@
 </template>
 
 <script setup>
-  import { onMounted, ref } from 'vue';
-  import PunchIn from './PunchIn.vue';
-  import imgSrc from '../assets/images/BubbleHouse.webp';
+import { onMounted, ref, defineProps, onBeforeMount, reactive } from 'vue';
 
-  const emit = defineEmits(['close']);
- 
-  const close = () => {
-    console.log("close");
-    emit('close');
+//close
+const emit = defineEmits(['close']);
+
+const close = () => {
+  console.log("close");
+  emit('close');
+};
+
+const props = defineProps({
+  firstProp: Number,
+  secondProp: String
+});
+
+
+//generateImg
+const imgSrcs = reactive(['test.jpg',
+  'BubbleHouse.webp'
+]);
+
+const generateImg = async () => {
+  var canvas = document.createElement('canvas');
+  canvas.width = 500;
+  canvas.height = 750;
+  const ctx = canvas.getContext('2d');
+
+  var img = document.getElementById("canvas2img")
+
+  var bgImage = new Image();
+  var bgimageSrc = '../assets/images/' + imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
+  let m = await import(/* @vite-ignore */bgimageSrc);
+  bgImage.src = m.default;
+  bgImage.onload = () => {
+    const margin = 15;
+    const imgWidth = 500;
+    const imgHeight = 500;
+
+    ctx.drawImage(bgImage, (canvas.width - imgWidth) / 2, margin, imgWidth, imgHeight);
+
+    ctx.font = "16px serif";
+    ctx.fillText("坚持打卡" + props.firstProp + "天", 10, 650);
+
+    const canvasWidth = canvas.width;
+    const lineHeight = 10;
+    const text = props.secondProp;
+
+    console.log("坚持打卡" + props.firstProp + "天");
+    console.log(props.secondProp);
+
+    const words = text.split(/\s+/);
+    let line = '', lines = [];
+    for (const word of words) {
+      const tempLine = line + word + ' ';
+      if (ctx.measureText(tempLine).width > canvasWidth) {
+        lines.push(line);
+        line = word + ' ';
+      } else {
+        line = tempLine;
+      }
+    }
+    lines.push(line);
+
+    const y = 600;
+    lines.forEach((line, index) => {
+      ctx.fillText(line.trim(), 10, y + index * lineHeight);
+    });
+
+    img.src = canvas.toDataURL('image/png');
   };
 
-  // const consecutiveDays = PunchIn.consecutiveDays;
-  // const inspiration = PunchIn.inspiration;
+}
 
-  const imageSrc = ref('');
-
-  const generateImg = () => {
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-
-    var bgImage = new Image();
-    bgImage.src = imgSrc; 
-    bgImage.onload = () => {
-      const margin = 15; 
-      const imgWidth = 500;
-      const imgHeight = 500;
-
-      ctx.drawImage(bgImage, (canvas.width - imgWidth) / 2, margin, imgWidth, imgHeight);
-
-      ctx.font = "16px serif";
-      ctx.fillText("坚持打卡20天", 10, 650);
-      
-      const canvasWidth = canvas.width;
-      const lineHeight = 10;
-      const text = "每天的努力，都是为了让未来的自己更加优秀。";
-
-      const words = text.split(/\s+/);
-      let line = '', lines = [];
-      for (const word of words) {
-        const tempLine = line + word + ' ';
-          if (ctx.measureText(tempLine).width > canvasWidth) {
-            lines.push(line);
-            line = word + ' ';
-          } else {
-          line = tempLine;
-          }
-      }
-      lines.push(line); 
-
-      const y = 600; 
-      lines.forEach((line, index) => {
-        ctx.fillText(line.trim(), 10, y + index * lineHeight);
-      });
-    };
-  }
-
-  
-  onMounted(() => {
-    generateImg();
-  })
+onMounted(() => {
+  generateImg();
+})
 
 </script>
 
 <style scoped>
-
 .modal-mask {
   position: fixed;
   z-index: 9998;
