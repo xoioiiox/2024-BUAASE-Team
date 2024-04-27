@@ -5,6 +5,9 @@
         <div class="modal-container">
           <!-- <canvas id="canvas" width="550" height="750"></canvas> -->
           <img src="" alt="Canvas Image" id="canvas2img" />
+
+          <button class="save" @click="saveImg">保存图片</button>
+
         </div>
       </div>
     </div>
@@ -27,6 +30,22 @@ const props = defineProps({
   secondProp: String
 });
 
+//saveImg
+const saveImg = () => {
+
+  const imageUrl = document.getElementById("canvas2img").src;
+  const imageFileName = 'punchIn.jpg';
+
+  const link = document.createElement('a');
+
+  link.href = imageUrl;
+  link.download = imageFileName;
+
+  link.click();
+
+  link.remove();
+
+}
 
 //generateImg
 const imgSrcs = reactive(['test.jpg',
@@ -35,8 +54,8 @@ const imgSrcs = reactive(['test.jpg',
 
 const generateImg = async () => {
   var canvas = document.createElement('canvas');
-  canvas.width = 500;
-  canvas.height = 750;
+  canvas.width = 550;
+  canvas.height = 700;
   const ctx = canvas.getContext('2d');
 
   var img = document.getElementById("canvas2img")
@@ -46,14 +65,18 @@ const generateImg = async () => {
   let m = await import(/* @vite-ignore */bgimageSrc);
   bgImage.src = m.default;
   bgImage.onload = () => {
-    const margin = 15;
+    const margin = 20;
     const imgWidth = 500;
     const imgHeight = 500;
 
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     ctx.drawImage(bgImage, (canvas.width - imgWidth) / 2, margin, imgWidth, imgHeight);
 
+    ctx.fillStyle = 'black';
     ctx.font = "16px serif";
-    ctx.fillText("坚持打卡" + props.firstProp + "天", 10, 650);
+    ctx.fillText("坚持打卡" + props.firstProp + "天", 30, 650);
 
     const canvasWidth = canvas.width;
     const lineHeight = 10;
@@ -77,7 +100,7 @@ const generateImg = async () => {
 
     const y = 600;
     lines.forEach((line, index) => {
-      ctx.fillText(line.trim(), 10, y + index * lineHeight);
+      ctx.fillText(line.trim(), 30, y + index * lineHeight);
     });
 
     img.src = canvas.toDataURL('image/png');
@@ -117,6 +140,13 @@ onMounted(() => {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+
 }
 
 .preview-image {
@@ -135,5 +165,19 @@ onMounted(() => {
 .modal-leave-to .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+
+.save {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  background-color: #0366d6;
+  color: white;
+  border-radius: 5px;
+  margin: 50px 50px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.1s ease;
 }
 </style>
