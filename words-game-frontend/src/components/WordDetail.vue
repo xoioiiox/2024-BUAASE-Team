@@ -5,18 +5,15 @@
         <div class="word-pronunciation">
             <span>发音： </span>
             <span>{{ pronunciation }}</span>
-        </div>
-
-        <div class="word-meaning">
-            <h2>释义：</h2>
-            <p>{{ meaning }}</p>
+            <button id="sound-button" @click="playtts">🔊</button>
+            <audio id="audio" style="display: none;"></audio>
         </div>
 
         <div class="word-examples">
-            <h2>例句：</h2>
+            <h2>释义：</h2>
             <ul>
                 <li v-for="example in examples" :key="example">
-                    {{ example }}
+                    {{ example.part + ' ' + example.mean }}
                 </li>
             </ul>
         </div>
@@ -34,17 +31,26 @@
 <script setup>
 import { onBeforeMount, onMounted, ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from "vue-router";
 
-//
-const word = ref('Hello');
+const router = useRouter();
+
+//word
+const word = ref('Hello');//router.query.word
 const dict = ref('');
 const pronunciation = ref(' həˈləʊ ');
-const pronunciationSrc = ref('');
+const theSrc = 'https://fanyi-api.baidu.com/api/trans/api/tts?query=hello&appid=20210101000000001&lang=en&sign=169aa0398cfb86ace951aa8a96ec44fd'.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
+const pronunciationSrc = ref(theSrc);
 
-const meaning = ref('你好');
 const examples = ref([
-    '"Hello, this is John, my colleague."',
-    '"Hello, I must be going now."'
+    {
+        part: 'n.',
+        mean: '打招呼'
+    },
+    {
+        part: 'v.',
+        mean: '说'
+    }
 ]);
 
 
@@ -62,7 +68,7 @@ const deleteWord = () => {
         .catch((error) => {
             console.log(error);
         });
-
+    router.push('/recite');
 };
 
 const correctWord = () => {
@@ -79,6 +85,7 @@ const correctWord = () => {
         .catch((error) => {
             console.log(error);
         });
+    router.push('/recite');
 };
 
 const recognizeWord = () => {
@@ -95,6 +102,8 @@ const recognizeWord = () => {
         .catch((error) => {
             console.log(error);
         });
+    router.push('/recite');
+
 };
 
 const addToVocab = () => {
@@ -120,8 +129,14 @@ const queryWord = () => {
     })
         .then((response) => {
             console.log(response);
-            meaning.value = response.result.trans_result.dst;
 
+            dict.value = JSON.parse(response.data.result.trans_result.dict);
+            pronunciation.value = dict.value.word_result.simple_means.symbols.ph_am;
+
+            const ttsSrc = response.data.result.trans_result.src_tts;
+            pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
+
+            examples.value = dict.value.word_result.simple_means.symbols.parts;
         })
         .catch((error) => {
             console.log(error);
@@ -129,28 +144,18 @@ const queryWord = () => {
 }
 
 const playtts = () => {
-    axios.get('/fanyi/api/trans/api/tts?query=%E4%BD%A0%E5%A5%BD&appid=202105250003&lang=zh&sign=4dff83efd4a0ff36e8806efd2a0421b4', {
-        params: {
-        }
-    })
-        .then((response) => {
-            console.log(response);
-            //meaning.value = response.result.trans_result.dst;
-
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    const audio = document.getElementById('audio');
+    audio.src = pronunciationSrc.value;
+    audio.play();
 }
 
 
 onBeforeMount(() => {
-
+    //word.value = router.query.word;
 })
 
 onMounted(() => {
-    playtts();
-    //queryWord();
+    queryWord();
 })
 
 </script>
@@ -168,10 +173,6 @@ onMounted(() => {
 
 .word-pronunciation span:first-child {
     font-weight: bold;
-}
-
-.word-meaning p {
-    font-size: 1.1em;
 }
 
 .word-examples li {
