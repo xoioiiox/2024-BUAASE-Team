@@ -75,25 +75,23 @@
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import {useUserStore} from "@/stores/userStore.js"
+import axios from "axios"
 export default {
 	components: {PersonalSide},
 	async created() {
-		this.username = useUserStore();
-		console.log("username:" + this.username)
-		await this.axios({
+		await axios({
 			method: 'get',
 			url: '/api/word/get-info/'
 		}).then((res)=>{
 			console.log(res)
 			this.infoForm.avatar = res.data.avatar;
-			//this.infoForm.username = res.data.username;
+			this.infoForm.username = res.data.username;
 			this.infoForm.phone = res.data.phone;
 			this.infoForm.wechat = res.data.wechat;
 		})
 	},
 	data() {
 		return {
-			username: "",
 			passwordDialog: false,
 			infoDialog: false,
 			infoForm: {
@@ -128,13 +126,10 @@ export default {
 		modifyInfo() {
 			this.infoDialog = true
 		},
-		submitPassword() {
-
-		},
 		submitInfo() {
 			console.log(this.infoForm)
-			this.axios({
-				method: 'post',
+			axios({
+				method: 'put',
 				url: '/api/word/change-info',
 				data: {
 					username: this.infoForm.username,
@@ -143,16 +138,15 @@ export default {
 					wechat: this.infoForm.wechat
 				}
 			}).then((res)=> {
-				if (res.data.status == 200) {
-					this.$message({
-						type: 'success',
-						message: "修改个人信息成功"
-					});
-				}
 			})
+			this.$message({
+				type: 'success',
+				message: "修改个人信息成功"
+			});
+			this.infoDialog = false
 		},
 		submitPassword() {
-			this.axios({
+			axios({
 				method: 'post',
 				url: '',
 				data: {
