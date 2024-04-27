@@ -14,14 +14,9 @@
     <el-form-item label="用户名" prop="username">
       <el-input v-model="registerForm.username" />
     </el-form-item>
-    <!--选择自己注册的角色-->
-    <el-form-item label="角色" prop="role">
-      <el-select v-model="registerForm.role" placeholder="     ">
-        <!--普通用户角色-->
-        <el-option label="用户" value="user" />
-        <!--管理员角色角色-->
-        <el-option label="管理员" value="admin" />
-      </el-select>
+    <!--输入手机号码-->
+    <el-form-item label="手机号" prop="phone">
+    <el-input v-model="registerForm.phone" />
     </el-form-item>
     <!--输入密码-->
     <el-form-item label="密码" prop="password">
@@ -57,19 +52,17 @@ import {register} from "@/apis/apis";
 
 interface Form {
   username: string;
-  role: string;
+  phone:string;
   password: string;
   confirmPassword: string;
-  phone:string
 }
 
 
 const registerForm = reactive<Form>({
   username: '',
-  role: '',
+  phone: '',
   password: '',
   confirmPassword: '',
-  phone: ''
 })
 
 const registerFormRef = ref<FormInstance>()
@@ -79,6 +72,14 @@ const router = useRouter();
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (!value) {
     return callback(new Error('用户名不能为空'))
+  }else{
+    callback()
+  }
+}
+
+const validatePhone = (rule: any, value: any, callback: any) => {
+  if (!value) {
+    return callback(new Error('手机号码不能为空'))
   }else{
     callback()
   }
@@ -107,6 +108,7 @@ const validateConfirmPassword = (rule: any, value: any, callback: any) => {
 
 const rules = reactive<FormRules<typeof registerForm>>({
   username: [{ validator: validateUsername, trigger: 'blur' }],
+  phone: [{ validator: validatePhone, trigger: 'blur' }],
   password: [{ validator: validatePassword, trigger: 'blur' }],
   confirmPassword: [{ validator: validateConfirmPassword, trigger: 'blur' }],
 })
