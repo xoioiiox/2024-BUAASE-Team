@@ -35,64 +35,68 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import IconStar from "@/components/icons/IconStar.vue";
 import IconSpeaker from "@/components/icons/IconSpeaker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import PersonalSide from "../../components/PersonalSide.vue";
-// import axios from "axios";
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
-export default {
-  components: { PersonalSide, IconStar, IconSpeaker },
-  // async created() {
-  //   await axios({
-  //     method: "get",
-  //     url: "/api/word/get-favor-words/",
-  //     params: {
-  //       begin: 2,
-  //       end: 6,
-  //     },
-  //   }).then((res) => console.log("res", res));
-  // },
-  methods: {
-    onShowWord(word) {
+//Data
+const words = ref([]);
+
+const getSavedWords = () => {
+  axios
+    .get("/word/get-favor-words/", {
+      params: {},
+    })
+    .then((res) => console.log("res ", res))
+    .catch((err) => console.log("err ", err));
+  // try {
+  //   const { status, data } = await axios.get("/api/word/get-favor-words");
+
+  //   if (status !== 200) {
+  //     console.log("Status not 200");
+  //   } else {
+  //     console.log("data: ", data);
+  //   }
+  // } catch (error) {
+  //   console.log("error axios: ", error);
+  // }
+};
+
+onMounted(() => {
+  console.log("Mounted");
+  getSavedWords();
+});
+
+//Method
+const onShowWord = (word) => {
+  ElMessage({
+    type: "info",
+    message: `Go to ${word} detail`,
+  });
+};
+
+const onUnsaveWord = (word) => {
+  ElMessageBox.confirm(`Do you want to delete ${word}`, "Delete Warning", {
+    confirmButtonText: "Yes",
+    cancelButtonText: "Cancel",
+    type: "warning",
+  })
+    .then(() => {
       ElMessage({
-        type: "info",
-        message: `Go to ${word} detail`,
+        type: "success",
+        message: "Delete completed",
       });
-    },
-    onListenWord(word) {
+    })
+    .catch(() => {
       ElMessage({
-        type: "info",
-        message: `Listen to ${word}`,
+        type: "error",
+        message: "Delete Canceled",
       });
-    },
-    onUnsaveWord(word) {
-      ElMessageBox.confirm("", {
-        title: `Do you want to unsave ${word}?`,
-        confirmButtonText: "Yes",
-        cancelButtonText: "Cancel",
-        type: "warning",
-      })
-        .then(() => {
-          ElMessage({
-            type: "success",
-            message: "Delete completed",
-          });
-        })
-        .catch(() => {
-          ElMessage({
-            type: "info",
-            message: "Delete canceled",
-          });
-        });
-    },
-  },
-  data() {
-    return {
-      words: [],
-    };
-  },
+    });
 };
 </script>
 
