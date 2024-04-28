@@ -145,7 +145,7 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  height: 83vh;
 
 }
 
