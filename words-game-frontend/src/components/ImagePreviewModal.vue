@@ -48,8 +48,12 @@ const saveImg = () => {
 }
 
 //generateImg
-const imgSrcs = reactive(['test.jpg',
-  'BubbleHouse.webp'
+const imgSrcs = reactive(['1.jpg',
+  '2.jpg',
+  '3.jpg',
+  '4.jpg',
+  '5.jpg',
+  '6.jpg'
 ]);
 
 const generateImg = async () => {
