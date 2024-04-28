@@ -187,11 +187,12 @@ export default {
 	width: 180px;
 	height: 220px;
 	margin-bottom: 20px;
-  box-shadow: rgba(0, 0, 0, 0.101) 4px 6px 3px;
-  border-radius: 5px;
-  border: 1px solid #e0e0e0d4;
+	box-shadow: rgba(0, 0, 0, 0.101) 4px 6px 3px;
+	border-radius: 5px;
+	border: 1px solid #e0e0e0d4;
 }
 .curbook {
-	background-color:  #d9ecff
+	background-color:  #d9ecff;
+	border: 2px dashed  #79bbff;
 }
 </style>
