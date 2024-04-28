@@ -151,10 +151,11 @@ const playtts = () => {
 
 
 onBeforeMount(() => {
-    //word.value = router.query.word;
+
 })
 
 onMounted(() => {
+    word.value = router.currentRoute.value.query.word;
     queryWord();
 })
 
