@@ -24,7 +24,7 @@
             <button class="choise" @click="recognizeWord">认识</button>
         </div>
 
-        <button class="add-to-vocab" @click="addToVocab">添加生词本</button>
+        <button :disabled="disabled" class="add-to-vocab" @click="addToVocab">{{ atvText }}</button>
     </div>
 </template>
 
@@ -106,8 +106,11 @@ const recognizeWord = () => {
 
 };
 
+const disabled = ref(false);
+const atvText = ref('加收藏');
 const addToVocab = () => {
-    // 添加到生词本的逻辑
+    disabled.value = true;
+    atvText.value = '已添加';
     axios.post('/api/word/add-favor-word', {
         params: {
             word: word.value
@@ -119,6 +122,7 @@ const addToVocab = () => {
         .catch((error) => {
             console.log(error);
         });
+
 };
 
 const queryWord = () => {
@@ -224,5 +228,10 @@ onMounted(() => {
 
 .add-to-vocab:active {
     background-color: #5c8db8;
+}
+
+.add-to-vocab:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
 }
 </style>
