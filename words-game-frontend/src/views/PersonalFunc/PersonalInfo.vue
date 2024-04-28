@@ -10,7 +10,18 @@
 					<div>
 						<el-row>
 							<el-col :span="4">
-								<el-avatar :size="100" :src="circleUrl"></el-avatar>
+								<el-avatar :size="100" :src="this.infoForm.avatar"></el-avatar>
+							</el-col>
+							<el-col :span="4" class="upload_avatar">
+								<el-tooltip
+									class="box-item"
+									effect="dark"
+									content="上传头像"
+									placement="top">
+								<el-button type="text" @click="uploadAvatar()">
+									<el-icon><Upload /></el-icon>
+								</el-button>
+								</el-tooltip>
 							</el-col>
 						</el-row>
 						<div class="infoForm">
@@ -65,6 +76,23 @@
 								</div>
 							</el-dialog>
 						</div>
+						<div class="avatarDialog">
+							<el-dialog title="上传头像" v-model="uploadDialog" width="30%">
+								<el-upload
+									class="avatar-uploader"
+									action="#"
+									:show-file-list="false"
+									:on-change="handleAvatarPreview"
+									:before-upload="beforeAvatarUpload">
+									<img v-if="imageUrl" :src="imageUrl" class="avatar" />
+									<el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+								</el-upload>
+								<div style="margin-top:20px">
+									<el-button type="primary" @click="submitAvatar()">确认</el-button>
+									<el-button @click="uploadDialog=false">取消</el-button>
+								</div>
+							</el-dialog>
+						</div>
 					</div>
 				</div>
 			</el-col>
@@ -94,6 +122,9 @@ export default {
 		return {
 			passwordDialog: false,
 			infoDialog: false,
+			uploadDialog: false,
+			imageUrl: '',
+			image_formData: new FormData(),
 			infoForm: {
 				avatar: "",
 				username: "viola",
@@ -159,6 +190,43 @@ export default {
 					});
 				}
 			})
+		},
+		uploadAvatar() {
+			this.uploadDialog = true
+		},
+		handleAvatarPreview(file) {
+      console.log(true);
+      let fd = new FormData()
+      fd.append('image', file.raw)
+      this.image_formData = fd
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(this.imageUrl);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      if (!isJPG) {
+        this.$message.error('只可上传 JPG 格式图片');
+      }
+      return isJPG;
+    },
+		submitAvatar() {
+			this.infoForm.avatar = this.imageUrl
+			axios({
+				method: 'put',
+				url: '/api/word/change-info',
+				data: {
+					username: this.infoForm.username,
+					avatar: this.infoForm.avatar,
+					phone: this.infoForm.phone,
+					wechat: this.infoForm.wechat
+				}
+			}).then((res)=> {
+			})
+			this.$message({
+				type: 'success',
+				message: "修改头像成功"
+			});
+			this.uploadDialog = false
 		}
 	}
 }
@@ -184,6 +252,9 @@ export default {
 .modify {
 	margin-top: 30px;
 }
+.upload_avatar {
+	margin-top: 80px;
+}
 /deep/.el-descriptions__label {
 	font-size: medium;
 	font-weight: normal;
@@ -191,4 +262,32 @@ export default {
 /*/deep/.el-descriptions__content {
 	font-size: medium;
 }*/
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.avatarDialog {
+	text-align: center
+}
 </style>
