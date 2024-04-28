@@ -108,7 +108,7 @@ const onUnsaveWord = (word) => {
 .saved-words-page {
   padding-left: 30px;
   height: 100%;
-  background-color: "#F5F5F5";
+  background-color: #F5F5F5;
 }
 
 .saved-words-list {
