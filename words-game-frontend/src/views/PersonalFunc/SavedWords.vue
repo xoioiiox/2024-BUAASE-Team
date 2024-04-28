@@ -46,20 +46,24 @@ import axios from "axios";
 //Data
 const words = ref([]);
 
-const getSavedWords = async () => {
-  try {
-    const { status, data } = await axios.get("/api/word/get-favor-words/", {
-      params: { begin: 0, end: 3 },
-    });
+const getSavedWords = () => {
+  axios
+    .get("/word/get-favor-words/", {
+      params: {},
+    })
+    .then((res) => console.log("res ", res))
+    .catch((err) => console.log("err ", err));
+  // try {
+  //   const { status, data } = await axios.get("/api/word/get-favor-words");
 
-    if (status !== 200) {
-      console.log("Status not 200");
-    } else {
-      console.log("data: ", data);
-    }
-  } catch (error) {
-    console.log("error axios: ", error);
-  }
+  //   if (status !== 200) {
+  //     console.log("Status not 200");
+  //   } else {
+  //     console.log("data: ", data);
+  //   }
+  // } catch (error) {
+  //   console.log("error axios: ", error);
+  // }
 };
 
 onMounted(() => {
