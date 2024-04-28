@@ -2,7 +2,7 @@
 	<div>
 		<el-row :gutter="20">
 			<el-col :span="6">
-				<PersonalSide></PersonalSide>
+				<PersonalSide ref="side"></PersonalSide>
 			</el-col>
 			<el-col :span="18">
 				<h2>个人信息</h2>
@@ -81,7 +81,7 @@
 								<el-upload
 									class="avatar-uploader"
 									action="#"
-                  :http-request="upload"
+									:http-request="upload"
 									:show-file-list="false"
 									:on-change="handleAvatarPreview"
 									:before-upload="beforeAvatarUpload">
@@ -196,43 +196,39 @@ export default {
 			this.uploadDialog = true
 		},
 		handleAvatarPreview(file) {
-      console.log(true);
-      let fd = new FormData()
-      fd.append('smfile', file.raw)
-      this.image_formData = fd
-      console.log(file.raw instanceof File)
-      axios.post('/smmsapi/api/v2/upload', this.image_formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
-          // 'Content-Type': 'application/json'
-        }
-      }).then(response => {
-        console.log(response)
-        if(response.data) {
-          this.imageUrl = response.data.data.url
-        } else {
-          this.imageUrl = response.data.images
-        }
-
-
-        console.log(this.imageUrl)
-
-      }).catch(err => {
-        console.log(err)
-      });
-
-
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      if (!isJPG) {
-        this.$message.error('只可上传 JPG 格式图片');
-      }
-      return isJPG;
-    },
+			console.log(true);
+			let fd = new FormData()
+			fd.append('smfile', file.raw)
+			this.image_formData = fd
+			console.log(file.raw instanceof File)
+			axios.post('/smmsapi/api/v2/upload', this.image_formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
+					// 'Content-Type': 'application/json'
+				}
+			}).then(response => {
+				console.log(response)
+				if(response.data.data) {
+					this.imageUrl = response.data.data.url
+				} else {
+					this.imageUrl = response.data.images
+				}
+				console.log(this.imageUrl)
+			}).catch(err => {
+				console.log(err)
+			});
+		},
+		beforeAvatarUpload(file) {
+			const isJPG = file.type === 'image/jpeg';
+			if (!isJPG) {
+				this.$message.error('只可上传 JPG 格式图片');
+			}
+			return isJPG;
+		},
 		submitAvatar() {
 			this.infoForm.avatar = this.imageUrl
+			console.log("in" + this.infoForm.avatar)
 			axios({
 				method: 'put',
 				url: '/api/word/change-info',
@@ -248,6 +244,8 @@ export default {
 				type: 'success',
 				message: "修改头像成功"
 			});
+			this.$refs.side.changeAvatar(this.imageUrl);
+			this.imageUrl = '';
 			this.uploadDialog = false
 		}
 	}
@@ -285,29 +283,29 @@ export default {
 	font-size: medium;
 }*/
 .avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
+	border: 1px dashed var(--el-border-color);
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: var(--el-transition-duration-fast);
 }
 
 .avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
+	border-color: var(--el-color-primary);
 }
 
 .el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
+	font-size: 28px;
+	color: #8c939d;
+	width: 178px;
+	height: 178px;
+	text-align: center;
 }
 .avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
+	width: 178px;
+	height: 178px;
+	display: block;
 }
 .avatarDialog {
 	text-align: center

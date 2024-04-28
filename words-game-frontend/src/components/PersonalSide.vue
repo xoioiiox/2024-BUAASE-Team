@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: "PersonalSide",
   async created() {
@@ -78,6 +79,9 @@ export default {
     },
     toHome() {
       this.$router.push({path: "/"});
+    },
+    changeAvatar(img_url) {
+      this.imageUrl = img_url
     }
    },
 };
