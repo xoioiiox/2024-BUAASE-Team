@@ -81,6 +81,7 @@
 								<el-upload
 									class="avatar-uploader"
 									action="#"
+                  :http-request="upload"
 									:show-file-list="false"
 									:on-change="handleAvatarPreview"
 									:before-upload="beforeAvatarUpload">
@@ -197,10 +198,31 @@ export default {
 		handleAvatarPreview(file) {
       console.log(true);
       let fd = new FormData()
-      fd.append('image', file.raw)
+      fd.append('smfile', file.raw)
       this.image_formData = fd
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(this.imageUrl);
+      console.log(file.raw instanceof File)
+      axios.post('/smmsapi/api/v2/upload', this.image_formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
+          // 'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        console.log(response)
+        if(response.data) {
+          this.imageUrl = response.data.data.url
+        } else {
+          this.imageUrl = response.data.images
+        }
+
+
+        console.log(this.imageUrl)
+
+      }).catch(err => {
+        console.log(err)
+      });
+
+
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
