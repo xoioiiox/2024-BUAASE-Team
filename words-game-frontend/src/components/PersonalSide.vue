@@ -78,6 +78,9 @@ export default {
     },
     toHome() {
       this.$router.push({path: "/"});
+    },
+    changeAvatar(img_url) {
+      this.imageUrl = img_url
     }
    },
 };

@@ -2,7 +2,7 @@
 	<div>
 		<el-row :gutter="20">
 			<el-col :span="6">
-				<PersonalSide></PersonalSide>
+				<PersonalSide ref="side"></PersonalSide>
 			</el-col>
 			<el-col :span="18">
 				<h2>个人信息</h2>
@@ -233,6 +233,7 @@ export default {
     },
 		submitAvatar() {
 			this.infoForm.avatar = this.imageUrl
+			console.log("in" + this.infoForm.avatar)
 			axios({
 				method: 'put',
 				url: '/api/word/change-info',
@@ -248,6 +249,7 @@ export default {
 				type: 'success',
 				message: "修改头像成功"
 			});
+			this.$refs.side.changeAvatar(this.imageUrl);
 			this.uploadDialog = false
 		}
 	}
