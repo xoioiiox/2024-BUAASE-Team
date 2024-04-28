@@ -35,8 +35,6 @@ cache:
 
 install-job:
   stage: install # 这里代表我们当前的任务处于install阶段
-  tags:
-    - vue3 # 这里是当前任务的标签，标签是我们后面在gitlab-runner中定义的
   script: # 每个任务都必须有script，顾名思义就是执行的语句
     - npm install # 前面说的我们处于一个有node环境的虚拟机，那这句话就是在这个虚拟机的我们当前项目里执行npm instal
 
@@ -44,8 +42,6 @@ install-job:
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
-  tags:
-    - vue3
   script:
     - npm run build
 
@@ -66,8 +62,6 @@ lint-test-job:   # This job also runs in the test stage.
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy
   image: docker # 因为这里我们用到docker指令所以要把node环境切换到docker
-  tags:
-    - vue3
   script:
     # 这里是通过我们项目根目录下的Dockerfile文件创建一个新的镜像
     # 不懂可以理解成打包成一个安装包
