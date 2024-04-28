@@ -30,6 +30,12 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/fanyi/, '')
+      },
+      '/smmsapi': {
+        target: 'https://smms.app/',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/smmsapi/, '')
       }
     }
   },     // 实际请求中的写法：axois.post('/api/xxx', data) 【所以不需要配置axios的baseUrl了】
