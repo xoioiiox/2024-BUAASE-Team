@@ -2,6 +2,13 @@
 export default {
   name: "AfterHeaderNavigator",
 
+  methods: {
+    goToPersonal() {
+      // 用户点击按钮时导航到需要登录权限的页面
+      this.$router.push({name: 'PersonalBook'});
+    }
+  }
+
 }
 </script>
 
@@ -23,11 +30,11 @@ export default {
       </router-link>
     </el-menu-item>
     <div class="flex-grow" />
-    <router-link to="/PersonalBook">
-    <el-menu-item index="1">
+   
+    <el-menu-item index="1" @click="goToPersonal">
       个人中心
     </el-menu-item>
-    </router-link>
+
 
   </el-menu>
 </template>
