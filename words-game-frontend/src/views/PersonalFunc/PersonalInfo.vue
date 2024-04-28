@@ -209,7 +209,7 @@ export default {
         }
       }).then(response => {
         console.log(response)
-        if(response.data) {
+        if(response.data.data) {
           this.imageUrl = response.data.data.url
         } else {
           this.imageUrl = response.data.images
