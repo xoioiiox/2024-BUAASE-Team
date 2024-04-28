@@ -9,19 +9,19 @@
 				<div class="Info">
 					<div>
 						<el-row>
-							<el-col :span="4">
+							<el-col :span="3">
 								<el-avatar :size="100" :src="this.infoForm.avatar"></el-avatar>
 							</el-col>
 							<el-col :span="4" class="upload_avatar">
-								<el-tooltip
+								<!--el-tooltip
 									class="box-item"
 									effect="dark"
 									content="上传头像"
 									placement="top">
+								</el-tooltip-->
 								<el-button type="text" @click="uploadAvatar()">
-									<el-icon><Upload /></el-icon>
+									<el-icon><Upload /></el-icon>上传头像
 								</el-button>
-								</el-tooltip>
 							</el-col>
 						</el-row>
 						<div class="infoForm">

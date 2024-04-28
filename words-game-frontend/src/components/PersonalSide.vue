@@ -1,6 +1,10 @@
 <template>
   <el-row class="side">
     <el-col>
+      <img style="width: 100px"
+          src="../assets/logo.png"
+          alt="Element logo"  @click="toHome()"/>
+      <!--h5 class="mb-2" @click="toHome()">Default colors</h5-->
       <el-menu
         default-active="1"
         class="el-menu-vertical-demo"
@@ -8,7 +12,7 @@
         @close="handleClose"
       >
         <div class="avatar">
-          <el-avatar :size="130" :src="circleUrl"></el-avatar>
+          <el-avatar :size="130" :src="imageUrl"></el-avatar>
         </div>
         <el-menu-item index="1" @click="toChooseBook()">
           <el-icon><Notebook /></el-icon>
@@ -42,8 +46,19 @@
 <script>
 export default {
   name: "PersonalSide",
+  async created() {
+		await axios({
+			method: 'get',
+			url: '/api/word/get-info/'
+		}).then((res)=>{
+			console.log(res)
+			this.imageUrl = res.data.avatar;
+		})
+	},
   data() {
-    return {};
+    return {
+      imageUrl: ''
+    };
   },
   methods: {
     toChooseBook() {
@@ -61,7 +76,10 @@ export default {
     toStatistics() {
       this.$router.push({ path: "/Statistics" });
     },
-  },
+    toHome() {
+      this.$router.push({path: "/"});
+    }
+   },
 };
 </script>
 
@@ -73,6 +91,6 @@ export default {
   margin-bottom: 20px;
 }
 .side {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 </style>
