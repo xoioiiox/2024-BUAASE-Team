@@ -25,9 +25,53 @@ export default {
   data() {
     return {
       userStore: null, // 初始化为null
-      ratio: 0
+      ratio: 0,
+      settingDialog: false,
+      settingForm: {
+        new_number: "10",
+        review_number: "10"
+      },
+      options: [
+        {value: '10', label: '10'},
+        {value: '15', label: '15'},
+        {value: '20', label: '20'},
+      ]
     };
   },
+
+  methods: {
+
+    studySetting() {
+      this.settingDialog = true;
+    },
+    submitInfo() {
+      console.log("new:" + this.settingForm.new_number)
+      console.log("new:" + this.settingForm.new_number)
+      /*修改每日计划新词*/
+      axios({
+        method: 'post',
+        url: '/api/word/set-plan/',
+        data: {
+          'num': this.settingForm.new_number
+        }
+      }).then((res) => {
+      })
+      /*修改每日复习上限*/
+      axios({
+        method: 'post',
+        url: '/api/word/set-review-limit/',
+        data: {
+          'num': this.settingForm.review_number
+        }
+      }).then((res) => {
+      })
+      this.settingDialog = false
+      this.$message({
+        type: 'success',
+        message: "修改成功"
+      });
+    }
+  }
 
 
 }
@@ -53,14 +97,52 @@ export default {
 
     </el-row>
     <el-row>
-      <el-col :span="24" class="text-center"><span>当前词书进度</span></el-col>
+      <el-col :span="24" class="text-center"><span>当前词书进度
+          <el-button class="button-style" type="primary" @click="studySetting()">学习设置</el-button>
+         </span></el-col>
     </el-row>
-   
+
+    <div>
+    <el-row>
+      <el-col :span="24">
+
+
+      <el-dialog title="学习设置" v-model="settingDialog" width="30%">
+        <el-form :model="settingForm" label-width="auto">
+          <el-form-item label="每日计划新词">
+            <el-select v-model="settingForm.new_number">
+              <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="每日复习上限">
+            <el-select v-model="settingForm.review_number">
+              <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="settingDialog = false">取 消</el-button>
+          <el-button type="primary" @click="submitInfo()">确 定</el-button>
+        </div>
+      </el-dialog>
+      </el-col>
+    </el-row>
+    </div>
 
     <el-row>
-      <el-col :span="24" class="button-center">
+      <el-col :span="24" class="button-center ">
         <router-link to="/recite">
-          <el-button type="primary" round>
+          <el-button type="primary" round class="button-size">
             开始背单词
           </el-button>
 
@@ -109,10 +191,19 @@ export default {
   height: 100%; /* 可以根据需要设置高度 */
 }
 
+.button-size{
+  width: 380px;
+  height: 60px;
+}
+
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.button-style {
+  margin-left: 30px;
 }
 
 
