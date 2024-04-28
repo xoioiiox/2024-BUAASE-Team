@@ -214,15 +214,10 @@ export default {
         } else {
           this.imageUrl = response.data.images
         }
-
-
         console.log(this.imageUrl)
-
       }).catch(err => {
         console.log(err)
       });
-
-
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
