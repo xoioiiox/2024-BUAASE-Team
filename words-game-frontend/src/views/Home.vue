@@ -49,12 +49,12 @@ export default {
 
     <div>
       
-      <el-row :gutter="180">
+      <el-row :gutter="150">
         <el-col :span="8"><div class="grid-content ep-bg-purple" />
           <el-card style="max-width: 480px">
 <!--            <router-link to="/StartWordHome">-->
               <img class="image" @click="goToWord"
-                  src="../assets/learn.png"
+                  src="https://s2.loli.net/2024/04/29/HPLpnfmO9aGlCbI.png"
               />
 
 <!--            </router-link>-->
@@ -67,7 +67,7 @@ export default {
           <el-card style="max-width: 480px">
 <!--            <router-link to="/WordDetail">-->
               <img class="image" @click="goToGame"
-                  src="../assets/chess.png"
+                  src="https://s2.loli.net/2024/04/29/tiKkA4aUm2lLySh.png"
 
               />
 <!--            </router-link>-->
