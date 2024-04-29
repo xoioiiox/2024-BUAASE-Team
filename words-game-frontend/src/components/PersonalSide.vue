@@ -12,19 +12,19 @@
         <div class="avatar">
           <el-avatar :size="130" :src="imageUrl"></el-avatar>
         </div>
-        <el-menu-item index="/PersonalBook/">
+        <el-menu-item index="/PersonalBook">
           <el-icon><Notebook /></el-icon>
           <span>选择词书</span>
         </el-menu-item>
-        <el-menu-item index="/Statistics/">
+        <el-menu-item index="/Statistics">
           <el-icon><PieChart /></el-icon>
           <span>统计信息</span>
         </el-menu-item>
-        <el-menu-item index="/SavedWords/">
+        <el-menu-item index="/SavedWords">
           <el-icon><document /></el-icon>
           <span>生词本记录</span>
         </el-menu-item>
-        <el-menu-item index="/PersonalInfo/">
+        <el-menu-item index="/PersonalInfo">
           <el-icon><User /></el-icon>
           <span>个人信息</span>
         </el-menu-item>
