@@ -48,12 +48,12 @@ const saveImg = () => {
 }
 
 //generateImg
-const imgSrcs = reactive(['1.jpg',
-  '2.jpg',
-  '3.jpg',
-  '4.jpg',
-  '5.jpg',
-  '6.jpg'
+const imgSrcs = reactive(['https://s2.loli.net/2024/04/29/FSGLCJaP5KVekBX.png',
+  'https://s2.loli.net/2024/04/29/5ls1OIwQTX3zmuE.png',
+  'https://s2.loli.net/2024/04/29/rQS2jhKAsYydvq3.png',
+  'https://s2.loli.net/2024/04/29/rqyZ5Y1epdkNEW9.png',
+  'https://s2.loli.net/2024/04/29/SnYGErUFZmu68PW.png',
+  'https://s2.loli.net/2024/04/29/7LiwPSY8lpeDUWf.png'
 ]);
 
 const generateImg = async () => {
@@ -65,7 +65,7 @@ const generateImg = async () => {
   var img = document.getElementById("canvas2img")
 
   var bgImage = new Image();
-  var bgimageSrc = '../assets/images/' + imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
+  var bgimageSrc = imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
   let m = await import(/* @vite-ignore */bgimageSrc);
   bgImage.src = m.default;
   bgImage.onload = () => {
