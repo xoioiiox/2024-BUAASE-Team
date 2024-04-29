@@ -64,7 +64,7 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     # 这里是通过我们项目根目录下的Dockerfile文件创建一个新的镜像
     # # 不懂可以理解成打包成一个安装包
-    - export DOCKER_HOST="tcp://docker:2375"
+    - export DOCKER_HOST="tcp://60.205.14.77:2375"
     - docker build -t vue-frontend . 
     # # 这里是查看当前的服务器上有没有正在运行或者存在我们之前运行过的项目容器，如果有删除了
     - if [ $(docker ps -aq --filter name=vue-frontend-main) ];then docker rm -f vue-frontend-main;fi
