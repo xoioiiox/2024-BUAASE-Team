@@ -6,31 +6,29 @@
           alt="Element logo"  @click="toHome()"/>
       <!--h5 class="mb-2" @click="toHome()">Default colors</h5-->
       <el-menu
-        default-active="1"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
-      >
+        :default-active="$route.path"
+        :router="true"
+        class="el-menu-vertical-demo">
         <div class="avatar">
           <el-avatar :size="130" :src="imageUrl"></el-avatar>
         </div>
-        <el-menu-item index="1" @click="toChooseBook()">
+        <el-menu-item index="/PersonalBook/">
           <el-icon><Notebook /></el-icon>
           <span>选择词书</span>
         </el-menu-item>
-        <el-menu-item index="2" @click="toStatistics()">
+        <el-menu-item index="/Statistics/">
           <el-icon><PieChart /></el-icon>
           <span>统计信息</span>
         </el-menu-item>
-        <el-menu-item index="3" @click="toSavedWords()">
+        <el-menu-item index="/SavedWords/">
           <el-icon><document /></el-icon>
           <span>生词本记录</span>
         </el-menu-item>
-        <el-menu-item index="4" @click="toEditInfo()">
+        <el-menu-item index="/PersonalInfo/">
           <el-icon><User /></el-icon>
           <span>个人信息</span>
         </el-menu-item>
-        <el-menu-item index="5" @click="">
+        <el-menu-item index="">
           <el-icon><Histogram /></el-icon>
           <span>排行榜</span>
         </el-menu-item>
