@@ -60,3 +60,5 @@ deploy-job:      # This job runs in the deploy stage.
     # # 不懂得可以理解成安装我们刚才打包好的安装包，安装过后会把你的项目运行在nginx里面，外网就可以访问你的项目了
     - docker run -d -p 8999:80 --name=vue-frontend-main vue-frontend 
     - echo "Deploy finished."
+
+
