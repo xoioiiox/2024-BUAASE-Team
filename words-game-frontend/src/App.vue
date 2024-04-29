@@ -6,6 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 
+  <router-link :to="'/PunchIn'">Home</router-link>
   <RouterView></RouterView>
 
 </template>
