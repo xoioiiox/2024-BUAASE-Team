@@ -20,7 +20,6 @@ image: node:alpine
 stages:          # List of stages for jobs, and their order of execution
   - install
   - build
-  - test
   - deploy
 
   # 因为每个任务中所有操作产生的新的文件在进行到下一个任务时都会被清除
