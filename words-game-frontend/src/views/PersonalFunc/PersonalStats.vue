@@ -123,6 +123,7 @@ const dataDays = {
 };
 
 // FUNCTIONS
+/*
 const getWordDataToday = async () => {
   const res = await axios("/api/word/get-word-data/today");
   if (!res) {
@@ -144,6 +145,7 @@ onBeforeMount(() => {
   getWordDataToday();
   getWordDataBefore();
 });
+*/
 </script>
 
 <style scoped>
