@@ -15,7 +15,7 @@ export default defineConfig({
     port: '3000',    // 指定的本地启动端口
     proxy: {
       '/api': {     // 你想代理的请求
-        target: 'http://127.0.0.1:8080/',        // target是你想请求的后端地址
+        target: 'http://60.205.14.77:8998/',        // target是你想请求的后端地址
         changeOrigin: true,    // 允许跨域
         rewrite: (path) => path.replace(/^\/api/, '') // 不可以省略rewrite
       },
