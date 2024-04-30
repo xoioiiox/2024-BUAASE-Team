@@ -147,7 +147,7 @@ const login= ()=>{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("./src/assets/logoBG.jpg"); /* 替换为你的背景图片路径 */
+  background-image: url("https://s2.loli.net/2024/04/29/B7Mjd4UkcOPzayH.jpg"); /* 替换为你的背景图片路径 */
   background-size: cover;
   background-position: center;
 }

@@ -2,6 +2,12 @@
 export default {
   name: "HeaderNavigator",
 
+  methods: {
+    goToLogin() {
+      // 用户点击按钮时导航到需要登录权限的页面
+      this.$router.push({name: 'login'});
+    }
+  }
 }
 </script>
 
@@ -15,17 +21,17 @@ export default {
   >
     <el-menu-item index="0">
       <img
-          style="width: 100px"
-          src="../assets/logo.png"
+          style="width: 200px"
+          src="https://s2.loli.net/2024/04/29/cwvlMF4oL83Z5Vt.png"
           alt="Element logo"
       />
     </el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="1">
-      <router-link to="/login">
+    <el-menu-item index="1" @click="goToLogin">
+
         登录 / 注册
 
-      </router-link></el-menu-item>
+    </el-menu-item>
 
   </el-menu>
 </template>
