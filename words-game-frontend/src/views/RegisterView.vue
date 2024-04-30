@@ -20,7 +20,7 @@
     </el-form-item>
     <!--输入密码-->
     <el-form-item label="密码" prop="password">
-      <el-input v-model="registerForm.password" type="password" autocomplete="off" />
+      <el-input v-model="registerForm.password" type="password" autocomplete="off"/>
     </el-form-item>
     <!--确认自己的密码-->
     <el-form-item label="确认密码" prop="confirmPassword">
@@ -80,6 +80,8 @@ const validateUsername = (rule: any, value: any, callback: any) => {
 const validatePhone = (rule: any, value: any, callback: any) => {
   if (!value) {
     return callback(new Error('手机号码不能为空'))
+  }else if(value.match(/^[1][3,4,5,7,8][0-9]{9}$/)==null){
+    return callback(new Error('手机号码格式不正确'))
   }else{
     callback()
   }
