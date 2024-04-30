@@ -78,7 +78,19 @@ import {
   Title,
   Tooltip,
   Legend,
-} 
+} from "chart.js";
+import { Line } from "vue-chartjs";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 
 const data = ref({
   labels: ["7", "6", "5", "4", "3", "2", "1"],
