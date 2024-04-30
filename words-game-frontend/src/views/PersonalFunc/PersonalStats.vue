@@ -91,6 +91,7 @@ ChartJS.register(
   Legend
 );
 
+
 const data = ref({
   labels: ["7", "6", "5", "4", "3", "2", "1"],
   datasets: [
