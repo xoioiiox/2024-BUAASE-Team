@@ -26,17 +26,17 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const consecutiveDays = ref(0);
-const inspirations = reactive(['鸡汤1',
-  '鸡汤2',
-  '鸡汤3',
-  '鸡汤4',
-  '鸡汤5',
-  '鸡汤6',
-  '鸡汤7',
-  '鸡汤8',
-  '鸡汤9',
-  '鸡汤10',
-  '鸡汤11']);
+const inspirations = reactive(['每一天都是一个新的开始。',
+  '微笑是世上最美的风景。',
+  '每一步都离梦想更近。',
+  '勇敢是在恐惧中前进。',
+  '梦想会在终点等你。',
+  '每一个困难都是成长的机会。',
+  '你的价值由自己的努力来证明。',
+  '保持好奇心，生活将充满惊喜。',
+  '真正的力量来自于内心的平静和坚定。',
+  '做你自己，你的独特是无价之宝。'
+]);
 const inspiration = ref('default');
 
 var isOpened = ref(false);

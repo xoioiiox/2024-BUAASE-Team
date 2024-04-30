@@ -2,15 +2,26 @@
 	<div>
 		<el-row :gutter="20">
 			<el-col :span="6">
-				<PersonalSide></PersonalSide>
+				<PersonalSide ref="side"></PersonalSide>
 			</el-col>
 			<el-col :span="18">
 				<h2>个人信息</h2>
 				<div class="Info">
 					<div>
 						<el-row>
-							<el-col :span="4">
-								<el-avatar :size="100" :src="circleUrl"></el-avatar>
+							<el-col :span="3">
+								<el-avatar :size="100" :src="this.infoForm.avatar"></el-avatar>
+							</el-col>
+							<el-col :span="4" class="upload_avatar">
+								<!--el-tooltip
+									class="box-item"
+									effect="dark"
+									content="上传头像"
+									placement="top">
+								</el-tooltip-->
+								<el-button type="text" @click="uploadAvatar()">
+									<el-icon><Upload /></el-icon>上传头像
+								</el-button>
 							</el-col>
 						</el-row>
 						<div class="infoForm">
@@ -65,6 +76,24 @@
 								</div>
 							</el-dialog>
 						</div>
+						<div class="avatarDialog">
+							<el-dialog title="上传头像" v-model="uploadDialog" width="30%">
+								<el-upload
+									class="avatar-uploader"
+									action="#"
+									:http-request="upload"
+									:show-file-list="false"
+									:on-change="handleAvatarPreview"
+									:before-upload="beforeAvatarUpload">
+									<img v-if="imageUrl" :src="imageUrl" class="avatar" />
+									<el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+								</el-upload>
+								<div style="margin-top:20px">
+									<el-button type="primary" @click="submitAvatar()">确认</el-button>
+									<el-button @click="uploadDialog=false">取消</el-button>
+								</div>
+							</el-dialog>
+						</div>
 					</div>
 				</div>
 			</el-col>
@@ -94,6 +123,9 @@ export default {
 		return {
 			passwordDialog: false,
 			infoDialog: false,
+			uploadDialog: false,
+			imageUrl: '',
+			image_formData: new FormData(),
 			infoForm: {
 				avatar: "",
 				username: "viola",
@@ -159,6 +191,62 @@ export default {
 					});
 				}
 			})
+		},
+		uploadAvatar() {
+			this.uploadDialog = true
+		},
+		handleAvatarPreview(file) {
+			console.log(true);
+			let fd = new FormData()
+			fd.append('smfile', file.raw)
+			this.image_formData = fd
+			console.log(file.raw instanceof File)
+			axios.post('/smmsapi/api/v2/upload', this.image_formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
+					// 'Content-Type': 'application/json'
+				}
+			}).then(response => {
+				console.log(response)
+				if(response.data.data) {
+					this.imageUrl = response.data.data.url
+				} else {
+					this.imageUrl = response.data.images
+				}
+				console.log(this.imageUrl)
+			}).catch(err => {
+				console.log(err)
+			});
+		},
+		beforeAvatarUpload(file) {
+			const isJPG = file.type === 'image/jpeg';
+			if (!isJPG) {
+				this.$message.error('只可上传 JPG 格式图片');
+			}
+			return isJPG;
+		},
+		submitAvatar() {
+			this.infoForm.avatar = this.imageUrl
+			console.log("in" + this.infoForm.avatar)
+			axios({
+				method: 'put',
+				url: '/api/word/change-info',
+				data: {
+					username: this.infoForm.username,
+					avatar: this.infoForm.avatar,
+					phone: this.infoForm.phone,
+					wechat: this.infoForm.wechat
+				}
+			}).then((res)=> {
+			})
+			this.$message({
+				type: 'success',
+				message: "修改头像成功"
+			});
+			this.$refs.side.changeAvatar(this.imageUrl);
+			this.imageUrl = '';
+			this.uploadDialog = false
 		}
 	}
 }
@@ -184,6 +272,9 @@ export default {
 .modify {
 	margin-top: 30px;
 }
+.upload_avatar {
+	margin-top: 80px;
+}
 /deep/.el-descriptions__label {
 	font-size: medium;
 	font-weight: normal;
@@ -191,4 +282,32 @@ export default {
 /*/deep/.el-descriptions__content {
 	font-size: medium;
 }*/
+.avatar-uploader .el-upload {
+	border: 1px dashed var(--el-border-color);
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+	border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+	font-size: 28px;
+	color: #8c939d;
+	width: 178px;
+	height: 178px;
+	text-align: center;
+}
+.avatar-uploader .avatar {
+	width: 178px;
+	height: 178px;
+	display: block;
+}
+.avatarDialog {
+	text-align: center
+}
 </style>

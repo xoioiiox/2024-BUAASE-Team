@@ -33,15 +33,18 @@ const router = createRouter({
 
     {
       path: '/recite',
+      name: 'recite',
       component: ReciteView
     },
     {
       path: '/login',
+      name: 'login',
       component: LoginView,
       meta: { requiresAuth: false }
     },
     {
       path: '/register',
+      name: 'register',
       component: RegisterView,
       meta: { requiresAuth: false }
     },

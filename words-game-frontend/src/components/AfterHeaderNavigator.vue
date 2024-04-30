@@ -2,6 +2,13 @@
 export default {
   name: "AfterHeaderNavigator",
 
+  methods: {
+    goToPersonal() {
+      // 用户点击按钮时导航到需要登录权限的页面
+      this.$router.push({name: 'PersonalBook'});
+    }
+  }
+
 }
 </script>
 
@@ -17,17 +24,17 @@ export default {
       <router-link to="/">
       <img
           style="width: 200px"
-          src="../assets/logo.png"
+          src="https://s2.loli.net/2024/04/29/cwvlMF4oL83Z5Vt.png"
           alt="Element logo"
       />
       </router-link>
     </el-menu-item>
     <div class="flex-grow" />
-    <router-link to="/PersonalBook">
-    <el-menu-item index="1">
+   
+    <el-menu-item index="1" @click="goToPersonal">
       个人中心
     </el-menu-item>
-    </router-link>
+
 
   </el-menu>
 </template>
