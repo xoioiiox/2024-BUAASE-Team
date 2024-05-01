@@ -21,10 +21,7 @@
                   <!-- Card -->
                   <el-col :span="6" class="stat-card">
                     <div>
-                      <el-statistic
-                        title="新学"
-                        :value="dataToday.learn_number"
-                      >
+                      <el-statistic title="新学" :value="dataToday?.learn_num">
                         <template #suffix>
                           <el-icon style="font-size: small"> 词 </el-icon>
                         </template>
@@ -36,10 +33,7 @@
                   <!-- Card 2 -->
                   <el-col :span="6" class="stat-card">
                     <div>
-                      <el-statistic
-                        title="复习"
-                        :value="dataToday.review_number"
-                      >
+                      <el-statistic title="复习" :value="dataToday?.review_num">
                         <template #suffix>
                           <el-icon style="font-size: small"> 词 </el-icon>
                         </template>
@@ -51,7 +45,7 @@
                   <!-- Card 3 -->
                   <el-col :span="8" class="stat-card">
                     <div>
-                      <el-statistic title="复习" :value="dataToday.time">
+                      <el-statistic title="复习" :value="dataToday?.time">
                       </el-statistic>
                     </div>
                   </el-col>
@@ -62,7 +56,7 @@
               <el-row class="stat-weekly-row">
                 <el-col :span="24">
                   <div class="stat-windows stat-weekly-graph">
-                    近7天
+                    <span class="stat-daily-header">近7天学习统计</span>
                     <Line :options="graphOptions" :data="graphData" />
                   </div>
                 </el-col>
@@ -78,9 +72,7 @@
                   #header="{ date }"
                   style="width: 100%; justify-content: center"
                 >
-                  <!-- <button @click="selectDate('prev-month')">before</button> -->
-                  <div>{{ date }}</div>
-                  <!-- <button @click="selectDate('next-month')">next</button> -->
+                  <span>本月打卡情况</span>
                 </template>
                 <template #date-cell="{ data: cellData }">
                   <div :class="cellData.isSelected ? 'is-selected' : ''">
@@ -99,13 +91,8 @@
 <script setup lang="ts">
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
-import { onBeforeMount, ref } from "vue";
-import {
-  CalendarDateType,
-  CalendarInstance,
-  calendarEmits,
-} from "element-plus";
-
+import { onBeforeMount, onMounted, ref } from "vue";
+import { CalendarInstance } from "element-plus";
 //CHART
 import {
   Chart as ChartJS,
@@ -116,9 +103,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
 } from "chart.js";
 import { Line } from "vue-chartjs";
-import { RefSymbol } from "@vue/reactivity";
 
 ChartJS.register(
   CategoryScale,
@@ -130,30 +117,20 @@ ChartJS.register(
   Legend
 );
 
-// FUNCTIONS
-const getWordDataToday = async () => {
-  // const res = await axios(
-  //   "http://60.205.14.77:8998/api/word/get-word-data/today"
-  // );
-  // if (!res) {
-  //   console.log("Res ", res);
-  // } else {
-  //   console.log("Err ", res);
-  // }
-};
+interface WordData {
+  time: string;
+  learn_num: number;
+  review_num: number;
+}
 
-const getWordDataWeek = async () => {
-  const res = await axios("/api/word/get-word-data/period", {
-    params: { days: 4 },
-  })
-    .then((res) => console.log("res", res))
-    .catch((err) => console.log("err", err));
-};
-
-onBeforeMount(() => {
-  // getWordDataToday();
+const dataToday = ref<WordData>();
+const dataWeek = ref<WordData[]>();
+const graphData = ref<ChartData<"line">>({
+  labels: [],
+  datasets: [],
 });
 
+// FUNCTIONS
 const getLast7Days = () => {
   const dates = [];
   const today = new Date();
@@ -161,74 +138,126 @@ const getLast7Days = () => {
   for (let i = 0; i < 7; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
-    console.log("str date: ", date.getDate());
-    // dates.push(date.toDateString().split(" "));
+    // console.log("str date: ", date.getDate());
     dates.push(date.toLocaleDateString().split("/").slice(0, 2).join("/"));
   }
   return dates.reverse();
 };
 
-//API FILLED DATA
-//if failed to fetch show error
-const dataToday = {
-  learn_number: 3,
-  review_number: 5,
-  time: "0:00:10",
+const getWordDataToday = async () => {
+  try {
+    const res = await axios.get(
+      "http://60.205.14.77:8998/api/word/get-word-data/today"
+    );
+    console.log("get word data res: ", res.data);
+    if (res.status == 200) {
+      dataToday.value = res.data;
+    }
+  } catch (error) {
+    console.error("Error get today data:", error);
+    dataToday.value = {
+      learn_num: 3,
+      review_num: 5,
+      time: "0:00:10",
+    };
+  }
 };
 
-//今天，昨天，前天，大前天...
-const dataWeek = [
-  {
-    learn_num: 3,
-    review_num: 5,
-    time: "0:10:34",
-  },
-  {
-    learn_num: 5,
-    review_num: 10,
-    time: "0:20:02",
-  },
-  {
-    learn_num: 12,
-    review_num: 4,
-    time: "0:21:00",
-  },
-  {
-    learn_num: 10,
-    review_num: 12,
-    time: "1:30:02",
-  },
-  {
-    learn_num: 10,
-    review_num: 20,
-    time: "1:30:02",
-  },
-  {
-    learn_num: 7,
-    review_num: 12,
-    time: "1:30:02",
-  },
-  {
-    learn_num: 0,
-    review_num: 16,
-    time: "1:30:02",
-  },
-];
+const getWordDataWeek = () => {
+  axios
+    .get("/api/word/get-word-data/period", {
+      params: { days: 7 },
+    })
+    .then((res) => {
+      console.log("get week data res:", res);
+      dataWeek.value = res.data.word_data;
+    })
+    .catch((err) => {
+      console.log("Error get week data: ", err);
+      dataWeek.value = [
+        {
+          learn_num: 3,
+          review_num: 5,
+          time: "0:10:34",
+        },
+        {
+          learn_num: 5,
+          review_num: 10,
+          time: "0:20:02",
+        },
+        {
+          learn_num: 12,
+          review_num: 4,
+          time: "0:21:00",
+        },
+        {
+          learn_num: 10,
+          review_num: 12,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 10,
+          review_num: 20,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 7,
+          review_num: 12,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 0,
+          review_num: 16,
+          time: "1:30:02",
+        },
+      ];
+    })
+    .finally(() => {
+      console.log("data changed: ", dataWeek.value[0]);
 
-const graphData = ref({
-  labels: getLast7Days(),
-  datasets: [
-    {
-      label: "学习词数",
-      backgroundColor: "#0096FF",
-      data: dataWeek.reverse().map((dataDay) => dataDay.learn_num),
-    },
-    {
-      label: "复习词数",
-      backgroundColor: " #00FF00",
-      data: dataWeek.reverse().map((dataDay) => dataDay.review_num),
-    },
-  ],
+      graphData.value = {
+        labels: getLast7Days(),
+        datasets: [
+          {
+            label: "学习词数",
+            backgroundColor: "#0096FF",
+            data: dataWeek.value.reverse().map((dataDay) => dataDay.learn_num),
+          },
+          {
+            label: "复习词数",
+            backgroundColor: "#00FF00",
+            data: dataWeek.value.reverse().map((dataDay) => dataDay.review_num),
+          },
+        ],
+      };
+    });
+};
+
+console.log("graph data: ", graphData.value);
+//first graph is built using the default data
+//but after mounting data it is not reloaded
+
+onMounted(() => {
+  getWordDataToday();
+  getWordDataWeek();
+});
+
+onMounted(() => {
+  graphData.value = {
+    labels: getLast7Days(),
+    datasets: [
+      {
+        label: "学习词数",
+        backgroundColor: "#0096FF",
+        data: dataWeek.value.reverse().map((dataDay) => dataDay.learn_num),
+      },
+      {
+        label: "复习词数",
+        backgroundColor: "#00FF00",
+        data: dataWeek.value.reverse().map((dataDay) => dataDay.review_num),
+      },
+    ],
+  };
 });
 
 const graphOptions = {
@@ -293,6 +322,19 @@ const calendar = ref<CalendarInstance>();
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 5%;
+}
+
+.stat-card {
+  /* border: 1px solid red; */
+  height: 100%;
+  border-radius: 4px;
+  background-color: var(--el-bg-color-overlay);
+}
+
+.stat-card-title {
+  display: inline-flex;
+  align-items: center;
 }
 
 .stat-weekly-row {
@@ -309,27 +351,8 @@ const calendar = ref<CalendarInstance>();
   --el-statistic-content-font-size: 28px;
 }
 
-.stat-card {
-  border: 1px solid red;
-  height: 100%;
-  /* padding: 0px 10px 0px 40px; */
-  border-radius: 4px;
-  background-color: var(--el-bg-color-overlay);
-}
-
-.stat-card-title {
-  display: inline-flex;
-  align-items: center;
-}
-
 .el-calendar {
   --el-calendar-cell-width: 36px;
-}
-
-.el-calendar__header {
-  display: flex;
-  justify-content: center !important;
-  border: 1px solid red;
 }
 
 .el-divider {
