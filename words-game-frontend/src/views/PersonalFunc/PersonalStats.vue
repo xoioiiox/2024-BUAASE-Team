@@ -16,37 +16,46 @@
             <div class="stat-study">
               <!-- DAILY -->
               <el-row class="stat-daily-row stat-windows">
-                <!-- Card -->
-                <el-col :span="6" class="stat-card">
-                  <div>
-                    <el-statistic title="新学" :value="dataToday.learn_number">
-                      <template #suffix>
-                        <el-icon style="font-size: small"> 词 </el-icon>
-                      </template>
-                    </el-statistic>
-                  </div>
-                </el-col>
-                <el-divider direction="vertical" />
+                <span class="stat-daily-header">今日学习统计</span>
+                <div class="stat-daily-cards">
+                  <!-- Card -->
+                  <el-col :span="6" class="stat-card">
+                    <div>
+                      <el-statistic
+                        title="新学"
+                        :value="dataToday.learn_number"
+                      >
+                        <template #suffix>
+                          <el-icon style="font-size: small"> 词 </el-icon>
+                        </template>
+                      </el-statistic>
+                    </div>
+                  </el-col>
+                  <el-divider direction="vertical" />
 
-                <!-- Card 2 -->
-                <el-col :span="6" class="stat-card">
-                  <div>
-                    <el-statistic title="复习" :value="dataToday.review_number">
-                      <template #suffix>
-                        <el-icon style="font-size: small"> 词 </el-icon>
-                      </template>
-                    </el-statistic>
-                  </div>
-                </el-col>
-                <el-divider direction="vertical" />
+                  <!-- Card 2 -->
+                  <el-col :span="6" class="stat-card">
+                    <div>
+                      <el-statistic
+                        title="复习"
+                        :value="dataToday.review_number"
+                      >
+                        <template #suffix>
+                          <el-icon style="font-size: small"> 词 </el-icon>
+                        </template>
+                      </el-statistic>
+                    </div>
+                  </el-col>
+                  <el-divider direction="vertical" />
 
-                <!-- Card 3 -->
-                <el-col :span="8" class="stat-card">
-                  <div>
-                    <el-statistic title="复习" :value="dataToday.time">
-                    </el-statistic>
-                  </div>
-                </el-col>
+                  <!-- Card 3 -->
+                  <el-col :span="8" class="stat-card">
+                    <div>
+                      <el-statistic title="复习" :value="dataToday.time">
+                      </el-statistic>
+                    </div>
+                  </el-col>
+                </div>
               </el-row>
 
               <!-- WEEKLY -->
@@ -54,7 +63,7 @@
                 <el-col :span="24">
                   <div class="stat-windows stat-weekly-graph">
                     近7天
-                    <Line :options="options" :data="data" />
+                    <Line :options="graphOptions" :data="graphData" />
                   </div>
                 </el-col>
               </el-row>
@@ -64,7 +73,21 @@
           <!-- CALENDAR -->
           <el-col :span="8">
             <div class="stat-windows stat-calendar">
-              <el-calendar v-model="value" />
+              <el-calendar ref="calendar">
+                <template
+                  #header="{ date }"
+                  style="width: 100%; justify-content: center"
+                >
+                  <!-- <button @click="selectDate('prev-month')">before</button> -->
+                  <div>{{ date }}</div>
+                  <!-- <button @click="selectDate('next-month')">next</button> -->
+                </template>
+                <template #date-cell="{ data: cellData }">
+                  <div :class="cellData.isSelected ? 'is-selected' : ''">
+                    {{ cellData.day.split("-").slice(2).join("-") }}
+                  </div>
+                </template>
+              </el-calendar>
             </div>
           </el-col>
         </el-row>
@@ -77,6 +100,12 @@
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
 import { onBeforeMount, ref } from "vue";
+import {
+  CalendarDateType,
+  CalendarInstance,
+  calendarEmits,
+} from "element-plus";
+
 //CHART
 import {
   Chart as ChartJS,
@@ -89,6 +118,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "vue-chartjs";
+import { RefSymbol } from "@vue/reactivity";
 
 ChartJS.register(
   CategoryScale,
@@ -99,6 +129,44 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
+// FUNCTIONS
+const getWordDataToday = async () => {
+  // const res = await axios(
+  //   "http://60.205.14.77:8998/api/word/get-word-data/today"
+  // );
+  // if (!res) {
+  //   console.log("Res ", res);
+  // } else {
+  //   console.log("Err ", res);
+  // }
+};
+
+const getWordDataWeek = async () => {
+  const res = await axios("/api/word/get-word-data/period", {
+    params: { days: 4 },
+  })
+    .then((res) => console.log("res", res))
+    .catch((err) => console.log("err", err));
+};
+
+onBeforeMount(() => {
+  // getWordDataToday();
+});
+
+const getLast7Days = () => {
+  const dates = [];
+  const today = new Date();
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - i);
+    console.log("str date: ", date.getDate());
+    // dates.push(date.toDateString().split(" "));
+    dates.push(date.toLocaleDateString().split("/").slice(0, 2).join("/"));
+  }
+  return dates.reverse();
+};
 
 //API FILLED DATA
 //if failed to fetch show error
@@ -147,8 +215,8 @@ const dataWeek = [
   },
 ];
 
-const data = ref({
-  labels: ["7", "6", "5", "4", "3", "2", "1"],
+const graphData = ref({
+  labels: getLast7Days(),
   datasets: [
     {
       label: "学习词数",
@@ -163,37 +231,25 @@ const data = ref({
   ],
 });
 
-const options = {
+const graphOptions = {
   responsive: true,
 };
 
 //CALENDAR
-const value = ref(new Date());
-
-// FUNCTIONS
-/*
-const getWordDataToday = async () => {
-  const res = await axios("/api/word/get-word-data/today");
-  if (!res) {
-    console.log("Res ", res);
-  } else {
-    console.log("Err ", res);
-  }
-};
-
-const getWordDataBefore = async () => {
-  const res = await axios("/api/word/get-word-data/period", {
-    params: { days: 4 },
-  })
-    .then((res) => console.log("res", res))
-    .catch((err) => console.log("err", err));
-};
-
-onBeforeMount(() => {
-  getWordDataToday();
-  getWordDataBefore();
-});
-*/
+const calendar = ref<CalendarInstance>();
+// const selectDate = (val: CalendarDateType) => {
+//   const today = new Date();
+//   const currentMonth = today.getMonth();
+//   console.log("next ", calendar.value.modelValue?.getMonth());
+//   if (!calendar.value) return;
+//   else if (
+//     val == "next-month" &&
+//     calendar.value.modelValue?.getMonth() > currentMonth
+//   ) {
+//     return;
+//   }
+//   calendar.value.selectDate(val);
+// };
 </script>
 
 <style scoped>
@@ -221,8 +277,19 @@ onBeforeMount(() => {
 }
 
 .stat-daily-row {
-  /* border: 1px solid orange; */
+  padding-top: 10px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-daily-header {
+  /* border: 1px solid red; */
+  padding-left: 30px;
+}
+
+.stat-daily-cards {
+  /* border: 1px solid orange; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -243,8 +310,9 @@ onBeforeMount(() => {
 }
 
 .stat-card {
+  border: 1px solid red;
   height: 100%;
-  padding: 20px;
+  /* padding: 0px 10px 0px 40px; */
   border-radius: 4px;
   background-color: var(--el-bg-color-overlay);
 }
@@ -256,6 +324,12 @@ onBeforeMount(() => {
 
 .el-calendar {
   --el-calendar-cell-width: 36px;
+}
+
+.el-calendar__header {
+  display: flex;
+  justify-content: center !important;
+  border: 1px solid red;
 }
 
 .el-divider {
