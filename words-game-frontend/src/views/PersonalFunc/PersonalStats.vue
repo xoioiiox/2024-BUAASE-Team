@@ -1,4 +1,3 @@
-//Stats
 <template>
   <div>
     <el-row :gutter="20">
@@ -45,7 +44,15 @@
                   <!-- Card 3 -->
                   <el-col :span="8" class="stat-card">
                     <div>
-                      <el-statistic title="复习" :value="dataToday?.time">
+                      <el-statistic
+                        title="学习时长"
+                        :value="dataToday ? getHourMin(dataToday?.time).val : 0"
+                      >
+                        <template #suffix>
+                          <el-icon style="font-size: small">
+                            <!-- {{ getHourMin(dataToday?.time).type }} -->
+                          </el-icon>
+                        </template>
                       </el-statistic>
                     </div>
                   </el-col>
@@ -92,9 +99,8 @@
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
 import LineChart from "../../components/LineChart.vue";
-import { computed, onBeforeMount, reactive, ref, watch } from "vue";
+import { computed, onBeforeMount, ref, watch } from "vue";
 import { CalendarInstance } from "element-plus";
-import { ChartData } from "chart.js";
 
 interface WordData {
   time: string;
@@ -123,11 +129,26 @@ const getLast7Days = () => {
   return dates.reverse();
 };
 
+const getHourMin = (dataDay: string) => {
+  const timeParts = dataDay.split(":");
+  const hour = parseInt(timeParts[0]);
+  const minute = parseInt(timeParts[1]);
+  if (hour === 0) {
+    return {
+      val: minute,
+      type: "min",
+    };
+  } else {
+    return {
+      val: hour,
+      type: "hr",
+    };
+  }
+};
+
 const getWordDataToday = async () => {
   try {
-    const res = await axios.get(
-      "http://60.205.14.77:8998/api/word/get-word-data/today"
-    );
+    const res = await axios.get("/api/word/get-word-data/today");
     console.log("get word data res: ", res.data);
     if (res.status == 200) {
       dataToday.value = res.data;
@@ -137,7 +158,7 @@ const getWordDataToday = async () => {
     dataToday.value = {
       learn_num: 3,
       review_num: 5,
-      time: "0:00:10",
+      time: "00:10:00",
     };
   }
 };
@@ -192,7 +213,7 @@ const getWordDataWeek = () => {
       ];
     })
     .finally(() => {
-      console.log("finally: ", dataWeek.value[0]);
+      // console.log("finally: ", dataWeek.value[0]);
     });
 };
 
@@ -203,7 +224,7 @@ onBeforeMount(() => {
 
 //CHART
 const chartData = computed(() => {
-  console.log("weekData ", dataWeek.value);
+  // console.log("weekData ", dataWeek.value);
   return {
     labels: getLast7Days(),
     datasets: [
