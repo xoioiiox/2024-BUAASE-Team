@@ -57,7 +57,7 @@
                 <el-col :span="24">
                   <div class="stat-windows stat-weekly-graph">
                     <span class="stat-daily-header">近7天学习统计</span>
-                    <Line :options="graphOptions" :data="graphData" />
+                    <LineChart :data="chartData" :options="chartOptions" />
                   </div>
                 </el-col>
               </el-row>
@@ -91,31 +91,10 @@
 <script setup lang="ts">
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
-import { onBeforeMount, onMounted, ref } from "vue";
+import LineChart from "../../components/LineChart.vue";
+import { computed, onBeforeMount, reactive, ref, watch } from "vue";
 import { CalendarInstance } from "element-plus";
-//CHART
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartData,
-} from "chart.js";
-import { Line } from "vue-chartjs";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { ChartData } from "chart.js";
 
 interface WordData {
   time: string;
@@ -125,10 +104,10 @@ interface WordData {
 
 const dataToday = ref<WordData>();
 const dataWeek = ref<WordData[]>();
-const graphData = ref<ChartData<"line">>({
-  labels: [],
-  datasets: [],
-});
+
+const chartOptions = {
+  responsive: true,
+};
 
 // FUNCTIONS
 const getLast7Days = () => {
@@ -213,72 +192,46 @@ const getWordDataWeek = () => {
       ];
     })
     .finally(() => {
-      console.log("data changed: ", dataWeek.value[0]);
-
-      graphData.value = {
-        labels: getLast7Days(),
-        datasets: [
-          {
-            label: "学习词数",
-            backgroundColor: "#0096FF",
-            data: dataWeek.value.reverse().map((dataDay) => dataDay.learn_num),
-          },
-          {
-            label: "复习词数",
-            backgroundColor: "#00FF00",
-            data: dataWeek.value.reverse().map((dataDay) => dataDay.review_num),
-          },
-        ],
-      };
+      console.log("finally: ", dataWeek.value[0]);
     });
 };
 
-console.log("graph data: ", graphData.value);
-//first graph is built using the default data
-//but after mounting data it is not reloaded
-
-onMounted(() => {
+onBeforeMount(() => {
   getWordDataToday();
   getWordDataWeek();
 });
 
-onMounted(() => {
-  graphData.value = {
+//CHART
+const chartData = computed(() => {
+  console.log("weekData ", dataWeek.value);
+  return {
     labels: getLast7Days(),
     datasets: [
       {
         label: "学习词数",
         backgroundColor: "#0096FF",
-        data: dataWeek.value.reverse().map((dataDay) => dataDay.learn_num),
+        data: [],
       },
       {
         label: "复习词数",
         backgroundColor: "#00FF00",
-        data: dataWeek.value.reverse().map((dataDay) => dataDay.review_num),
+        data: [],
       },
     ],
   };
 });
 
-const graphOptions = {
-  responsive: true,
-};
+watch(dataWeek, () => {
+  chartData.value.datasets[0].data = dataWeek.value
+    .map((dataDay) => dataDay.learn_num)
+    .reverse();
+  chartData.value.datasets[1].data = dataWeek.value
+    .map((dataDay) => dataDay.review_num)
+    .reverse();
+});
 
 //CALENDAR
 const calendar = ref<CalendarInstance>();
-// const selectDate = (val: CalendarDateType) => {
-//   const today = new Date();
-//   const currentMonth = today.getMonth();
-//   console.log("next ", calendar.value.modelValue?.getMonth());
-//   if (!calendar.value) return;
-//   else if (
-//     val == "next-month" &&
-//     calendar.value.modelValue?.getMonth() > currentMonth
-//   ) {
-//     return;
-//   }
-//   calendar.value.selectDate(val);
-// };
 </script>
 
 <style scoped>
