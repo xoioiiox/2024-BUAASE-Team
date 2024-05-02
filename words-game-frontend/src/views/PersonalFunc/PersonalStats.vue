@@ -213,7 +213,7 @@ const getWordDataWeek = () => {
       ];
     })
     .finally(() => {
-      // console.log("finally: ", dataWeek.value[0]);
+      console.log("finally: ", dataWeek.value[0]);
     });
 };
 
@@ -224,7 +224,8 @@ onBeforeMount(() => {
 
 //CHART
 const chartData = computed(() => {
-  // console.log("weekData ", dataWeek.value);
+  //do not delete this line, works as a trigger
+  const current = dataWeek.value;
   return {
     labels: getLast7Days(),
     datasets: [
