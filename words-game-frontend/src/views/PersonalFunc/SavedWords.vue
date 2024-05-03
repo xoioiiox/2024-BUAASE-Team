@@ -7,7 +7,7 @@
       <el-col :span="18" class="saved-words-page">
         <h2>生词本记录</h2>
         <!-- Words List -->
-        <el-empty v-if="words[2]" />
+        <el-empty v-if="!words[0]" description="暂无数据" />
         <template v-else>
           <el-scrollbar
             class="saved-words-list"
@@ -60,7 +60,10 @@ const getSavedWords = async () => {
       console.log("Get saved words: ", res.data);
       words.value = res.data.words;
     })
-    .catch((err) => console.log("Saved Words Error ", err));
+    .catch((err) => {
+      console.log("Saved Words Error ", err);
+      words.value = [];
+    });
 };
 
 onMounted(() => {
@@ -75,22 +78,34 @@ const onShowWord = (word) => {
   });
 };
 
-const onUnsaveWord = (word) => {
-  ElMessageBox.confirm(`Do you want to delete ${word}`, "Delete Warning", {
+const onUnsaveWord = (selectedWord) => {
+  ElMessageBox.confirm(`确定删除单词 ${selectedWord}?`, "删除", {
     confirmButtonText: "Yes",
     cancelButtonText: "Cancel",
-    type: "warning",
-  })
-    .then(() => {
+    type: "error",
+  }).then(() => {
+    onDeleteWord(selectedWord);
+  });
+};
+
+const onDeleteWord = async (selectedWord) => {
+  await axios
+    .delete("/api/word/delete-favor-word/", {
+      params: { word: selectedWord },
+    })
+    .then((delRes) => {
+      console.log("Delete response: ", delRes);
       ElMessage({
         type: "success",
-        message: "Delete completed",
+        message: "删除成功",
       });
+      getSavedWords();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log("Delete err: ", err);
       ElMessage({
         type: "error",
-        message: "Delete Canceled",
+        message: "删除失败",
       });
     });
 };
