@@ -9,11 +9,7 @@
         <!-- Words List -->
         <el-empty v-if="!words[0]" description="暂无数据" />
         <template v-else>
-          <el-scrollbar
-            class="saved-words-list"
-            max-height="600px"
-            height="100%"
-          >
+          <el-scrollbar class="saved-words-list" max-height="600px" height="100%">
             <!-- Word Card/ -->
             <div class="saved-words-card" v-for="word in words" :key="word">
               <div class="word-card-body" @click="onShowWord(word)">

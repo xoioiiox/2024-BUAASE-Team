@@ -126,7 +126,7 @@ const addToVocab = () => {
 };
 
 const queryWord = () => {
-    axios.get('/api/query-word-zh-dict', {
+    axios.get('/api/word/query-word-zh-dict', {
         params: {
             word: word.value
         }
@@ -159,7 +159,9 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-    word.value = router.currentRoute.value.query.word;
+    //word.value = router.currentRoute.value.query.word;
+    word.value = 'hello';
+    console.log("word:" + router.currentRoute.value.query.word);
     queryWord();
 })
 
