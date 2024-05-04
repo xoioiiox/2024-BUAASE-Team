@@ -22,7 +22,7 @@ export interface UserInfo {
 
 
 export async function login(data: LoginForm) {
-    const response = await axios.post('/api/word/login/', data);
+    const response = await axios.post('http://60.205.14.77:8998/api/word/login/', data);
     //const response = {status: 200, data:{code:0, id:1, username:"123", role:"user"}}
     if (response.status === 200) {//状态码200，请求正确
         ElMessage({
