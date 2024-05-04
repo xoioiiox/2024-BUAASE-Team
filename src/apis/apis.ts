@@ -42,7 +42,7 @@ export async function login(data: LoginForm) {
 }
 
 export async function register(data: RegisterForm) {
-    const response = await axios.post('http://127.0.0.1:8998/api/word/register/', data);
+    const response = await axios.post('http://60.205.14.77:8998/api/word/register/', data);
     if (response.status === 200) { //状态码200，请求正确
         ElMessage({
             message: '注册成功',
