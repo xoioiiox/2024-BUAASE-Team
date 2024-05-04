@@ -15,7 +15,8 @@ export default {
     console.log(this.userStore.isLoggedIn);
     await axios({
       method: 'get',
-      url: '/api/word/now-book-ratio'
+      url: '/api/word/now-book-ratio',
+      withCredentials: true
     }).then((res)=>{
       console.log(res)
       this.ratio = res.data.ratio
@@ -53,7 +54,8 @@ export default {
         url: '/api/word/set-plan/',
         data: {
           'num': this.settingForm.new_number
-        }
+        },
+        withCredentials: true
       }).then((res) => {
       })
       /*修改每日复习上限*/
