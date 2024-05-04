@@ -7,29 +7,36 @@
       <el-col :span="18" class="saved-words-page">
         <h2>生词本记录</h2>
         <!-- Words List -->
-        <el-scrollbar class="saved-words-list" max-height="600px" height="100%">
-          <!-- Word Card/ -->
-          <div class="saved-words-card" v-for="word in 30" :key="word">
-            <div class="word-card-body">
-              <div class="word-card-title">
-                <div class="word-card-word">Word {{ word }}</div>
-                <span class="word-card-speak" @click="onListenWord(word)">
-                  <IconSpeaker />
+        <el-empty v-if="!words[0]" description="暂无数据" />
+        <template v-else>
+          <el-scrollbar
+            class="saved-words-list"
+            max-height="600px"
+            height="100%"
+          >
+            <!-- Word Card/ -->
+            <div class="saved-words-card" v-for="word in words" :key="word">
+              <div class="word-card-body" @click="onShowWord(word)">
+                <div class="word-card-title">
+                  <div class="word-card-word">Word {{ word }}</div>
+                  <!-- Will be used in beta version -->
+                  <!-- <span class="word-card-speak" @click="onListenWord(word)">
+                    <IconSpeaker />
+                  </span> -->
+                </div>
+                <!-- <div class="word-card-desc" @click="onShowWord(word)">
+                  Lorem ipsum dolor sit amet consectetur
+                  <a> More >>></a>
+                </div> -->
+              </div>
+              <div class="word-card-saved">
+                <span class="word-card-saved-icon" @click="onUnsaveWord(word)">
+                  <IconStar />
                 </span>
               </div>
-
-              <div class="word-card-desc" @click="onShowWord(word)">
-                Lorem ipsum dolor sit amet consectetur
-                <a> More >>></a>
-              </div>
             </div>
-            <div class="word-card-saved">
-              <span class="word-card-saved-icon" @click="onUnsaveWord(word)">
-                <IconStar />
-              </span>
-            </div>
-          </div>
-        </el-scrollbar>
+          </el-scrollbar>
+        </template>
       </el-col>
     </el-row>
   </div>
@@ -46,32 +53,24 @@ import axios from "axios";
 //Data
 const words = ref([]);
 
-const getSavedWords = () => {
-  axios
-    .get("/word/get-favor-words/", {
-      params: {},
+const getSavedWords = async () => {
+  await axios
+    .get("/api/word/get-favor-words/")
+    .then((res) => {
+      console.log("Get saved words: ", res.data);
+      words.value = res.data.words;
     })
-    .then((res) => console.log("res ", res))
-    .catch((err) => console.log("err ", err));
-  // try {
-  //   const { status, data } = await axios.get("/api/word/get-favor-words");
-
-  //   if (status !== 200) {
-  //     console.log("Status not 200");
-  //   } else {
-  //     console.log("data: ", data);
-  //   }
-  // } catch (error) {
-  //   console.log("error axios: ", error);
-  // }
+    .catch((err) => {
+      console.log("Saved Words Error ", err);
+      words.value = [];
+    });
 };
 
 onMounted(() => {
-  console.log("Mounted");
   getSavedWords();
 });
 
-//Method
+//Card Methods
 const onShowWord = (word) => {
   ElMessage({
     type: "info",
@@ -79,22 +78,34 @@ const onShowWord = (word) => {
   });
 };
 
-const onUnsaveWord = (word) => {
-  ElMessageBox.confirm(`Do you want to delete ${word}`, "Delete Warning", {
+const onUnsaveWord = (selectedWord) => {
+  ElMessageBox.confirm(`确定删除单词 ${selectedWord}?`, "删除", {
     confirmButtonText: "Yes",
     cancelButtonText: "Cancel",
-    type: "warning",
-  })
-    .then(() => {
+    type: "error",
+  }).then(() => {
+    onDeleteWord(selectedWord);
+  });
+};
+
+const onDeleteWord = async (selectedWord) => {
+  await axios
+    .delete("/api/word/delete-favor-word/", {
+      params: { word: selectedWord },
+    })
+    .then((delRes) => {
+      console.log("Delete response: ", delRes);
       ElMessage({
         type: "success",
-        message: "Delete completed",
+        message: "删除成功",
       });
+      getSavedWords();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log("Delete err: ", err);
       ElMessage({
         type: "error",
-        message: "Delete Canceled",
+        message: "删除失败",
       });
     });
 };
@@ -165,14 +176,3 @@ const onUnsaveWord = (word) => {
   /* border: 1px solid red; */
 }
 </style>
-
-<!-- // try {
-  //   const { data } = await axios.get("/api/word/get-favor-words/", {
-  //     params: { begin: 0, end: 3 },
-  //   });
-  //   console.log("Get data: ", data);
-  //   // this.words = data;
-  // } catch (error) {
-  //   this.words = ["error", "testing"];
-  //   console.log("Error get words: ", error);
-  // } -->
