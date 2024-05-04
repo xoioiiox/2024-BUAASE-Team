@@ -16,6 +16,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 
+axios.defaults.baseURL = 'http://60.205.14.77:8998';
+
 app.use(VueAxios,axios);
 app.use(createPinia())
 app.use(router)
