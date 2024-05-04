@@ -61,21 +61,21 @@
           <el-col :span="8">
             <div class="grid-content ep-bg-purple" />
             <div class="choice-button-container">
-              <el-button class="choice-button" @click="TagWord(newWord, 0)">不认识</el-button>
+              <el-button class="choice-button" @click="TagWord(newWord, '不认识')">不认识</el-button>
             </div>
           </el-col>
           <!-- 跳转到单词释义界面，同时打上认识标签 -->
           <el-col :span="8">
             <div class="grid-content ep-bg-purple" />
             <div class="choice-button-container">
-              <el-button class="choice-button" @click="TagWord(newWord, 1)">认识</el-button>
+              <el-button class="choice-button" @click="TagWord(newWord, '认识')">认识</el-button>
             </div>
           </el-col>
           <!-- 跳转到单词释义界面，同时打上模糊标签 -->
           <el-col :span="8">
             <div class="grid-content ep-bg-purple" />
             <div class="choice-button-container">
-              <el-button class="choice-button" @click="TagWord(newWord, 2)">模糊</el-button>
+              <el-button class="choice-button" @click="TagWord(newWord, '模糊')">模糊</el-button>
             </div>
           </el-col>
         </el-row>
@@ -102,20 +102,20 @@ const Ratio = {
 const getDayRatio = () => {
   const response = axios.get('/api/word/get-daily-ratio/');
   response.then(function (response) {
-    if (response.status === 200) {
-      //console.log(response.data)
-      Ratio.ratio = response.data.ratio
-      ElMessage({
-        message: '获取日常学习数据成功',
-        type: 'success'
-      })
-    } else {
-      ElMessage({
-        message: '获取日常学习数据失败',
-        type: 'error'
-      })
-    }
-  }
+        if (response.status === 200) {
+          //console.log(response.data)
+          Ratio.ratio = response.data.ratio
+          ElMessage({
+            message: '获取日常学习数据成功',
+            type: 'success'
+          })
+        } else {
+          ElMessage({
+            message: '获取日常学习数据失败',
+            type: 'error'
+          })
+        }
+      }
   )
 }
 
@@ -152,7 +152,7 @@ const TagWord = (newWord, rate) => {
   const response = axios.post('/api/word/tag-word/', {
     params: {
       word: newWord.word,
-      tag: rate  //标记为认识    0:不认识   1:认识   2:模糊
+      tag: rate  //标记为    不认识   认识   模糊
     }
   });
   response.then(function (response) {
@@ -175,7 +175,7 @@ const TagWord = (newWord, rate) => {
 //将单词加入生词本
 const collectWord = (newWord) => {
   const response = axios.post('/api/word/add-favor-word/', {
-    word: newWord.word_id
+    word: newWord.word
   });
   response.then(function (response) {
     if (response.status === 200) {
@@ -195,7 +195,7 @@ const collectWord = (newWord) => {
 //将单词删除
 const deleteWord = (newWord) => {
   const response = axios.post('/api/word/tag-word/', {
-    word: newWord.word_id,
+    word: newWord.word,
     tag: 0  //标记为已删除 = 已认识
   });
   response.then(function (response) {
