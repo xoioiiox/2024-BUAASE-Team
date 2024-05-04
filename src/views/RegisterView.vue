@@ -1,46 +1,46 @@
 <template>
   <div class="register-container">
-  <el-card class="register-card">
-    <img src="../assets/user.svg" alt="Logo" class="logo">
-    <h2 class="register-title">用户注册</h2>
-    <el-form
-      ref="registerFormRef"
-      :model="registerForm"
-      status-icon
-      :rules="rules"
-      label-position="top"
-    >
-    <!--输入用户名-->
-    <el-form-item label="用户名" prop="username">
-      <el-input v-model="registerForm.username" />
-    </el-form-item>
-    <!--输入手机号码-->
-    <el-form-item label="手机号" prop="phone">
-    <el-input v-model="registerForm.phone" />
-    </el-form-item>
-    <!--输入密码-->
-    <el-form-item label="密码" prop="password">
-      <el-input v-model="registerForm.password" type="password" autocomplete="off" />
-    </el-form-item>
-    <!--确认自己的密码-->
-    <el-form-item label="确认密码" prop="confirmPassword">
-      <el-input
-          v-model="registerForm.confirmPassword"
-          type="password"
-          autocomplete="off"
-      />
-    </el-form-item>
-    <!--按钮区域-->
-      <div class="register-button-container">
-      <el-button type="primary" @click="submitForm(registerFormRef)">注册</el-button>
-      <el-button @click="resetForm(registerFormRef)">重置</el-button>
+    <el-card class="register-card">
+      <img src="../assets/user.svg" alt="Logo" class="logo">
+      <h2 class="register-title">用户注册</h2>
+      <el-form
+          ref="registerFormRef"
+          :model="registerForm"
+          status-icon
+          :rules="rules"
+          label-position="top"
+      >
+        <!--输入用户名-->
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="registerForm.username" />
+        </el-form-item>
+        <!--输入手机号码-->
+        <el-form-item label="手机号" prop="phone">
+          <el-input v-model="registerForm.phone" />
+        </el-form-item>
+        <!--输入密码-->
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="registerForm.password" type="password" autocomplete="off"/>
+        </el-form-item>
+        <!--确认自己的密码-->
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input
+              v-model="registerForm.confirmPassword"
+              type="password"
+              autocomplete="off"
+          />
+        </el-form-item>
+        <!--按钮区域-->
+        <div class="register-button-container">
+          <el-button type="primary" @click="submitForm(registerFormRef)">注册</el-button>
+          <el-button @click="resetForm(registerFormRef)">重置</el-button>
         </div>
-          <div class="register-button-container">
-      <el-button class="register-button" @click="login">已有账号，点我登录</el-button>
-          </div>
+        <div class="register-button-container">
+          <el-button class="register-button" @click="login">已有账号，点我登录</el-button>
+        </div>
 
-  </el-form>
-  </el-card>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
@@ -80,6 +80,8 @@ const validateUsername = (rule: any, value: any, callback: any) => {
 const validatePhone = (rule: any, value: any, callback: any) => {
   if (!value) {
     return callback(new Error('手机号码不能为空'))
+  }else if(value.match(/^[1][3,4,5,7,8][0-9]{9}$/)==null){
+    return callback(new Error('手机号码格式不正确'))
   }else{
     callback()
   }
