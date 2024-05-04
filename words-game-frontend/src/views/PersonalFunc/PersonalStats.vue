@@ -148,7 +148,7 @@ const getHourMin = (dataDay: string) => {
 
 const getWordDataToday = async () => {
   try {
-    const res = await axios.get("/api/word/get-word-data/today");
+    const res = await axios.get("/api/word/get-word-data/today/");
     console.log("get word data res: ", res.data);
     if (res.status == 200) {
       dataToday.value = res.data;
@@ -165,7 +165,7 @@ const getWordDataToday = async () => {
 
 const getWordDataWeek = () => {
   axios
-    .get("/api/word/get-word-data/period", {
+    .get("/api/word/get-word-data/period/", {
       params: { days: 7 },
     })
     .then((res) => {

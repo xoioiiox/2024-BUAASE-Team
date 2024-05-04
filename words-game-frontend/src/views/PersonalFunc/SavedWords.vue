@@ -55,7 +55,7 @@ const words = ref([]);
 
 const getSavedWords = async () => {
   await axios
-    .get("/api/word/get-favor-words")
+    .get("/api/word/get-favor-words/")
     .then((res) => {
       console.log("Get saved words: ", res.data);
       words.value = res.data.words;
