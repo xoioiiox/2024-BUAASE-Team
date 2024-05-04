@@ -17,6 +17,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 axios.defaults.baseURL = 'http://60.205.14.77:8998/';
+axios.defaults.withCredentials = true;
 
 app.use(VueAxios,axios);
 app.use(createPinia())
