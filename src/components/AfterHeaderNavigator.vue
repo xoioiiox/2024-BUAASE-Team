@@ -12,6 +12,9 @@ export default {
 
     goToLogOut(){
       axios.post('/api/word/logout/', {
+        params:{
+
+        }
       })
           .then((response) => {
             console.log(response);

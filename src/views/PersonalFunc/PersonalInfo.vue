@@ -187,13 +187,11 @@ export default {
 					password_again: this.passwordForm.new_password_again
 				}
 			}).then((res)=> {
-				if (res.data.status == 200) {
-					this.$message({
-						type: 'success',
-						message: "修改密码成功"
-					});
-				}
 			})
+      this.$message({
+        type: 'success',
+        message: "修改密码成功"
+      });
 		},
 		uploadAvatar() {
 			this.uploadDialog = true
