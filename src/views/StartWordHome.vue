@@ -15,7 +15,7 @@ export default {
     console.log(this.userStore.isLoggedIn);
     await axios({
       method: 'get',
-      url: '/api/word/now-book-ratio',
+      url: '/api/word/now-book-ratio/',
       withCredentials: true
     }).then((res)=>{
       console.log(res)
