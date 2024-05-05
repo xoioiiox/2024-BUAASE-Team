@@ -42,16 +42,16 @@
         <el-card class="word-container">
           <!-- 单词 -->
           <div class="timeNewRomanCard" align="center" style="margin-top: 10px;">
-            hello
-            <!-- {{ newWord.word }} -->
+<!--            hello-->
+             {{ newWord.word }}
           </div>
           <!-- 音标 -->
           <div class="black-body" align="center" style="margin-top: 10px;">
-            /həˈləʊ/
+<!--            /həˈləʊ/-->
           </div>
           <!-- 例句 -->
           <div class="black-body" align="center" style="margin-top: 100px;">
-            This is a sentence about hello.
+<!--            This is a sentence about hello.-->
           </div>
         </el-card>
         <!-- 下方认识程度选择区域 -->
