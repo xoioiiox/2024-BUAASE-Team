@@ -111,10 +111,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
         userStore.login(loginForm);   //  从stores中引入
         }catch (e){
         // 4. 处理注册失败情况
+        this.$message.error('登录失败，请检查用户名或密码');
         console.error(e);
       }
     } else {
       console.log('error submit!')
+      this.$message.error('登录失败，请检查用户名或密码');
       return false
     }
   })
