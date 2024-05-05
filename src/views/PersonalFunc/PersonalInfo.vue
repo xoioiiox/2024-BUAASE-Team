@@ -180,8 +180,11 @@ export default {
 		submitPassword() {
 			axios({
 				method: 'post',
-				url: '',
+				url: '/api/word/reset-password/',
 				data: {
+					original_password: this.passwordForm.old_password,
+					password: this.passwordForm.new_password,
+					password_again: this.passwordForm.new_password_again
 				}
 			}).then((res)=> {
 				if (res.data.status == 200) {
