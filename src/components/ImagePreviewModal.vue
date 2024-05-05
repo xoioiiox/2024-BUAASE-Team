@@ -56,7 +56,7 @@ const imgSrcs = reactive(['https://s2.loli.net/2024/04/29/FSGLCJaP5KVekBX.png',
   'https://s2.loli.net/2024/04/29/7LiwPSY8lpeDUWf.png'
 ]);
 
-const generateImg = async () => {
+const generateImg = async (props) => {
   var canvas = document.createElement('canvas');
   canvas.width = 550;
   canvas.height = 700;
@@ -121,7 +121,7 @@ const generateImg = async () => {
 
 onMounted(() => {
   console.log("0");
-  generateImg();
+  generateImg(props);
 })
 
 </script>
