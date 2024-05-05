@@ -42,7 +42,7 @@ const inspiration = ref('default');
 var isOpened = ref(false);
 const punch = () => {
   isOpened.value = true;
-  axios.post('/api/word/daka', {
+  axios.post('/api/word/daka/', {
     params: {
     }
   })
@@ -58,7 +58,7 @@ const punch = () => {
 
 // getInfo
 const getInfo = () => {
-  axios.get('/api/word/get-daka-days', {
+  axios.get('/api/word/get-daka-days/', {
     params: {
     }
   })

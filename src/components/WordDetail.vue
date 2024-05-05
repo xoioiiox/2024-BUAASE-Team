@@ -57,7 +57,7 @@ const examples = ref([
 
 const deleteWord = () => {
   // 删除单词的逻辑
-  axios.post('/api/word/tag-word', {
+  axios.post('/api/word/tag-word/', {
     params: {
       word: word.value,
       tag: '完全掌握'
@@ -74,7 +74,7 @@ const deleteWord = () => {
 
 const correctWord = () => {
   // 记错了单词的逻辑
-  axios.post('/api/word/tag-word', {
+  axios.post('/api/word/tag-word/', {
     params: {
       word: word.value,
       tag: '记错了'
@@ -91,7 +91,7 @@ const correctWord = () => {
 
 const recognizeWord = () => {
   // 认识单词的逻辑
-  axios.post('/api/word/tag-word', {
+  axios.post('/api/word/tag-word/', {
     params: {
       word: word.value,
       tag: '认识'
@@ -112,7 +112,7 @@ const atvText = ref('加收藏');
 const addToVocab = () => {
   disabled.value = true;
   atvText.value = '已添加';
-  axios.post('/api/word/add-favor-word', {
+  axios.post('/api/word/add-favor-word/', {
     params: {
       word: word.value
     }
@@ -127,7 +127,7 @@ const addToVocab = () => {
 };
 
 const queryWord = () => {
-  axios.get('/api/word/query-word-ch-dict', {
+  axios.get('/api/word/query-word-ch-dict/', {
     params: {
       q: word.value
     }
