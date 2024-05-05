@@ -1,4 +1,6 @@
 <script>
+import axios from "axios";
+
 export default {
   name: "AfterHeaderNavigator",
 
@@ -6,6 +8,19 @@ export default {
     goToPersonal() {
       // 用户点击按钮时导航到需要登录权限的页面
       this.$router.push({name: 'PersonalBook'});
+    },
+
+    goToLogOut(){
+      axios.post('/api/word/logout/', {
+      })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+          });
     }
   }
 
@@ -33,6 +48,9 @@ export default {
    
     <el-menu-item index="1" @click="goToPersonal">
       个人中心
+    </el-menu-item>
+    <el-menu-item index="2" @click="goToLogOut">
+      登出
     </el-menu-item>
 
 
