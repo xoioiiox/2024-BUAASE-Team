@@ -13,7 +13,7 @@
       <h2>释义：</h2>
       <ul>
         <li v-for="example in examples" :key="example">
-          {{ example.part + ' ' + example.mean }}
+          {{ example.part + ' ' + example.means }}
         </li>
       </ul>
     </div>
