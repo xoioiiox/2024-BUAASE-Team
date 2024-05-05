@@ -141,7 +141,8 @@ const queryWord = () => {
         console.log(JSON.parse(dict.value).word_result.simple_means);
 
         const ttsSrc = response.data.result.trans_result[0].src_tts;
-        pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
+        pronunciationSrc.value = ttsSrc;
+        /*pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');*/
 
         examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
         console.log(examples.value);
@@ -164,7 +165,8 @@ onBeforeMount(() => {
 
 onMounted(() => {
   //word.value = router.currentRoute.value.query.word;
-  word.value = 'cat';
+
+  word.value = router.currentRoute.value.query.word == '' ? 'dog' : router.currentRoute.value.query.word;
   console.log("word:" + router.currentRoute.value.query.word);
   queryWord();
 })

@@ -95,7 +95,8 @@ const generateImg = async () => {
     console.log("坚持打卡" + props.firstProp + "天");
     console.log(props.secondProp);
 
-    const words = text.split(/\s+/);
+    const words = text;
+    /*const words = text.split(/\s+/);*/
     let line = '', lines = [];
     for (const word of words) {
       const tempLine = line + word + ' ';
