@@ -65,18 +65,24 @@ const generateImg = async () => {
   var img = document.getElementById("canvas2img")
 
   var bgImage = new Image();
-  var bgimageSrc = imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
-  let m = await import(/* @vite-ignore */bgimageSrc);
-  bgImage.src = m.default;
+  //bgImage.src = require(imgSrcs[props.firstProp % imgSrcs.length]);
+  // var bgimageSrc = imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
+  // let m = await import(/* @vite-ignore */bgimageSrc);
+  //bgImage.src = m.default;
+
+  bgImage.src = imgSrcs[props.firstProp % imgSrcs.length];
   bgImage.onload = () => {
+    console.log("-1");
     const margin = 20;
     const imgWidth = 500;
     const imgHeight = 500;
 
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    console.log("1");
 
     ctx.drawImage(bgImage, (canvas.width - imgWidth) / 2, margin, imgWidth, imgHeight);
+    console.log("2");
 
     ctx.fillStyle = 'black';
     ctx.font = "16px serif";
@@ -113,6 +119,7 @@ const generateImg = async () => {
 }
 
 onMounted(() => {
+  console.log("0");
   generateImg();
 })
 

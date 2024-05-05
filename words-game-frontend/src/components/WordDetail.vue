@@ -41,6 +41,7 @@ const dict = ref('');
 const pronunciation = ref(' həˈləʊ ');
 const theSrc = 'https://fanyi-api.baidu.com/api/trans/api/tts?query=hello&appid=20210101000000001&lang=en&sign=169aa0398cfb86ace951aa8a96ec44fd'.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
 const pronunciationSrc = ref(theSrc);
+const testWord = ref("fuck");
 
 const examples = ref([
     {
@@ -126,21 +127,24 @@ const addToVocab = () => {
 };
 
 const queryWord = () => {
-    axios.get('/api/query-word-zh-dict', {
+    axios.get('/api/word/query-word-ch-dict', {
         params: {
-            word: word.value
+            q: word.value
         }
     })
         .then((response) => {
             console.log(response);
 
-            dict.value = JSON.parse(response.data.result.trans_result.dict);
-            pronunciation.value = dict.value.word_result.simple_means.symbols.ph_am;
+            dict.value = response.data.result.trans_result[0].dict;
+            //console.log("dict:" + response.data.result.trans_result[0].dict);
+            pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+            console.log(JSON.parse(dict.value).word_result.simple_means);
 
-            const ttsSrc = response.data.result.trans_result.src_tts;
+            const ttsSrc = response.data.result.trans_result[0].src_tts;
             pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
 
-            examples.value = dict.value.word_result.simple_means.symbols.parts;
+            examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+            console.log(examples.value);
         })
         .catch((error) => {
             console.log(error);
@@ -159,7 +163,9 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-    word.value = router.currentRoute.value.query.word;
+    //word.value = router.currentRoute.value.query.word;
+    word.value = 'cat';
+    console.log("word:" + router.currentRoute.value.query.word);
     queryWord();
 })
 

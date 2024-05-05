@@ -3,7 +3,7 @@
     <h1>今日任务完成！</h1>
     <p>您已连续打卡 <strong>{{ consecutiveDays }}</strong> 天</p>
     <div>
-      <button class="share" @click="isOpened = !isOpened">打卡</button>
+      <button class="share" @click="punch">打卡</button>
       <Teleport to="body">
         <ImagePreviewModal v-if="isOpened" @close="isOpened = !isOpened" :firstProp="consecutiveDays"
           :secondProp="inspiration" />
@@ -40,6 +40,21 @@ const inspirations = reactive(['每一天都是一个新的开始。',
 const inspiration = ref('default');
 
 var isOpened = ref(false);
+const punch = () => {
+  isOpened.value = true;
+  axios.post('/api/word/daka', {
+    params: {
+    }
+  })
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
+}
 
 // getInfo
 const getInfo = () => {
