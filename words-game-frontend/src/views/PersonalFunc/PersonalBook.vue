@@ -87,13 +87,13 @@ export default {
 		})
 		await axios({
 			method: 'get',
-			url: '/api/word/get-plan',
+			url: '/api/word/get-plan/',
 		}).then((res)=>{
 			this.settingForm.new_number = res.data.num
 		})
 		await axios({
 			method: 'get',
-			url: '/api/word/get-review-limit',
+			url: '/api/word/get-review-limit/',
 		}).then((res)=>{
 			this.settingForm.review_number = res.data.limit
 		})
@@ -127,7 +127,7 @@ export default {
 			this.curBook = bookname
 			axios({
 				method: 'post',
-				url: '/api/word/change-now-book',
+				url: '/api/word/change-now-book/',
 				data: {
 					'bookname': bookname
 				}

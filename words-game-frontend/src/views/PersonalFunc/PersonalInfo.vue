@@ -162,7 +162,7 @@ export default {
 			console.log(this.infoForm)
 			axios({
 				method: 'put',
-				url: '/api/word/change-info',
+				url: '/api/word/change-info/',
 				data: {
 					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
@@ -231,7 +231,7 @@ export default {
 			console.log("in" + this.infoForm.avatar)
 			axios({
 				method: 'put',
-				url: '/api/word/change-info',
+				url: '/api/word/change-info/',
 				data: {
 					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
