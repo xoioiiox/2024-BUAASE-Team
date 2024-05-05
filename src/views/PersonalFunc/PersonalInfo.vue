@@ -162,7 +162,7 @@ export default {
 			console.log(this.infoForm)
 			axios({
 				method: 'put',
-				url: '/api/word/change-info',
+				url: '/api/word/change-info/',
 				data: {
 					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
@@ -201,7 +201,7 @@ export default {
 			fd.append('smfile', file.raw)
 			this.image_formData = fd
 			console.log(file.raw instanceof File)
-			axios.post('/smmsapi/api/v2/upload', this.image_formData, {
+			axios.post('/smmsapi/api/v2/upload/', this.image_formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
@@ -231,7 +231,7 @@ export default {
 			console.log("in" + this.infoForm.avatar)
 			axios({
 				method: 'put',
-				url: '/api/word/change-info',
+				url: '/api/word/change-info/',
 				data: {
 					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
