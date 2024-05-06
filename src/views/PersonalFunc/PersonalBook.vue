@@ -8,6 +8,7 @@
 				<h2>选择词书</h2>
 				<div class="setting">
 					<el-button type="primary" @click="studySetting()">学习设置</el-button>
+          <el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
 				</div>
 				<div class="ChooseBook">
 					<el-row>
@@ -61,11 +62,41 @@
 			</div>
 		</el-dialog>
 	</div>
+
+
+  <div>
+    <el-dialog title="上传词书" v-model="wordBookDialog" width="30%">
+      <el-upload
+          ref="upload"
+          class="upload-demo"
+          action="#"
+          :limit="1"
+          :on-change="handleChange"
+          :on-exceed="handleExceed"
+          :auto-upload="false"
+      >
+        <template #trigger>
+          <el-button type="primary">选择文件 (txt格式)</el-button>
+        </template>
+        <el-button class="ml-3" type="success" @click="submitUpload">
+          上传词书
+        </el-button>
+        <template #tip>
+          <div class="el-upload__tip text-red">
+            限制一次仅上传一个文件。 (文件仅限.txt格式)
+          </div>
+        </template>
+      </el-upload>
+    </el-dialog>
+  </div>
+
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
+import yaml from 'js-yaml'
+
 export default {
 	components: {PersonalSide},
 	async created() {
@@ -100,6 +131,13 @@ export default {
 	},
 	data() {
 		return {
+      wordBookDialog: false,
+      // 用于存储当前选择的文件
+      currentFile: null,
+      uploadBookName: "",
+
+
+
 			settingDialog: false,
 			settingForm: {
 				new_number: "10",
@@ -169,7 +207,88 @@ export default {
 				type: 'success',
 				message: "修改成功"
 			});
-		}
+		},
+
+    /*   以下为上传词书操作   */
+    wordBookSetting() {
+      this.wordBookDialog = true
+    },
+    handleChange(file) {
+      // file 参数包含了当前选择的文件信息
+      this.currentFile = file.raw; // 'raw' 是原生文件对象
+      // 可以在这里添加上传逻辑或进一步处理文件
+
+    },
+    handleExceed(files, fileList) {
+      // 当上传的文件数量超过限制数量时触发
+      this.$message.error('只能选择一个文件进行上传');
+    },
+
+
+    async readFile(file) {
+      const reader = new FileReader()
+      const promise = new Promise((resolve, reject) => {
+        reader.onload = function () {
+          resolve(reader.result)
+        }
+        reader.onerror = function (e) {
+          reader.abort()
+          reject(e)
+        }
+      })
+      reader.readAsText(file, 'UTF-8') // 将文件读取为文本
+
+      return promise
+    },
+
+    async submitUpload() {
+      console.log(this.currentFile)
+
+      let res = await this.readFile(this.currentFile) // res 为文件中内容
+
+      const fileName = this.currentFile.name
+      this.uploadBookName =  fileName.split('.').slice(0, -1).join('.')
+
+      console.log(this.uploadBookName)
+
+      try {
+        // res 为 yaml 格式的内容（从文本文件中取得）
+
+
+
+        const json = yaml.load(res) // 输出为 json 格式
+
+       /* console.log(json)
+        console.log(typeof json)*/
+
+        const wordArray = json.split(/\s+/)
+
+      /*  console.log(wordArray)
+        console.log(typeof wordArray)*/
+
+        axios({
+          method: 'post',
+          url: '/api/word/import/',
+          data: {
+            book_name: this.uploadBookName,
+            words: wordArray
+          }
+        }).then((res)=> {
+        })
+
+
+      } catch (e) {
+        this.$message({ message: "格式转换错误，请重新选择文件上传", type: 'error', duration: 2000 })
+      }
+
+      this.wordBookDialog = false
+      this.currentFile = null
+      this.uploadBookName = ""
+      this.$refs.upload.clearFiles()
+    }
+
+
+
 	}
 }
 </script>
