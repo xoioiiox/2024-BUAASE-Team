@@ -46,11 +46,11 @@ const testWord = ref("fuck");
 const examples = ref([
   {
     part: 'n.',
-    mean: '打招呼'
+    means: '打招呼'
   },
   {
     part: 'v.',
-    mean: '说'
+    means: '说'
   }
 ]);
 
@@ -58,51 +58,51 @@ const examples = ref([
 const deleteWord = () => {
   // 删除单词的逻辑
   axios.post('/api/word/tag-word/', {
-    params: {
-      word: word.value,
-      tag: '完全掌握'
-    }
+
+    word: word.value,
+    tag: '完全掌握'
+
   })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   router.push('/recite');
 };
 
 const correctWord = () => {
   // 记错了单词的逻辑
   axios.post('/api/word/tag-word/', {
-    params: {
-      word: word.value,
-      tag: '记错了'
-    }
+
+    word: word.value,
+    tag: '记错了'
+
   })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   router.push('/recite');
 };
 
 const recognizeWord = () => {
   // 认识单词的逻辑
   axios.post('/api/word/tag-word/', {
-    params: {
-      word: word.value,
-      tag: '认识'
-    }
+
+    word: word.value,
+    tag: '认识'
+
   })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   router.push('/recite');
 
 };
@@ -113,16 +113,16 @@ const addToVocab = () => {
   disabled.value = true;
   atvText.value = '已添加';
   axios.post('/api/word/add-favor-word/', {
-    params: {
-      word: word.value
-    }
+
+    word: word.value
+
   })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
 };
 
@@ -132,24 +132,24 @@ const queryWord = () => {
       q: word.value
     }
   })
-      .then((response) => {
-        console.log(response);
+    .then((response) => {
+      console.log(response);
 
-        dict.value = response.data.result.trans_result[0].dict;
-        //console.log("dict:" + response.data.result.trans_result[0].dict);
-        pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
-        console.log(JSON.parse(dict.value).word_result.simple_means);
+      dict.value = response.data.result.trans_result[0].dict;
+      //console.log("dict:" + response.data.result.trans_result[0].dict);
+      pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+      console.log(JSON.parse(dict.value).word_result.simple_means);
 
-        const ttsSrc = response.data.result.trans_result[0].src_tts;
-        pronunciationSrc.value = ttsSrc;
-        /*pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');*/
+      const ttsSrc = response.data.result.trans_result[0].src_tts;
+      pronunciationSrc.value = ttsSrc;
+      /*pronunciationSrc.value = ttsSrc.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');*/
 
-        examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
-        console.log(examples.value);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+      console.log(examples.value);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 const playtts = () => {

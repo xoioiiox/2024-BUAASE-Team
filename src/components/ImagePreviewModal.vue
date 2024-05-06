@@ -16,6 +16,7 @@
 
 <script setup>
 import { onMounted, ref, defineProps, onBeforeMount, reactive } from 'vue';
+import axios from 'axios';
 
 //close
 const emit = defineEmits(['close']);
@@ -48,12 +49,12 @@ const saveImg = () => {
 }
 
 //generateImg
-const imgSrcs = reactive(['https://s2.loli.net/2024/04/29/FSGLCJaP5KVekBX.png',
-  'https://s2.loli.net/2024/04/29/5ls1OIwQTX3zmuE.png',
-  'https://s2.loli.net/2024/04/29/rQS2jhKAsYydvq3.png',
-  'https://s2.loli.net/2024/04/29/rqyZ5Y1epdkNEW9.png',
-  'https://s2.loli.net/2024/04/29/SnYGErUFZmu68PW.png',
-  'https://s2.loli.net/2024/04/29/7LiwPSY8lpeDUWf.png'
+const imgSrcs = reactive(['/images/1.jpg',
+  '/images/2.jpg',
+  '/images/3.jpg',
+  '/images/4.jpg',
+  '/images/5.jpg',
+  '/images/6.jpg'
 ]);
 
 const generateImg = async (props) => {
@@ -65,12 +66,9 @@ const generateImg = async (props) => {
   var img = document.getElementById("canvas2img")
 
   var bgImage = new Image();
-  //bgImage.src = require(imgSrcs[props.firstProp % imgSrcs.length]);
-  // var bgimageSrc = imgSrcs[props.firstProp % imgSrcs.length];//修改bgimg路径
-  // let m = await import(/* @vite-ignore */bgimageSrc);
-  //bgImage.src = m.default;
+  let m = await import(/* @vite-ignore */imgSrcs[props.firstProp % imgSrcs.length]);
+  bgImage.src = m.default;
 
-  bgImage.src = imgSrcs[props.firstProp % imgSrcs.length];
   bgImage.onload = () => {
     console.log("-1");
     const margin = 20;
@@ -86,33 +84,13 @@ const generateImg = async (props) => {
 
     ctx.fillStyle = 'black';
     ctx.font = "16px serif";
-    ctx.fillText("坚持打卡" + props.firstProp + "天", 30, 650);
+    ctx.fillText("坚持打卡" + props.firstProp + "天", 30, 600);
 
-    const canvasWidth = canvas.width;
-    const lineHeight = 10;
     const text = props.secondProp;
+    ctx.fillText(text, 30, 650);
 
     console.log("坚持打卡" + props.firstProp + "天");
     console.log(props.secondProp);
-
-    const words = text;
-    /*const words = text.split(/\s+/);*/
-    let line = '', lines = [];
-    for (const word of words) {
-      const tempLine = line + word + ' ';
-      if (ctx.measureText(tempLine).width > canvasWidth) {
-        lines.push(line);
-        line = word + ' ';
-      } else {
-        line = tempLine;
-      }
-    }
-    lines.push(line);
-
-    const y = 600;
-    lines.forEach((line, index) => {
-      ctx.fillText(line.trim(), 30, y + index * lineHeight);
-    });
 
     img.src = canvas.toDataURL('image/png');
   };
