@@ -153,9 +153,25 @@ const queryWord = () => {
 }
 
 const playtts = () => {
-  const audio = document.getElementById('audio');
-  audio.src = pronunciationSrc.value;
-  audio.play();
+  //const audio = document.getElementById('audio');
+  //audio.src = pronunciationSrc.value;
+  //audio.play();
+  if (!window.speechSynthesis) {
+    alert('当前浏览器不支持TTS！');
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(word.value);
+
+  const voices = speechSynthesis.getVoices();
+  if (voices.length !== 0) {
+    utterance.voice = voices[0]; // 选择第一个语音
+  }
+
+  utterance.pitch = 1;
+  utterance.rate = 1;
+
+  window.speechSynthesis.speak(utterance);
 }
 
 
