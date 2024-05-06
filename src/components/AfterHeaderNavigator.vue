@@ -24,6 +24,8 @@ export default {
           })
           .finally(() => {
           });
+    
+    this.$router.push({path: '/'});
     }
   }
 
