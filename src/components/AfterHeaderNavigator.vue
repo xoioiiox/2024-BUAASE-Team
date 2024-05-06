@@ -26,11 +26,12 @@ export default {
             console.log(error);
           })
           .finally(() => {
+              this.$router.push({path: '/'});
+
+              userStore.logout();
           });
     
-    this.$router.push({path: '/'});
-
-    userStore.logout();
+    
 
     }
   }
