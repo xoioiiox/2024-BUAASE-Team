@@ -6,7 +6,7 @@
       <button class="share" @click="punch">打卡</button>
       <Teleport to="body">
         <ImagePreviewModal v-if="isOpened" @close="isOpened = !isOpened" :firstProp="consecutiveDays"
-                           :secondProp="inspiration" />
+          :secondProp="inspiration" />
       </Teleport>
     </div>
     <div class="buttons">
@@ -46,14 +46,14 @@ const punch = () => {
     params: {
     }
   })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-      });
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
 }
 
 // getInfo
@@ -62,16 +62,16 @@ const getInfo = () => {
     params: {
     }
   })
-      .then((response) => {
-        console.log(response);
-        consecutiveDays.value = response.data.days;
-        inspiration.value = inspirations[consecutiveDays % inspirations.length]
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-      });
+    .then((response) => {
+      console.log(response);
+      consecutiveDays.value = response.data.days;
+      inspiration.value = inspirations[consecutiveDays.value % inspirations.length]
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
 }
 
 onBeforeMount(() => {
