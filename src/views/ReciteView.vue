@@ -88,7 +88,7 @@
 import { useRouter } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 
 //返回主页
@@ -96,9 +96,9 @@ const back2home = () => {
   router.push('/')// 主页路由
 }
 
-const Ratio = {
-  ratio: Number(0)   //学习进度
-}
+const Ratio = ref({
+  ratio: 0
+})
 const getDayRatio = () => {
   const response = axios.get('/api/word/get-daily-ratio/');
   response.then(function (response) {
@@ -122,9 +122,9 @@ const getDayRatio = () => {
 
 
 //获取到的新单词
-const newWord = {
+const newWord = ref({
   word: 'hello'
-}
+})
 onMounted(() => {
   getDayRatio();
   getNextWord();
@@ -150,10 +150,10 @@ const getNextWord = async () => {
 const TagWord = (newWord, rate) => {
   //notify('Word Detail')
   const response = axios.post('/api/word/tag-word/', {
-    params: {
+    
       word: newWord.word,
       tag: rate  //标记为    不认识   认识   模糊
-    }
+    
   });
   response.then(function (response) {
     if (response.status === 200) {
@@ -196,7 +196,7 @@ const collectWord = (newWord) => {
 const deleteWord = (newWord) => {
   const response = axios.post('/api/word/tag-word/', {
     word: newWord.word,
-    tag: 0  //标记为已删除 = 已认识
+    tag: '认识'  //标记为已删除 = 已认识
   });
   response.then(function (response) {
     if (response.status === 200) {
