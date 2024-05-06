@@ -1,5 +1,8 @@
 <script>
 import axios from "axios";
+import {useUserStore} from "@/stores/userStore.js";
+
+const userStore = useUserStore();   // 从stores中引入
 
 export default {
   name: "AfterHeaderNavigator",
@@ -26,6 +29,9 @@ export default {
           });
     
     this.$router.push({path: '/'});
+
+    userStore.logout();
+
     }
   }
 
