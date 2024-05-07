@@ -188,10 +188,10 @@ export default {
 				}
 			}).then((res)=> {
 			})
-      this.$message({
-        type: 'success',
-        message: "修改密码成功"
-      });
+			this.$message({
+				type: 'success',
+				message: "修改密码成功"
+			});
 		},
 		uploadAvatar() {
 			this.uploadDialog = true
@@ -202,7 +202,7 @@ export default {
 			fd.append('smfile', file.raw)
 			this.image_formData = fd
 			console.log(file.raw instanceof File)
-			axios.post('https://smmsapi/api/v2/upload/', this.image_formData, { // todo 此url不需要固定前缀
+			axios.post('https://smms.app/api/v2/upload/', this.image_formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
