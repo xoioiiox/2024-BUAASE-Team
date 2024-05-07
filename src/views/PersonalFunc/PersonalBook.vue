@@ -241,8 +241,19 @@ export default {
 			return promise
 		},
 
+
+
 		async submitUpload() {
 			console.log(this.currentFile)
+
+      const isTXT = this.currentFile.type === 'text/plain';
+      console.log(isTXT)
+      
+      if (!isTXT) {
+        this.$message.error('只可上传 TXT 格式文本文件');
+        return ; // 仅当文件类型为 TXT 时返回 true，否则返回 false
+      }
+
 
 			let res = await this.readFile(this.currentFile) // res 为文件中内容
 
