@@ -108,10 +108,8 @@ import axios from "axios"
 export default {
 	components: {PersonalSide},
 	async created() {
-		await axios({
-			method: 'get',
-			url: '/api/word/get-info/'
-		}).then((res)=>{
+		await axios.get('/api/word/get-info/')
+		.then((res)=>{
 			console.log(res)
 			this.infoForm.avatar = res.data.avatar;
 			this.infoForm.username = res.data.username;
@@ -128,10 +126,10 @@ export default {
 			image_formData: new FormData(),
 			infoForm: {
 				avatar: "",
-				username: "viola",
-				level: "12",
-				phone: "18000000000",
-				wechat: "12345"
+				username: "",
+				level: "1",
+				phone: "",
+				wechat: ""
 			},
 			passwordForm: {
 				old_password: "",
@@ -159,34 +157,28 @@ export default {
 			this.infoDialog = true
 		},
 		submitInfo() {
-			console.log(this.infoForm)
-			axios({
-				method: 'put',
-				url: '/api/word/change-info/',
-				data: {
+			console.log('info-form: ' + this.infoForm)
+			axios.put('/api/word/change-info/', {
 					//username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
-				}
 			}).then((res)=> {
+				if (res.data.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改个人信息成功"
+					});
+				}
 			})
-			this.$message({
-				type: 'success',
-				message: "修改个人信息成功"
-			});
 			this.infoDialog = false
 		},
 		submitPassword() {
 			console.log(this.passwordForm)
-			axios({
-				method: 'post',
-				url: '/api/word/reset-password/',
-				data: {
+			axios.post('/api/word/reset-password/', {
 					original_password: this.passwordForm.old_password,
 					password: this.passwordForm.new_password,
 					password_again: this.passwordForm.new_password_again
-				}
 			}).then((res)=> {
 				console.log('submit-res: ' + res)
 				if (res.data.status == 200) {
@@ -254,21 +246,19 @@ export default {
 		submitAvatar() {
 			this.infoForm.avatar = this.imageUrl
 			console.log("in" + this.infoForm.avatar)
-			axios({
-				method: 'put',
-				url: '/api/word/change-info/',
-				data: {
+			axios.put('/api/word/change-info/', {
 					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
-				}
 			}).then((res)=> {
+				if (res.data.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改头像成功"
+					});
+				}
 			})
-			this.$message({
-				type: 'success',
-				message: "修改头像成功"
-			});
 			this.$refs.side.changeAvatar(this.imageUrl);
 			this.imageUrl = '';
 			this.uploadDialog = false
