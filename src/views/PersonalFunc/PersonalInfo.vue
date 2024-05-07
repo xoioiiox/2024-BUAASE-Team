@@ -202,7 +202,7 @@ export default {
 			fd.append('smfile', file.raw)
 			this.image_formData = fd
 			console.log(file.raw instanceof File)
-			axios.post('/smmsapi/api/v2/upload/', this.image_formData, {
+			axios.post('https://smmsapi/api/v2/upload/', this.image_formData, { // todo 此url不需要固定前缀
 				headers: {
 					'Content-Type': 'multipart/form-data',
 					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
