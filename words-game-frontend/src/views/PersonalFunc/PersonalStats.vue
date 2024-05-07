@@ -113,6 +113,11 @@ const dataWeek = ref<WordData[]>();
 
 const chartOptions = {
   responsive: true,
+  scales: {
+    y: {
+      min: 0,
+    },
+  },
 };
 
 // FUNCTIONS
@@ -181,7 +186,7 @@ const getWordDataWeek = () => {
           time: "0:10:34",
         },
         {
-          learn_num: 5,
+          learn_num: 0,
           review_num: 10,
           time: "0:20:02",
         },
