@@ -14,7 +14,7 @@
             <div class="saved-words-card" v-for="word in words" :key="word">
               <div class="word-card-body" @click="onShowWord(word)">
                 <div class="word-card-title">
-                  <div class="word-card-word">Word {{ word }}</div>
+                  <div class="word-card-word">{{ word }}</div>
                   <!-- Will be used in beta version -->
                   <!-- <span class="word-card-speak" @click="onListenWord(word)">
                     <IconSpeaker />
