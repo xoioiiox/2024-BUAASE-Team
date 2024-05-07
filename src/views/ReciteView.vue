@@ -210,7 +210,7 @@ const TagWord = (newWord, rate) => {
   //notify('Word Detail')
   const response = axios.post('/api/word/tag-word/', {
     
-      word: newWord.value,
+      word: newWord,
       tag: rate  //标记为    不认识   认识   模糊
     
   });
@@ -254,7 +254,7 @@ const collectWord = (newWord) => {
 //将单词删除
 const deleteWord = (newWord) => {
   const response = axios.post('/api/word/tag-word/', {
-    word: newWord.value,
+    word: newWord,
     tag: '认识'  //标记为已删除 = 已认识
   });
   response.then(function (response) {
