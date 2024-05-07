@@ -187,11 +187,28 @@ export default {
 					password_again: this.passwordForm.new_password_again
 				}
 			}).then((res)=> {
+				console.log(res)
+				if (res.data.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改密码成功"
+					});
+				}
+				else {
+					if (res.data.errors.code == 400) {
+						this.$message({
+							type: 'error',
+							message: '新密码输入不一致'
+						});
+					}
+					else {
+						this.$message({
+							type: 'error',
+							message: '原密码错误'
+						});
+					}
+				}
 			})
-			this.$message({
-				type: 'success',
-				message: "修改密码成功"
-			});
 		},
 		uploadAvatar() {
 			this.uploadDialog = true
