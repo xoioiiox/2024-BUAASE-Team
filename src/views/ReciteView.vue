@@ -85,10 +85,65 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter , useRoute } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
-import { onMounted, ref } from "vue";
+import { onMounted, ref , onUnmounted, watch} from "vue";
+
+
+  const route1 = useRoute();
+  const enterTime = ref(null);
+
+  // 开始计时
+  const startTimer = () => {
+    enterTime.value = new Date().getTime();
+  };
+
+  // 计算停留时间并发送到后端
+  const sendStayTime = () => {
+    const seconds = Math.floor((new Date().getTime() - enterTime.value) / 1000);
+
+
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const paddedHours = hours.toString().padStart(2, '0');
+    const paddedMinutes = minutes.toString().padStart(2, '0');
+    const paddedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+    const stayTime =  `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+
+    console.log(stayTime)
+
+    const response = axios.post('/api/word/update-word-data/today/', {
+        time: stayTime
+    }).then((response) => {
+      console.log(response);
+    })
+        .catch((error) => {
+          console.log(error);
+        })
+
+
+  };
+
+  // 监听页面挂载时开始计时
+  onMounted(() => {
+    startTimer();
+  });
+
+  // 监听路由变化，当路由变化时发送停留时间
+  watch(() => route1.path, () => {
+    sendStayTime();
+    startTimer();
+  });
+
+  // 页面卸载时发送最后一次停留时间
+  onUnmounted(() => {
+    sendStayTime();
+  });
 
 
 //返回主页
@@ -128,9 +183,13 @@ const newWord = ref({
   word: 'hello'
 })
 onMounted(() => {
+
+
   getDayRatio();
   getNextWord();
 })
+
+
 //获取一个新单词
 const getNextWord = async () => {
   // 调用后端接口获取新单词
