@@ -101,7 +101,9 @@ const Ratio = ref({
 })
 const getDayRatio = () => {
   const response = axios.get('/api/word/get-daily-ratio/');
+  console.log(response.data)
   response.then(function (response) {
+    console.log(response.data)
         if (response.status === 200) {
           //console.log(response.data)
           Ratio.ratio = response.data.ratio
@@ -134,6 +136,7 @@ const getNextWord = async () => {
   // 调用后端接口获取新单词
   const response = await axios.get('/api/word/get-next-word/');
   if (response.status === 200) {
+    console.log(response.data)
     newWord.word = response.data.word;
     ElMessage({
       message: '获取单词成功',
