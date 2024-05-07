@@ -60,9 +60,9 @@
 						<div>
 							<el-dialog title="修改信息" v-model="infoDialog" width="30%">
 								<el-form :model="infoForm" label-width="auto" :rules="rules">
-									<el-form-item label="用户名" prop="username">
+									<!--el-form-item label="用户名" prop="username">
 									<el-input v-model="infoForm.username" autocomplete="off"></el-input>
-									</el-form-item>
+									</el-form-item-->
 									<el-form-item label="绑定手机号" prop="phone">
 									<el-input v-model="infoForm.phone" autocomplete="off"></el-input>
 									</el-form-item>
@@ -247,7 +247,6 @@ export default {
 			this.infoForm.avatar = this.imageUrl
 			console.log("in" + this.infoForm.avatar)
 			axios.put('/api/word/change-info/', {
-					username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
