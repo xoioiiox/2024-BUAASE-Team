@@ -2,10 +2,21 @@
 import axios from "axios";
 import {useUserStore} from "@/stores/userStore.js";
 
-const userStore = useUserStore();   // 从stores中引入
+
 
 export default {
   name: "AfterHeaderNavigator",
+
+  // 在Vue组件的生命周期钩子中使用store
+  created() {
+    this.userStore = useUserStore();
+  },
+
+  data() {
+    return {
+      userStore: null // 初始化为null
+    };
+  },
 
   methods: {
     goToPersonal() {
@@ -28,7 +39,7 @@ export default {
           .finally(() => {
               this.$router.push({path: '/'});
 
-              userStore.logout();
+              this.userStore.logout();
           });
     
     

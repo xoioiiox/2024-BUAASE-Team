@@ -153,10 +153,10 @@ const queryWord = () => {
 }
 
 const playtts = () => {
-  const audio = document.getElementById('audio');
+  /*const audio = document.getElementById('audio');
   audio.src = pronunciationSrc.value;
-  audio.play();
-  /*if (!window.speechSynthesis) {
+  audio.play();*/
+  if (!window.speechSynthesis) {
     alert('当前浏览器不支持TTS！');
     return;
   }
@@ -171,7 +171,7 @@ const playtts = () => {
   utterance.pitch = 1;
   utterance.rate = 1;
 
-  window.speechSynthesis.speak(utterance);*/
+  window.speechSynthesis.speak(utterance);
 }
 
 
