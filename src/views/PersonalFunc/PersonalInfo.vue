@@ -188,10 +188,10 @@ export default {
 				}
 			}).then((res)=> {
 			})
-      this.$message({
-        type: 'success',
-        message: "修改密码成功"
-      });
+			this.$message({
+				type: 'success',
+				message: "修改密码成功"
+			});
 		},
 		uploadAvatar() {
 			this.uploadDialog = true
