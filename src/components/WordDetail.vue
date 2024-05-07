@@ -59,7 +59,7 @@ const deleteWord = () => {
   // 删除单词的逻辑
   axios.post('/api/word/tag-word/', {
 
-    word: word,
+    word: word.value,
     tag: '完全掌握'
 
   })
@@ -76,7 +76,7 @@ const correctWord = () => {
   // 记错了单词的逻辑
   axios.post('/api/word/tag-word/', {
 
-    word: word,
+    word: word.value,
     tag: '记错了'
 
   })
@@ -93,7 +93,7 @@ const recognizeWord = () => {
   // 认识单词的逻辑
   axios.post('/api/word/tag-word/', {
 
-    word: word,
+    word: word.value,
     tag: '认识'
 
   })
