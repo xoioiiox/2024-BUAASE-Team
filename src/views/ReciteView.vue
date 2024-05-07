@@ -30,7 +30,7 @@
           <el-col :span="18">
             <div class="centered-content">
               <div class="demo-progress">
-                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio.value" />
+                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio" />
               </div>
             </div>
           </el-col>
@@ -42,16 +42,16 @@
         <el-card class="word-container">
           <!-- 单词 -->
           <div class="timeNewRomanCard" align="center" style="margin-top: 10px;">
-<!--            hello-->
-             {{ newWord }}
+            <!--            hello-->
+            {{ newWord }}
           </div>
           <!-- 音标 -->
           <div class="black-body" align="center" style="margin-top: 10px;">
-<!--            /həˈləʊ/-->
+            <!--            /həˈləʊ/-->
           </div>
           <!-- 例句 -->
           <div class="black-body" align="center" style="margin-top: 100px;">
-<!--            This is a sentence about hello.-->
+            <!--            This is a sentence about hello.-->
           </div>
         </el-card>
         <!-- 下方认识程度选择区域 -->
@@ -85,65 +85,65 @@
 </template>
 
 <script setup>
-import { useRouter , useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
-import { onMounted, ref , onUnmounted, watch} from "vue";
+import { onMounted, ref, onUnmounted, watch } from "vue";
 
 
-  const route1 = useRoute();
-  const enterTime = ref(null);
+const route1 = useRoute();
+const enterTime = ref(null);
 
-  // 开始计时
-  const startTimer = () => {
-    enterTime.value = new Date().getTime();
-  };
+// 开始计时
+const startTimer = () => {
+  enterTime.value = new Date().getTime();
+};
 
-  // 计算停留时间并发送到后端
-  const sendStayTime = () => {
-    const seconds = Math.floor((new Date().getTime() - enterTime.value) / 1000);
+// 计算停留时间并发送到后端
+const sendStayTime = () => {
+  const seconds = Math.floor((new Date().getTime() - enterTime.value) / 1000);
 
 
 
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
 
-    const paddedHours = hours.toString().padStart(2, '0');
-    const paddedMinutes = minutes.toString().padStart(2, '0');
-    const paddedSeconds = remainingSeconds.toString().padStart(2, '0');
+  const paddedHours = hours.toString().padStart(2, '0');
+  const paddedMinutes = minutes.toString().padStart(2, '0');
+  const paddedSeconds = remainingSeconds.toString().padStart(2, '0');
 
-    const stayTime =  `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
+  const stayTime = `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
 
-    console.log(stayTime)
+  console.log(stayTime)
 
-    const response = axios.post('/api/word/update-word-data/today/', {
-        time: stayTime
-    }).then((response) => {
-      console.log(response);
+  const response = axios.post('/api/word/update-word-data/today/', {
+    time: stayTime
+  }).then((response) => {
+    console.log(response);
+  })
+    .catch((error) => {
+      console.log(error);
     })
-        .catch((error) => {
-          console.log(error);
-        })
 
 
-  };
+};
 
-  // 监听页面挂载时开始计时
-  onMounted(() => {
-    startTimer();
-  });
+// 监听页面挂载时开始计时
+onMounted(() => {
+  startTimer();
+});
 
-  // 监听路由变化，当路由变化时发送停留时间
-  watch(() => route1.path, () => {
-    sendStayTime();
-    startTimer();
-  });
+// 监听路由变化，当路由变化时发送停留时间
+watch(() => route1.path, () => {
+  sendStayTime();
+  startTimer();
+});
 
-  // 页面卸载时发送最后一次停留时间
-  onUnmounted(() => {
-    sendStayTime();
-  });
+// 页面卸载时发送最后一次停留时间
+onUnmounted(() => {
+  sendStayTime();
+});
 
 
 //返回主页
@@ -157,27 +157,27 @@ const getDayRatio = () => {
   console.log(response.data)
   response.then(function (response) {
     console.log(response.data)
-        if (response.status === 200) {
-          //console.log(response.data)
-          Ratio.value = response.data.ratio
-          ElMessage({
-            message: '获取日常学习数据成功',
-            type: 'success'
-          })
-        } else {
-          ElMessage({
-            message: '获取日常学习数据失败',
-            type: 'error'
-          })
-        }
-      }
+    if (response.status === 200) {
+      //console.log(response.data)
+      Ratio.value = response.data.ratio
+      ElMessage({
+        message: '获取日常学习数据成功',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: '获取日常学习数据失败',
+        type: 'error'
+      })
+    }
+  }
   )
 }
 
 
 
 //获取到的新单词
-const newWord = ref( 'hello')
+const newWord = ref('hello')
 onMounted(() => {
 
 
@@ -209,10 +209,10 @@ const getNextWord = async () => {
 const TagWord = (newWord, rate) => {
   //notify('Word Detail')
   const response = axios.post('/api/word/tag-word/', {
-    
-      word: newWord,
-      tag: rate  //标记为    不认识   认识   模糊
-    
+
+    word: newWord,
+    tag: rate  //标记为    不认识   认识   模糊
+
   });
   response.then(function (response) {
     if (response.status === 200) {
@@ -228,7 +228,7 @@ const TagWord = (newWord, rate) => {
     }
   })
   //跳转到单词释义界面
-  router.push({ path: '/WordDetail', query: { word: newWord.value } })// 单词详细释义路由
+  router.push({ path: '/WordDetail', query: { word: newWord } })// 单词详细释义路由
 }
 
 //将单词加入生词本
