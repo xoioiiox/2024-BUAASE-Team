@@ -30,7 +30,7 @@
           <el-col :span="18">
             <div class="centered-content">
               <div class="demo-progress">
-                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio.value" />
+                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio" />
               </div>
             </div>
           </el-col>
@@ -228,7 +228,7 @@ const TagWord = (newWord, rate) => {
     }
   })
   //跳转到单词释义界面
-  router.push({ path: '/WordDetail', query: { word: newWord.value } })// 单词详细释义路由
+  router.push({ path: '/WordDetail', query: { word: newWord } })// 单词详细释义路由
 }
 
 //将单词加入生词本
