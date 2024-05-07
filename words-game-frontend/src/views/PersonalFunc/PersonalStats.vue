@@ -46,7 +46,9 @@
                     <div>
                       <el-statistic
                         title="学习时长"
-                        :value="dataToday ? getHourMin(dataToday?.time).val : 0"
+                        :value="
+                          dataToday ? filterHourMin(dataToday?.time).val : 0
+                        "
                       >
                         <template #suffix>
                           <el-icon style="font-size: small">
@@ -82,7 +84,20 @@
                   <span>本月打卡情况</span>
                 </template>
                 <template #date-cell="{ data: cellData }">
-                  <div :class="cellData.isSelected ? 'is-selected' : ''">
+                  <div
+                    :class="
+                      isPassedDay(cellData.date) && isDakaDay(cellData.date)
+                        ? 'is-checked'
+                        : ''
+                    "
+                  >
+                    <div
+                      v-if="
+                        isPassedDay(cellData.date) && isDakaDay(cellData.date)
+                      "
+                    >
+                      hi
+                    </div>
                     {{ cellData.day.split("-").slice(2).join("-") }}
                   </div>
                 </template>
@@ -99,7 +114,7 @@
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
 import LineChart from "../../components/LineChart.vue";
-import { computed, onBeforeMount, ref, watch } from "vue";
+import { computed, onBeforeMount, ref, watch, nextTick } from "vue";
 import { CalendarInstance } from "element-plus";
 
 interface WordData {
@@ -108,9 +123,11 @@ interface WordData {
   review_num: number;
 }
 
+const today = new Date();
 const dataToday = ref<WordData>();
 const dataWeek = ref<WordData[]>();
-
+const calendar = ref<CalendarInstance>();
+const dakaDetail = ref([]);
 const chartOptions = {
   responsive: true,
   scales: {
@@ -119,12 +136,16 @@ const chartOptions = {
     },
   },
 };
+const dakaUpdated = computed(() => {
+  const current = dakaDetail.value;
+  return {
+    data: dakaDetail.value,
+  };
+});
 
 // FUNCTIONS
 const getLast7Days = () => {
   const dates = [];
-  const today = new Date();
-
   for (let i = 0; i < 7; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
@@ -134,7 +155,7 @@ const getLast7Days = () => {
   return dates.reverse();
 };
 
-const getHourMin = (dataDay: string) => {
+const filterHourMin = (dataDay: string) => {
   const timeParts = dataDay.split(":");
   const hour = parseInt(timeParts[0]);
   const minute = parseInt(timeParts[1]);
@@ -154,12 +175,12 @@ const getHourMin = (dataDay: string) => {
 const getWordDataToday = async () => {
   try {
     const res = await axios.get("/api/word/get-word-data/today/");
-    console.log("get word data res: ", res.data);
-    if (res.status == 200) {
+    // console.log("get word data res: ", res.data);
+    if (res.status === 200) {
       dataToday.value = res.data;
     }
   } catch (error) {
-    console.error("Error get today data:", error);
+    // console.error("Error get today data:", error);
     dataToday.value = {
       learn_num: 3,
       review_num: 5,
@@ -174,11 +195,11 @@ const getWordDataWeek = () => {
       params: { days: 7 },
     })
     .then((res) => {
-      console.log("get week data res:", res);
+      // console.log("get week data res:", res);
       dataWeek.value = res.data.word_data;
     })
     .catch((err) => {
-      console.log("Error get week data: ", err);
+      // console.log("Error get week data: ", err);
       dataWeek.value = [
         {
           learn_num: 3,
@@ -218,14 +239,29 @@ const getWordDataWeek = () => {
       ];
     })
     .finally(() => {
-      console.log("finally: ", dataWeek.value[0]);
+      // console.log("finally: ", dataWeek.value[0]);
     });
 };
 
-onBeforeMount(() => {
-  getWordDataToday();
-  getWordDataWeek();
-});
+const getDakaDetail = () => {
+  axios
+    .get("/api/words/get-daka-detail", {
+      params: { days: today.getDate() },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        console.log("get daka detail: ", res.data.daka);
+        dakaDetail.value = res.data.daka;
+      }
+    })
+    .catch((err) => {
+      console.log("Error get daka detail: ", err);
+      //today, yesterday ...
+      dakaDetail.value = [true, true, true, false, false, true, false];
+      nextTick();
+    });
+  // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
+};
 
 //CHART
 const chartData = computed(() => {
@@ -248,6 +284,25 @@ const chartData = computed(() => {
   };
 });
 
+//CALENDAR
+const isPassedDay = (date: Date) => {
+  return (
+    date.getDate() <= today.getDate() && date.getMonth() == today.getMonth()
+  );
+};
+
+const isDakaDay = (date: Date) => {
+  const dayVal = date.getDate();
+  console.log(`day: ${dayVal} - ${dakaDetail[dayVal - 1]}`);
+  return dakaDetail[dayVal - 1];
+};
+
+onBeforeMount(() => {
+  getWordDataToday();
+  getWordDataWeek();
+  getDakaDetail();
+});
+
 watch(dataWeek, () => {
   chartData.value.datasets[0].data = dataWeek.value
     .map((dataDay) => dataDay.learn_num)
@@ -256,9 +311,6 @@ watch(dataWeek, () => {
     .map((dataDay) => dataDay.review_num)
     .reverse();
 });
-
-//CALENDAR
-const calendar = ref<CalendarInstance>();
 </script>
 
 <style scoped>
@@ -337,5 +389,9 @@ const calendar = ref<CalendarInstance>();
 
 .el-divider {
   height: 50px;
+}
+
+.is-checked {
+  background-color: red;
 }
 </style>
