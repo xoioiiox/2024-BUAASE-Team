@@ -65,7 +65,7 @@
 
 
 	<div>
-		<el-dialog title="上传词书" v-model="wordBookDialog" width="30%">
+		<el-dialog title="上传词书" v-model="wordBookDialog" width="30%" >
 			<el-upload
 					ref="upload"
 					class="upload-demo"
@@ -85,6 +85,11 @@
 					<div class="el-upload__tip text-red">
 						限制一次仅上传一个文件。 (文件仅限.txt格式)
 					</div>
+          <router-link
+              to="/guide"
+          >
+            自定义词书创建说明
+          </router-link>
 				</template>
 			</el-upload>
 		</el-dialog>
