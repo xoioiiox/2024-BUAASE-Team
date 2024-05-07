@@ -240,10 +240,16 @@ export default {
 		},
 		beforeAvatarUpload(file) {
 			const isJPG = file.type === 'image/jpeg';
+			const isLt5M = file.size / 1024 / 1024 < 5;
+
 			if (!isJPG) {
 				this.$message.error('只可上传 JPG 格式图片');
 			}
-			return isJPG;
+
+			if (!isLt5M) {
+      			this.$message.error('图片大小不能超过 5MB!');
+    		}
+			return isJPG && isLt5M;
 		},
 		submitAvatar() {
 			this.infoForm.avatar = this.imageUrl
