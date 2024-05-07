@@ -80,7 +80,7 @@ const validateUsername = (rule: any, value: any, callback: any) => {
 const validatePhone = (rule: any, value: any, callback: any) => {
   if (!value) {
     return callback(new Error('手机号码不能为空'))
-  }else if(value.match(/^[1][3,4,5,7,8][0-9]{9}$/)==null){
+  }else if(value.match(/^[1][0-9]{10}$/)==null){
     return callback(new Error('手机号码格式不正确'))
   }else{
     callback()
