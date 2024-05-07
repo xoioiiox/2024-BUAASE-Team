@@ -30,7 +30,7 @@
           <el-col :span="18">
             <div class="centered-content">
               <div class="demo-progress">
-                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio" />
+                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
               </div>
             </div>
           </el-col>
@@ -174,6 +174,16 @@ const getDayRatio = () => {
   )
 }
 
+const BookRatio = ref(0)
+const getAllBookRatio = () => {
+  const response = axios.get('/api/word/now-book-ratio');
+  response.then(function (response) {
+    console.log(response.data)
+    //console.log(response.data)
+    BookRatio.value = response.data.ratio
+  })
+}
+
 
 
 //获取到的新单词
@@ -182,8 +192,19 @@ onMounted(() => {
 
 
   getDayRatio();
+  getAllBookRatio();
+  toPunchIn();
   getNextWord();
 })
+
+//跳转到打卡
+const toPunchIn = () => {
+  if (Ratio.value >= 1 - 0.005 && Ratio.value <= 1 + 0.005) {
+    router.push({ path: '/PunchIn' });
+  } else if (BookRatio.value >= 1 - 0.00001 && BookRatio.value <= 1 + 0.00001) {
+    router.push({ path: '/PunchIn' });
+  }
+}
 
 
 //获取一个新单词
