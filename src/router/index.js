@@ -9,6 +9,8 @@ import SavedWords from "../views/PersonalFunc/SavedWords.vue";
 import StartWordHome from "@/views/StartWordHome.vue";
 import PersonalStats from "../views/PersonalFunc/PersonalStats.vue";
 
+import Guide from "@/views/Guide.vue";
+
 
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
@@ -91,7 +93,13 @@ const router = createRouter({
       name: 'PunchIn',
       component: PunchIn
       //component: () => import('../components/PunchIn.vue') 
+    },
+    {
+      path: '/guide',
+      name: 'guide',
+      component: Guide
     }
+
   ]
 })
 

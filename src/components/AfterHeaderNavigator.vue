@@ -19,6 +19,11 @@ export default {
   },
 
   methods: {
+    goToGuide() {
+      // 用户点击按钮时导航到需要登录权限的页面
+      this.$router.push({path: '/guide'});
+    },
+
     goToPersonal() {
       // 用户点击按钮时导航到需要登录权限的页面
       this.$router.push({name: 'PersonalBook'});
@@ -68,11 +73,14 @@ export default {
       </router-link>
     </el-menu-item>
     <div class="flex-grow" />
-   
-    <el-menu-item index="1" @click="goToPersonal">
+
+    <el-menu-item index="1" @click="goToGuide">
+     使用说明
+    </el-menu-item>
+    <el-menu-item index="2" @click="goToPersonal">
       个人中心
     </el-menu-item>
-    <el-menu-item index="2" @click="goToLogOut">
+    <el-menu-item index="3" @click="goToLogOut">
       登出
     </el-menu-item>
 
