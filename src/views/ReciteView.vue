@@ -30,7 +30,7 @@
           <el-col :span="18">
             <div class="centered-content">
               <div class="demo-progress">
-                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio.ratio" />
+                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio.value" />
               </div>
             </div>
           </el-col>
@@ -43,7 +43,7 @@
           <!-- 单词 -->
           <div class="timeNewRomanCard" align="center" style="margin-top: 10px;">
 <!--            hello-->
-             {{ newWord.word }}
+             {{ newWord }}
           </div>
           <!-- 音标 -->
           <div class="black-body" align="center" style="margin-top: 10px;">
@@ -96,9 +96,7 @@ const back2home = () => {
   router.push('/')// 主页路由
 }
 
-const Ratio = ref({
-  ratio: 0
-})
+const Ratio = ref(0)
 const getDayRatio = () => {
   const response = axios.get('/api/word/get-daily-ratio/');
   console.log(response.data)
@@ -106,7 +104,7 @@ const getDayRatio = () => {
     console.log(response.data)
         if (response.status === 200) {
           //console.log(response.data)
-          Ratio.ratio = response.data.ratio
+          Ratio.value = response.data.ratio
           ElMessage({
             message: '获取日常学习数据成功',
             type: 'success'
@@ -124,9 +122,7 @@ const getDayRatio = () => {
 
 
 //获取到的新单词
-const newWord = ref({
-  word: 'hello'
-})
+const newWord = ref( 'hello')
 onMounted(() => {
   getDayRatio();
   getNextWord();
@@ -136,8 +132,9 @@ const getNextWord = async () => {
   // 调用后端接口获取新单词
   const response = await axios.get('/api/word/get-next-word/');
   if (response.status === 200) {
-    console.log(response.data)
-    newWord.word = response.data.word;
+    //console.log(response.data)
+    newWord.value = response.data.word;
+    console.log(newWord.value)
     ElMessage({
       message: '获取单词成功',
       type: 'success'
@@ -154,7 +151,7 @@ const TagWord = (newWord, rate) => {
   //notify('Word Detail')
   const response = axios.post('/api/word/tag-word/', {
     
-      word: newWord.word,
+      word: newWord.value,
       tag: rate  //标记为    不认识   认识   模糊
     
   });
@@ -172,13 +169,13 @@ const TagWord = (newWord, rate) => {
     }
   })
   //跳转到单词释义界面
-  router.push({ path: '/WordDetail', query: { word: newWord.word } })// 单词详细释义路由
+  router.push({ path: '/WordDetail', query: { word: newWord.value } })// 单词详细释义路由
 }
 
 //将单词加入生词本
 const collectWord = (newWord) => {
   const response = axios.post('/api/word/add-favor-word/', {
-    word: newWord.word
+    word: newWord.value
   });
   response.then(function (response) {
     if (response.status === 200) {
@@ -198,7 +195,7 @@ const collectWord = (newWord) => {
 //将单词删除
 const deleteWord = (newWord) => {
   const response = axios.post('/api/word/tag-word/', {
-    word: newWord.word,
+    word: newWord.value,
     tag: '认识'  //标记为已删除 = 已认识
   });
   response.then(function (response) {
