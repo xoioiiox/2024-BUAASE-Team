@@ -164,7 +164,7 @@ export default {
 				method: 'put',
 				url: '/api/word/change-info/',
 				data: {
-					username: this.infoForm.username,
+					//username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
@@ -178,6 +178,7 @@ export default {
 			this.infoDialog = false
 		},
 		submitPassword() {
+			console.log(this.passwordForm)
 			axios({
 				method: 'post',
 				url: '/api/word/reset-password/',
@@ -187,7 +188,7 @@ export default {
 					password_again: this.passwordForm.new_password_again
 				}
 			}).then((res)=> {
-				console.log(res)
+				console.log('submit-res: ' + res)
 				if (res.data.status == 200) {
 					this.$message({
 						type: 'success',
@@ -195,7 +196,7 @@ export default {
 					});
 				}
 				else {
-					if (res.data.errors.code == 400) {
+					if (res.data.errors[0].code == 400) {
 						this.$message({
 							type: 'error',
 							message: '新密码输入不一致'
