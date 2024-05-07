@@ -207,28 +207,28 @@ export default {
 			this.uploadDialog = true
 		},
 		handleAvatarPreview(file) {
-			console.log(true);
+
 			let fd = new FormData()
 			fd.append('smfile', file.raw)
 			this.image_formData = fd
-			console.log(file.raw instanceof File)
-			axios.post('https://smms.app/api/v2/upload/', this.image_formData, {
+
+			axios.post('/api/word/uploadAvatar/', this.image_formData, {
 				headers: {
-					'Content-Type': 'multipart/form-data',
-					'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",
+					'Content-Type': 'multipart/form-data'
+					/*'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",*/
 					// 'Content-Type': 'application/json'
 				}
 			}).then(response => {
-				console.log(response)
-				if(response.data.data) {
-					this.imageUrl = response.data.data.url
-				} else {
-					this.imageUrl = response.data.images
-				}
-				console.log(this.imageUrl)
 			}).catch(err => {
 				console.log(err)
 			});
+
+      axios.get('/api/word/get-info/')
+          .then((res)=>{
+            console.log(res)
+            this.imageUrl = res.data.avatar
+          })
+
 		},
 		beforeAvatarUpload(file) {
 			const isJPG = file.type === 'image/jpeg';
