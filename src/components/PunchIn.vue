@@ -42,10 +42,7 @@ const inspiration = ref('default');
 var isOpened = ref(false);
 const punch = () => {
   isOpened.value = true;
-  axios.post('/api/word/daka/', {
-    params: {
-    }
-  })
+  axios.post('/api/word/daka/')
     .then((response) => {
       console.log(response);
     })
@@ -58,10 +55,7 @@ const punch = () => {
 
 // getInfo
 const getInfo = () => {
-  axios.get('/api/word/get-daka-days/', {
-    params: {
-    }
-  })
+  axios.get('/api/word/get-daka-days/')
     .then((response) => {
       console.log(response);
       consecutiveDays.value = response.data.days;
