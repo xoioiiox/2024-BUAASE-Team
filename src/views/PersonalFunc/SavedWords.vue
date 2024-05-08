@@ -9,12 +9,16 @@
         <!-- Words List -->
         <el-empty v-if="!words[0]" description="暂无数据" />
         <template v-else>
-          <el-scrollbar class="saved-words-list" max-height="600px" height="100%">
+          <el-scrollbar
+            class="saved-words-list"
+            max-height="600px"
+            height="100%"
+          >
             <!-- Word Card/ -->
             <div class="saved-words-card" v-for="word in words" :key="word">
               <div class="word-card-body" @click="onShowWord(word)">
                 <div class="word-card-title">
-                  <div class="word-card-word">Word {{ word }}</div>
+                  <div class="word-card-word">{{ word }}</div>
                   <!-- Will be used in beta version -->
                   <!-- <span class="word-card-speak" @click="onListenWord(word)">
                     <IconSpeaker />
@@ -51,15 +55,15 @@ const words = ref([]);
 
 const getSavedWords = async () => {
   await axios
-      .get("/api/word/get-favor-words/")
-      .then((res) => {
-        console.log("Get saved words: ", res.data);
-        words.value = res.data.words;
-      })
-      .catch((err) => {
-        console.log("Saved Words Error ", err);
-        words.value = [];
-      });
+    .get("/api/word/get-favor-words/")
+    .then((res) => {
+      console.log("Get saved words: ", res.data);
+      words.value = res.data.words;
+    })
+    .catch((err) => {
+      console.log("Saved Words Error ", err);
+      words.value = [];
+    });
 };
 
 onMounted(() => {
@@ -86,24 +90,24 @@ const onUnsaveWord = (selectedWord) => {
 
 const onDeleteWord = async (selectedWord) => {
   await axios
-      .delete("/api/word/delete-favor-word/", {
-        params: { word: selectedWord },
-      })
-      .then((delRes) => {
-        console.log("Delete response: ", delRes);
-        ElMessage({
-          type: "success",
-          message: "删除成功",
-        });
-        getSavedWords();
-      })
-      .catch((err) => {
-        console.log("Delete err: ", err);
-        ElMessage({
-          type: "error",
-          message: "删除失败",
-        });
+    .delete("/api/word/delete-favor-word/", {
+      params: { word: selectedWord },
+    })
+    .then((delRes) => {
+      console.log("Delete response: ", delRes);
+      ElMessage({
+        type: "success",
+        message: "删除成功",
       });
+      getSavedWords();
+    })
+    .catch((err) => {
+      console.log("Delete err: ", err);
+      ElMessage({
+        type: "error",
+        message: "删除失败",
+      });
+    });
 };
 </script>
 

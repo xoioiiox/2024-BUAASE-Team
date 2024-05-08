@@ -45,12 +45,16 @@
                   <el-col :span="8" class="stat-card">
                     <div>
                       <el-statistic
-                          title="学习时长"
-                          :value="dataToday ? getHourMin(dataToday?.time).val : 0"
+                        title="学习时长"
+                        :value="
+                          dataToday ? filterHourMin(dataToday?.time).val : 0
+                        "
                       >
                         <template #suffix>
                           <el-icon style="font-size: small">
-                            <!-- {{ getHourMin(dataToday?.time).type }} -->
+                            {{
+                              dataToday && filterHourMin(dataToday?.time).type
+                            }}
                           </el-icon>
                         </template>
                       </el-statistic>
@@ -76,13 +80,19 @@
             <div class="stat-windows stat-calendar">
               <el-calendar ref="calendar">
                 <template
-                    #header="{ date }"
-                    style="width: 100%; justify-content: center"
+                  #header="{ date }"
+                  style="width: 100%; justify-content: center"
                 >
                   <span>本月打卡情况</span>
                 </template>
                 <template #date-cell="{ data: cellData }">
-                  <div :class="cellData.isSelected ? 'is-selected' : ''">
+                  <div
+                    :class="
+                      isPassedDay(cellData.date) && isDakaDay(cellData.date)
+                        ? 'is-checked'
+                        : ''
+                    "
+                  >
                     {{ cellData.day.split("-").slice(2).join("-") }}
                   </div>
                 </template>
@@ -99,7 +109,7 @@
 import axios from "axios";
 import PersonalSide from "../../components/PersonalSide.vue";
 import LineChart from "../../components/LineChart.vue";
-import { computed, onBeforeMount, ref, watch } from "vue";
+import { computed, onBeforeMount, ref, watch, nextTick } from "vue";
 import { CalendarInstance } from "element-plus";
 
 interface WordData {
@@ -108,18 +118,23 @@ interface WordData {
   review_num: number;
 }
 
+const today = new Date();
 const dataToday = ref<WordData>();
 const dataWeek = ref<WordData[]>();
-
+const calendar = ref<CalendarInstance>();
+const dakaDetail = ref([]);
 const chartOptions = {
   responsive: true,
+  scales: {
+    y: {
+      min: 0,
+    },
+  },
 };
 
 // FUNCTIONS
 const getLast7Days = () => {
   const dates = [];
-  const today = new Date();
-
   for (let i = 0; i < 7; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i);
@@ -129,7 +144,7 @@ const getLast7Days = () => {
   return dates.reverse();
 };
 
-const getHourMin = (dataDay: string) => {
+const filterHourMin = (dataDay: string) => {
   const timeParts = dataDay.split(":");
   const hour = parseInt(timeParts[0]);
   const minute = parseInt(timeParts[1]);
@@ -149,12 +164,12 @@ const getHourMin = (dataDay: string) => {
 const getWordDataToday = async () => {
   try {
     const res = await axios.get("/api/word/get-word-data/today/");
-    console.log("get word data res: ", res.data);
-    if (res.status == 200) {
+    // console.log("get word data res: ", res.data);
+    if (res.status === 200) {
       dataToday.value = res.data;
     }
   } catch (error) {
-    console.error("Error get today data:", error);
+    // console.error("Error get today data:", error);
     dataToday.value = {
       learn_num: 3,
       review_num: 5,
@@ -165,62 +180,76 @@ const getWordDataToday = async () => {
 
 const getWordDataWeek = () => {
   axios
-      .get("/api/word/get-word-data/period/", {
-        params: { days: 7 },
-      })
-      .then((res) => {
-        console.log("get week data res:", res);
-        dataWeek.value = res.data.word_data;
-      })
-      .catch((err) => {
-        console.log("Error get week data: ", err);
-        dataWeek.value = [
-          {
-            learn_num: 3,
-            review_num: 5,
-            time: "0:10:34",
-          },
-          {
-            learn_num: 5,
-            review_num: 10,
-            time: "0:20:02",
-          },
-          {
-            learn_num: 12,
-            review_num: 4,
-            time: "0:21:00",
-          },
-          {
-            learn_num: 10,
-            review_num: 12,
-            time: "1:30:02",
-          },
-          {
-            learn_num: 10,
-            review_num: 20,
-            time: "1:30:02",
-          },
-          {
-            learn_num: 7,
-            review_num: 12,
-            time: "1:30:02",
-          },
-          {
-            learn_num: 0,
-            review_num: 16,
-            time: "1:30:02",
-          },
-        ];
-      })
-      .finally(() => {
-        console.log("finally: ", dataWeek.value[0]);
-      });
+    .get("/api/word/get-word-data/period/", {
+      params: { days: 7 },
+    })
+    .then((res) => {
+      // console.log("get week data res:", res);
+      dataWeek.value = res.data.word_data;
+    })
+    .catch((err) => {
+      // console.log("Error get week data: ", err);
+      dataWeek.value = [
+        {
+          learn_num: 3,
+          review_num: 5,
+          time: "0:10:34",
+        },
+        {
+          learn_num: 0,
+          review_num: 10,
+          time: "0:20:02",
+        },
+        {
+          learn_num: 12,
+          review_num: 4,
+          time: "0:21:00",
+        },
+        {
+          learn_num: 10,
+          review_num: 12,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 10,
+          review_num: 20,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 7,
+          review_num: 12,
+          time: "1:30:02",
+        },
+        {
+          learn_num: 0,
+          review_num: 16,
+          time: "1:30:02",
+        },
+      ];
+    })
+    .finally(() => {
+      // console.log("finally: ", dataWeek.value[0]);
+    });
 };
 
-onBeforeMount(() => {
-  getWordDataToday();
-  getWordDataWeek();
-});
+const getDakaDetail = () => {
+  axios
+    .get("/api/words/get-daka-detail", {
+      params: { days: today.getDate() },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        console.log("get daka detail: ", res.data.daka);
+        dakaDetail.value = res.data.daka;
+      }
+    })
+    .catch((err) => {
+      console.log("Error get daka detail: ", err);
+      //today, yesterday ...
+      dakaDetail.value = [true, true, true, false, false, true, false, true];
+    });
+  // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
+};
 
 //CHART
 const chartData = computed(() => {
@@ -243,17 +272,32 @@ const chartData = computed(() => {
   };
 });
 
-watch(dataWeek, () => {
-  chartData.value.datasets[0].data = dataWeek.value
-      .map((dataDay) => dataDay.learn_num)
-      .reverse();
-  chartData.value.datasets[1].data = dataWeek.value
-      .map((dataDay) => dataDay.review_num)
-      .reverse();
+//CALENDAR
+const isPassedDay = (date: Date) => {
+  return (
+    date.getDate() <= today.getDate() && date.getMonth() == today.getMonth()
+  );
+};
+
+const isDakaDay = (date: Date) => {
+  const dayVal = date.getDate();
+  return dakaDetail.value[dayVal - 1];
+};
+
+onBeforeMount(() => {
+  getWordDataToday();
+  getWordDataWeek();
+  getDakaDetail();
 });
 
-//CALENDAR
-const calendar = ref<CalendarInstance>();
+watch(dataWeek, () => {
+  chartData.value.datasets[0].data = dataWeek.value
+    .map((dataDay) => dataDay.learn_num)
+    .reverse();
+  chartData.value.datasets[1].data = dataWeek.value
+    .map((dataDay) => dataDay.review_num)
+    .reverse();
+});
 </script>
 
 <style scoped>
@@ -271,7 +315,7 @@ const calendar = ref<CalendarInstance>();
   /* border: 1px solid blue; */
   border-radius: 4px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
-  rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
 .stat-study {
@@ -332,5 +376,24 @@ const calendar = ref<CalendarInstance>();
 
 .el-divider {
   height: 50px;
+}
+
+.is-checked {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: auto;
+  border: 3px double #00ff00;
+  border-radius: 50%;
+  font-size: 16px;
+  text-align: center;
+  background-color: #b2ffb2;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 7px,
+    transparent 0,
+    transparent 14px
+  );
 }
 </style>
