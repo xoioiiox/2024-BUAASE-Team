@@ -52,7 +52,9 @@
                       >
                         <template #suffix>
                           <el-icon style="font-size: small">
-                            <!-- {{ getHourMin(dataToday?.time).type }} -->
+                            {{
+                              dataToday && filterHourMin(dataToday?.time).type
+                            }}
                           </el-icon>
                         </template>
                       </el-statistic>
@@ -245,8 +247,8 @@ const getDakaDetail = () => {
       console.log("Error get daka detail: ", err);
       //today, yesterday ...
       dakaDetail.value = [true, true, true, false, false, true, false, true];
-    })
-    .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
+    });
+  // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
 };
 
 //CHART
