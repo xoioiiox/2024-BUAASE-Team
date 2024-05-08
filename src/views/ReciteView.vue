@@ -176,7 +176,7 @@ const getDayRatio = () => {
 
 const BookRatio = ref(0)
 const getAllBookRatio = () => {
-  const response = axios.get('/api/word/now-book-ratio');
+  const response = axios.get('/api/word/now-book-ratio/');
   response.then(function (response) {
     console.log(response.data)
     //console.log(response.data)

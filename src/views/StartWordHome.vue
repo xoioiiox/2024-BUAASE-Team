@@ -19,7 +19,8 @@ export default {
       withCredentials: true
     }).then((res)=>{
       console.log(res)
-      this.ratio = res.data.ratio
+      this.ratio = res.data.ratio * 100
+
     })
   },
 
