@@ -157,14 +157,14 @@ export default {
 			this.infoDialog = true
 		},
 		submitInfo() {
-			console.log('info-form: ' + this.infoForm)
+			console.log('info-form: ', this.infoForm)
 			axios.put('/api/word/change-info/', {
 					//username: this.infoForm.username,
 					avatar: this.infoForm.avatar,
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
 			}).then((res)=> {
-				console.log('submit-info: ' + res)
+				console.log('submit-info: ', res)
 				if (res.status == 200) {
 					this.$message({
 						type: 'success',
@@ -181,7 +181,7 @@ export default {
 					password: this.passwordForm.new_password,
 					password_again: this.passwordForm.new_password_again
 			}).then((res)=> {
-				console.log('submit-res: ' + res)
+				console.log('submit-res: ', res)
 				if (res.status == 200) {
 					this.$message({
 						type: 'success',
@@ -252,7 +252,7 @@ export default {
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
 			}).then((res)=> {
-				console.log('avatar: ' + res)
+				console.log('avatar: ', res)
 				if (res.status == 200) {
 					this.$message({
 						type: 'success',

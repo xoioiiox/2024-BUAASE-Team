@@ -153,7 +153,7 @@ export default {
 			axios.post('/api/word/change-now-book/', {
 					bookname: bookname
 			}).then((res)=> {
-				console.log('choose: ' + res)
+				console.log('choose: ', res)
 				if (res.status == 200) {
 					this.$message({
 						type: 'success',
