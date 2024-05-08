@@ -49,12 +49,12 @@ const saveImg = () => {
 }
 
 //generateImg
-const imgSrcs = reactive(['./images/1.jpg',
-  './images/2.jpg',
-  './images/3.jpg',
-  './images/4.jpg',
-  './images/5.jpg',
-  './images/6.jpg'
+const imgSrcs = reactive(['/images/1.jpg',
+  '/images/2.jpg',
+  '/images/3.jpg',
+  '/images/4.jpg',
+  '/images/5.jpg',
+  '/images/6.jpg'
 ]);
 
 const generateImg = async (props) => {
@@ -66,8 +66,7 @@ const generateImg = async (props) => {
   var img = document.getElementById("canvas2img")
 
   var bgImage = new Image();
-  let m = await import(/* @vite-ignore */imgSrcs[props.firstProp % imgSrcs.length]);
-  bgImage.src = m.default;
+  bgImage.src = imgSrcs[props.firstProp % imgSrcs.length];
 
   bgImage.onload = () => {
     console.log("-1");
