@@ -5,6 +5,11 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  esbuild:{
+    pure: ['console.log'], // 删除 console.log
+    drop: ['debugger'], // 删除 debugger
+  },
+  
   plugins: [
     vue(),
   ],
