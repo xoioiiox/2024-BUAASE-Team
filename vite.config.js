@@ -9,7 +9,7 @@ export default defineConfig({
     pure: ['console.log'], // 删除 console.log
     drop: ['debugger'], // 删除 debugger
   },
-  
+
   plugins: [
     vue(),
   ],
