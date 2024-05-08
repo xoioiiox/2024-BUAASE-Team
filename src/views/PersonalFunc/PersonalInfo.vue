@@ -164,7 +164,8 @@ export default {
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
 			}).then((res)=> {
-				if (res.data.status == 200) {
+				console.log('submit-info: ' + res)
+				if (res.status == 200) {
 					this.$message({
 						type: 'success',
 						message: "修改个人信息成功"
@@ -181,14 +182,14 @@ export default {
 					password_again: this.passwordForm.new_password_again
 			}).then((res)=> {
 				console.log('submit-res: ' + res)
-				if (res.data.status == 200) {
+				if (res.status == 200) {
 					this.$message({
 						type: 'success',
 						message: "修改密码成功"
 					});
 				}
 				else {
-					if (res.data.errors[0].code == 400) {
+					if (res.errors[0].code == 400) {
 						this.$message({
 							type: 'error',
 							message: '新密码输入不一致'
@@ -251,7 +252,8 @@ export default {
 					phone: this.infoForm.phone,
 					wechat: this.infoForm.wechat
 			}).then((res)=> {
-				if (res.data.status == 200) {
+				console.log('avatar: ' + res)
+				if (res.status == 200) {
 					this.$message({
 						type: 'success',
 						message: "修改头像成功"
