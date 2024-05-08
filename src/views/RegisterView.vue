@@ -49,6 +49,7 @@ import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import {useRouter} from "vue-router";
 import {register} from "@/apis/apis";
+import { ElMessage } from 'element-plus'
 
 interface Form {
   username: string;
@@ -120,6 +121,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate(async  (valid) => {
     if (valid) {
       try {
+        ElMessage({
+          type: 'warning',
+          message: "请等待几秒，稍后会自动跳转至首页"
+        })
         // 1. 发送请求
         register(registerForm);
       } catch (e) {
