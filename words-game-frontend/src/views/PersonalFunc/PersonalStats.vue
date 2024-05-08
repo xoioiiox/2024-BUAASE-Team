@@ -91,13 +91,6 @@
                         : ''
                     "
                   >
-                    <div
-                      v-if="
-                        isPassedDay(cellData.date) && isDakaDay(cellData.date)
-                      "
-                    >
-                      hi
-                    </div>
                     {{ cellData.day.split("-").slice(2).join("-") }}
                   </div>
                 </template>
@@ -136,12 +129,6 @@ const chartOptions = {
     },
   },
 };
-const dakaUpdated = computed(() => {
-  const current = dakaDetail.value;
-  return {
-    data: dakaDetail.value,
-  };
-});
 
 // FUNCTIONS
 const getLast7Days = () => {
@@ -257,10 +244,9 @@ const getDakaDetail = () => {
     .catch((err) => {
       console.log("Error get daka detail: ", err);
       //today, yesterday ...
-      dakaDetail.value = [true, true, true, false, false, true, false];
-      nextTick();
-    });
-  // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
+      dakaDetail.value = [true, true, true, false, false, true, false, true];
+    })
+    .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
 };
 
 //CHART
@@ -293,8 +279,7 @@ const isPassedDay = (date: Date) => {
 
 const isDakaDay = (date: Date) => {
   const dayVal = date.getDate();
-  console.log(`day: ${dayVal} - ${dakaDetail[dayVal - 1]}`);
-  return dakaDetail[dayVal - 1];
+  return dakaDetail.value[dayVal - 1];
 };
 
 onBeforeMount(() => {
@@ -392,6 +377,21 @@ watch(dataWeek, () => {
 }
 
 .is-checked {
-  background-color: red;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: auto;
+  border: 3px double #00ff00;
+  border-radius: 50%;
+  font-size: 16px;
+  text-align: center;
+  background-color: #b2ffb2;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 7px,
+    transparent 0,
+    transparent 14px
+  );
 }
 </style>
