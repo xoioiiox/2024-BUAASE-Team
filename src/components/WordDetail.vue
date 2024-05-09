@@ -54,6 +54,15 @@ const examples = ref([
   }
 ]);
 
+const Ratio = ref(0)
+const getDayRatio = () => {
+  const response = axios.get('/api/word/get-daily-ratio/');
+  console.log(response.data)
+  response.then(function (response) {
+    console.log(response.data)
+    Ratio.value = response.data.ratio
+  })
+}
 
 const deleteWord = () => {
   // 删除单词的逻辑
@@ -69,7 +78,12 @@ const deleteWord = () => {
     .catch((error) => {
       console.log(error);
     });
-  router.push('/recite');
+    if(Ratio.value >= 1-0.005 && Ratio.value <= 1 + 0.005){
+      router.push('/PunchIn');
+    }
+    else{
+      router.push('/recite');
+    }
 };
 
 const correctWord = () => {
@@ -86,7 +100,12 @@ const correctWord = () => {
     .catch((error) => {
       console.log(error);
     });
-  router.push('/recite');
+    if(Ratio.value >= 1-0.005 && Ratio.value <= 1 + 0.005){
+      router.push('/PunchIn');
+    }
+    else{
+      router.push('/recite');
+    }
 };
 
 const recognizeWord = () => {
@@ -103,8 +122,12 @@ const recognizeWord = () => {
     .catch((error) => {
       console.log(error);
     });
-  router.push('/recite');
-
+    if(Ratio.value >= 1-0.005 && Ratio.value <= 1 + 0.005){
+      router.push('/PunchIn' );
+    }
+    else{
+      router.push('/recite');
+    }
 };
 
 const disabled = ref(false);
@@ -181,7 +204,7 @@ onBeforeMount(() => {
 
 onMounted(() => {
   //word.value = router.currentRoute.value.query.word;
-
+  getDayRatio();
   word.value = router.currentRoute.value.query.word == '' ? 'dog' : router.currentRoute.value.query.word;
   console.log("word:" + router.currentRoute.value.query.word);
   queryWord();

@@ -160,10 +160,10 @@ const getDayRatio = () => {
     if (response.status === 200) {
       //console.log(response.data)
       Ratio.value = response.data.ratio
-      ElMessage({
-        //message: '获取日常学习数据成功',
+      /*ElMessage({
+        message: '获取日常学习数据成功',
         type: 'success'
-      })
+      })*/
     } else {
       ElMessage({
         message: '获取日常学习数据失败',
@@ -213,10 +213,10 @@ const getNextWord = async () => {
     //console.log(response.data)
     newWord.value = response.data.word;
     console.log(newWord.value)
-    ElMessage({
-      //message: '获取单词成功',
+    /*ElMessage({
+      message: '获取单词成功',
       type: 'success'
-    });
+    });*/
   } else {
     ElMessage({
       message: '获取单词失败',
@@ -235,10 +235,10 @@ const TagWord = (newWord, rate) => {
   });
   response.then(function (response) {
     if (response.status === 200) {
-      ElMessage({
+      /*ElMessage({
         message: '标记成功',
         type: 'success'
-      });
+      });*/
     } else {
       ElMessage({
         message: '标记失败',
@@ -247,6 +247,7 @@ const TagWord = (newWord, rate) => {
     }
   })
   //跳转到单词释义界面
+
   router.push({ path: '/WordDetail', query: { word: newWord } })// 单词详细释义路由
 }
 
@@ -257,10 +258,10 @@ const collectWord = (newWord) => {
   });
   response.then(function (response) {
     if (response.status === 200) {
-      ElMessage({
+      /*ElMessage({
         message: '收藏成功',
         type: 'success'
-      });
+      });*/
     } else {
       ElMessage({
         message: '收藏失败',
@@ -278,10 +279,10 @@ const deleteWord = (newWord) => {
   });
   response.then(function (response) {
     if (response.status === 200) {
-      ElMessage({
+      /*ElMessage({
         message: '删除成功',
         type: 'success'
-      });
+      });*/
       notify('Delete word success')
     } else {
       ElMessage({
