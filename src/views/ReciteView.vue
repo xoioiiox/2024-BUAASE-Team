@@ -161,7 +161,7 @@ const getDayRatio = () => {
       //console.log(response.data)
       Ratio.value = response.data.ratio
       ElMessage({
-        message: '获取日常学习数据成功',
+        //message: '获取日常学习数据成功',
         type: 'success'
       })
     } else {
@@ -189,8 +189,6 @@ const getAllBookRatio = () => {
 //获取到的新单词
 const newWord = ref('hello')
 onMounted(() => {
-
-
   getDayRatio();
   getAllBookRatio();
   toPunchIn();
@@ -200,9 +198,9 @@ onMounted(() => {
 //跳转到打卡
 const toPunchIn = () => {
   if (Ratio.value >= 1 - 0.005 && Ratio.value <= 1 + 0.005) {
-    router.push({ path: '/PunchIn' });
+    router.push('/PunchIn' );
   } else if (BookRatio.value >= 1 - 0.00001 && BookRatio.value <= 1 + 0.00001) {
-    router.push({ path: '/PunchIn' });
+    router.push('/PunchIn' );
   }
 }
 
@@ -216,7 +214,7 @@ const getNextWord = async () => {
     newWord.value = response.data.word;
     console.log(newWord.value)
     ElMessage({
-      message: '获取单词成功',
+      //message: '获取单词成功',
       type: 'success'
     });
   } else {
@@ -295,6 +293,8 @@ const deleteWord = (newWord) => {
   })
   //刷新页面，获取一个新的单词，获取新的学习进度
   getDayRatio();
+  getAllBookRatio();
+  toPunchIn();
   getNextWord();
 }
 
