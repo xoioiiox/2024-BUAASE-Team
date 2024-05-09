@@ -45,34 +45,34 @@ export default {
 
   <el-row class="home-container">
     <el-col :span="8" class="home-col">
-      <el-card style="max-width: 480px; max-height: 400px">
-        <!-- <router-link to="/StartWordHome">-->
+      <el-card class="home-card" :body-style="{ padding: '0px' }">
         <img
-          class="image"
+          class="home-image"
           @click="goToWord"
           src="https://s2.loli.net/2024/04/29/HPLpnfmO9aGlCbI.png"
         />
-
-        <!-- </router-link>-->
+        <div class="overlay">
+          <el-button type="primary" round @click="goToWord"
+            >开始背单词</el-button
+          >
+        </div>
       </el-card>
-      <el-button type="primary" round @click="goToWord">开始背单词</el-button>
     </el-col>
 
     <el-col :span="8" class="home-col">
-      <el-card style="max-width: 480px; max-height: 400px">
-        <!--<router-link to="/WordDetail">-->
+      <el-card class="home-card" :body-style="{ padding: '0px' }">
         <img
-          class="image"
+          class="home-image"
           @click="goToGame"
           src="https://s2.loli.net/2024/04/29/tiKkA4aUm2lLySh.png"
         />
-        <!--</router-link>-->
+        <div class="overlay">
+          <el-button type="primary" round @click="goToGame"
+            >Around the Words <br />
+            在游戏中学单词</el-button
+          >
+        </div>
       </el-card>
-      <!--<router-link to="/PersonalBook">-->
-      <el-button type="primary" round @click="goToGame"
-        >Around the Words ——在游戏中学单词</el-button
-      >
-      <!--</router-link>-->
     </el-col>
   </el-row>
 </template>
@@ -104,13 +104,56 @@ export default {
   gap: 200px;
 }
 
-/* .home-col {
-  border: 1px solid;
+.home-col {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-card {
+  /* border: 1px solid black; */
+  position: relative;
+}
+
+/* .el-card__body {
+  --el-card-padding: 0;
 } */
 
-.el-button {
+.home-image {
+  object-fit: fill;
+  display: block;
   width: 100%;
+  height: 400px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: #409eff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-card:hover .overlay {
+  opacity: 1;
+}
+
+.el-button {
+  background-color: #fff;
+  color: #409eff;
+  width: 150px;
   height: 60px;
+  overflow-wrap: break-word;
+  font: bold;
 }
 
 /*
