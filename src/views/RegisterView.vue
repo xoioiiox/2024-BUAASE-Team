@@ -45,11 +45,26 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import {onMounted, reactive, ref} from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import {useRouter} from "vue-router";
 import {register} from "@/apis/apis";
-import { ElMessage } from 'element-plus'
+import {ElMessage, ElNotification} from 'element-plus'
+
+// 定义一个方法来显示通知
+const showNotification = () => {
+  ElNotification({
+    title: 'Warning',
+    message: '本网站尚处于测试阶段，用户名与密码请不要与日常使用相似，以免造成损失 [手机号只需为1开头的11位号码]',
+    type: 'warning',
+    duration: 5000
+  });
+}
+
+// 在页面挂载后调用showNotification方法
+onMounted(() => {
+  showNotification();
+});
 
 interface Form {
   username: string;
