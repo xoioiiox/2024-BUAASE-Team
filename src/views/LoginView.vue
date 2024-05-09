@@ -1,62 +1,69 @@
 <template>
   <div class="login-container">
-    
     <el-card class="login-card">
       <!-- 显示单词英语区域 -->
-      <img src="../assets/user.svg" alt="Logo" class="logo">
+      <img src="../assets/user.svg" alt="Logo" class="logo" />
       <h2 class="login-title">登录</h2>
       <!-- 登录表单区域 -->
       <el-form
-          ref="loginFormRef"
-          :model="loginForm"
-          :rules="rules"
-          status-icon
-          label-position="top">
+        ref="loginFormRef"
+        :model="loginForm"
+        :rules="rules"
+        status-icon
+        label-position="top"
+      >
         <!-- 用户名 -->
         <el-form-item label="用户名" prop="username">
-          <el-input 
-          v-model="loginForm.username" 
-          prefix-icon="el-icon-user" 
-          placeholder="请输入用户名">
-        </el-input>
+          <el-input
+            v-model="loginForm.username"
+            prefix-icon="el-icon-user"
+            placeholder="请输入用户名"
+          >
+          </el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item label="密码" prop="password">
           <el-input
-              v-model="loginForm.password"
-              prefix-icon="el-icon-lock"
-              placeholder="请输入密码"
-              show-password
+            v-model="loginForm.password"
+            prefix-icon="el-icon-lock"
+            placeholder="请输入密码"
+            show-password
           ></el-input>
         </el-form-item>
 
-      <!-- 按钮区域 -->
+        <!-- 按钮区域 -->
         <div class="login-button-container">
-          <el-button class="login-button" type="primary" @click="submitForm(loginFormRef)">登录</el-button>
-          <el-button class="login-button" type="primary" @click="resetForm(loginFormRef)">重置</el-button>
+          <el-button
+            class="login-button"
+            type="primary"
+            @click="submitForm(loginFormRef)"
+            >登录</el-button
+          >
+          <el-button
+            class="login-button"
+            type="primary"
+            @click="resetForm(loginFormRef)"
+            >重置</el-button
+          >
         </div>
         <div class="login-button-container">
-          <el-button class="login-button" @click="register">没有账号？注册</el-button>
+          <el-button class="login-button" @click="register"
+            >没有账号？注册</el-button
+          >
         </div>
       </el-form>
     </el-card>
   </div>
 </template>
 
-
-
-
-
-
-
 <script lang="ts" setup>
-import type { FormInstance, FormRules } from 'element-plus'
-import {reactive, ref} from "vue";
-import {useRouter} from "vue-router";
-import {login} from "@/apis/apis";
+import type { FormInstance, FormRules } from "element-plus";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import { login } from "@/apis/apis";
 //import axios from "axios";
 
-import {useUserStore} from "@/stores/userStore"
+import { useUserStore } from "@/stores/userStore";
 
 interface Form {
   username: string;
@@ -64,76 +71,81 @@ interface Form {
 }
 
 const loginForm = reactive<Form>({
-  username: '',
-  password: '',
-})
+  username: "",
+  password: "",
+});
 
-const loginFormRef = ref<FormInstance>()
+const loginFormRef = ref<FormInstance>();
 
 const router = useRouter();
 
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (!value) {
-    return callback(new Error('用户名不能为空'))
-  }else{
-    callback()
+    return callback(new Error("用户名不能为空"));
+  } else {
+    callback();
   }
-}
+};
 
 const validatePassword = (rule: any, value: any, callback: any) => {
   if (!value) {
-    return callback(new Error('密码不能为空'))
-  }else{
-    callback()
+    return callback(new Error("密码不能为空"));
+  } else {
+    callback();
   }
-}
+};
 
 const rules = reactive<FormRules<typeof loginForm>>({
-  username: [{ validator: validateUsername, trigger: 'blur' }],
-  password: [{ validator: validatePassword, trigger: 'blur' }],
-})
+  username: [{ validator: validateUsername, trigger: "blur" }],
+  password: [{ validator: validatePassword, trigger: "blur" }],
+});
 
 interface LoginForm {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
-const userStore = useUserStore();   // 从stores中引入
+const userStore = useUserStore(); // 从stores中引入
 
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
+  if (!formEl) return;
   // 验证表单内容
-  formEl.validate(async  (valid) => {
+  formEl.validate(async (valid) => {
     if (valid) {
       try {
-          login(loginForm);  // 调用登录api
+        login(loginForm); // 调用登录api
 
-        userStore.login(loginForm);   //  从stores中引入
-        }catch (e){
+        userStore.login(loginForm); //  从stores中引入
+      } catch (e) {
         // 4. 处理注册失败情况
-        this.$message.error('登录失败，请检查用户名或密码');
+        this.$message.error("登录失败，请检查用户名或密码");
         console.error(e);
       }
     } else {
-      console.log('error submit!')
-      this.$message.error('登录失败，请检查用户名或密码');
-      return false
+      console.log("error submit!");
+      this.$message.error("登录失败，请检查用户名或密码");
+      return false;
     }
-  })
-}
+  });
+};
 
 const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
-}
+  if (!formEl) return;
+  formEl.resetFields();
+};
 
-const register= ()=>{
-  router.push('/register')
-}
+const register = () => {
+  router.push("/register");
+};
 </script>
 
 <style scoped>
 .login-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,8 +174,6 @@ const register= ()=>{
   margin-bottom: 20px;
 }
 
-
-
 .login-button-container {
   display: flex;
   justify-content: center;
@@ -171,29 +181,27 @@ const register= ()=>{
   margin-top: 20px;
 }
 
-.login-button{
+.login-button {
   width: 100%;
   height: 100%;
 }
 
-.choice-button{
+.choice-button {
   width: 100%;
   height: 100%;
 }
 
-
-.delete-button-container{
+.delete-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
 
-.choice-button-container{
+.choice-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
-
 </style>
