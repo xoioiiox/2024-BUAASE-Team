@@ -227,9 +227,7 @@ const getWordDataWeek = () => {
         },
       ];
     })
-    .finally(() => {
-      // console.log("finally: ", dataWeek.value[0]);
-    });
+
 };
 
 const getDakaDetail = () => {
@@ -307,7 +305,7 @@ watch(dataWeek, () => {
 
 .stat-page {
   /* border: 1px solid red; */
-  height: 100%!;
+  height: 100%;
   padding-left: 50px;
 }
 
