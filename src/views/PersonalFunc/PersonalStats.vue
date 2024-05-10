@@ -232,7 +232,7 @@ const getWordDataWeek = () => {
 
 const getDakaDetail = () => {
   axios
-    .get("/api/word/get-daka-detail", {
+    .get("/api/word/get-daka-detail/", {
       params: { days: today.getDate() },
     })
     .then((res) => {
