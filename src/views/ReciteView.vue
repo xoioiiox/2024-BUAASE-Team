@@ -254,7 +254,7 @@ const TagWord = (newWord, rate) => {
 //将单词加入生词本
 const collectWord = (newWord) => {
   const response = axios.post('/api/word/add-favor-word/', {
-    word: newWord.value
+    word: newWord
   });
   response.then(function (response) {
     if (response.status === 200) {
