@@ -22,29 +22,36 @@ export interface UserInfo {
 
 
 export async function login(data: LoginForm) {
-    const response = await axios.post('/api/word/login/', data);
-    //const response = {status: 200, data:{code:0, id:1, username:"123", role:"user"}}
-    if (response.status === 200) {//状态码200，请求正确
-        ElMessage({
-            message: '登录成功',
-            type: 'success'
-        });
-        const userinfo = {
-            userName:response.data.username,
+    const response = await axios.post('/api/word/login/', data).then((response) => {
+        if (response.status === 200) {//状态码200，请求正确
+            ElMessage({
+                message: '登录成功',
+                type: 'success'
+            });
+            const userinfo = {
+                userName:response.data.username,
+            }
+            router.push('/') //跳转到首页
+        } else {
+            ElMessage({
+                message: '登录失败，请检查用户名与密码',
+                type: 'error'
+            });
         }
-        router.push('/') //跳转到首页
-    } else {
-        ElMessage({
-            message: '登录失败',
-            type: 'error'
-        });
-    }
+    })
+        .catch((error) => {
+            ElMessage({
+                message: '登录失败，请检查用户名与密码',
+                type: 'error'
+            });
+        })
+ 
 }
 
 export async function register(data: RegisterForm) {
-    const response = await axios.post('/api/word/register/', data);
-    if (response.status === 200) { //状态码200，请求正确
-        ElMessage({
+    const response = await axios.post('/api/word/register/', data).then((response) => {
+        if (response.status === 200) {//状态码200，请求正确
+            ElMessage({
             message: '注册成功',
             type: 'success'
         });
@@ -54,11 +61,19 @@ export async function register(data: RegisterForm) {
             userPassword:response.data.password,
         }
         router.push('/') //跳转到首页
-    }else{
-        ElMessage({
-            message: '注册失败',
-            type: 'error'
-        });
-    }
+        } else {
+           ElMessage({
+                message: '注册失败',
+                type: 'error'
+             });
+        }
+    })
+        .catch((error) => {
+           ElMessage({
+                message: '注册失败',
+                type: 'error'
+            });
+        })
+    
 }
 
