@@ -1,6 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import PersonalBook from "../views/PersonalFunc/PersonalBook.vue";
 import PersonalSetting from "../views/PersonalFunc/PersonalSetting.vue";
+import PersonalRank from "../views/PersonalFunc/PersonalRank.vue";
+import PersonalAchieve from "../views/PersonalFunc/PersonalAchieve.vue";
+
 import WordDetail from "../components/WordDetail.vue";
 import PersonalInfo from "../views/PersonalFunc/PersonalInfo.vue";
 import Home from "@/views/Home.vue";
@@ -66,6 +69,16 @@ const router = createRouter({
       path: "/PersonalSetting",
       name: "PersonalSetting",
       component: PersonalSetting,
+    },
+    {
+      path: "/PersonalRank",
+      name: "PersonalRank",
+      component: PersonalRank,
+    },
+    {
+      path: "/PersonalAchieve",
+      name: "PersonalAchieve",
+      component: PersonalAchieve,
     },
     {
       path: "/SavedWords",
