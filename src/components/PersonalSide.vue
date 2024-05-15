@@ -28,9 +28,13 @@
           <el-icon><User /></el-icon>
           <span>个人信息</span>
         </el-menu-item>
-        <el-menu-item index="">
+        <el-menu-item index="/PersonalRank">
           <el-icon><Histogram /></el-icon>
           <span>排行榜</span>
+        </el-menu-item>
+        <el-menu-item index="/PersonalAchieve">
+          <el-icon><Trophy /></el-icon>
+          <span>成就展示</span>
         </el-menu-item>
         <!--el-menu-item index="6" @click="toSetting()">
           <el-icon><setting /></el-icon>
