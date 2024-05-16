@@ -36,21 +36,17 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 //word
-const word = ref('Hello');//router.query.word
+const word = ref('');//router.query.word
 const dict = ref('');
-const pronunciation = ref(' həˈləʊ ');
+const pronunciation = ref('');
 const theSrc = 'https://fanyi-api.baidu.com/api/trans/api/tts?query=hello&appid=20210101000000001&lang=en&sign=169aa0398cfb86ace951aa8a96ec44fd'.replace(/^https:\/\/fanyi-api\.baidu\.com/, '/fanyi');
 const pronunciationSrc = ref(theSrc);
-const testWord = ref("fuck");
+const testWord = ref("");
 
 const examples = ref([
   {
-    part: 'n.',
-    means: '打招呼'
-  },
-  {
-    part: 'v.',
-    means: '说'
+    part: '',
+    means: ''
   }
 ]);
 
