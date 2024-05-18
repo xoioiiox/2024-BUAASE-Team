@@ -66,7 +66,7 @@ const generateImg = async (props) => {
   var img = document.getElementById("canvas2img")
 
   var bgImage = new Image();
-  bgImage.src = imgSrcs[props.firstProp % imgSrcs.length];
+  bgImage.src = imgSrcs[Math.floor(Math.random() * imgSrcs.length)];
 
   bgImage.onload = () => {
     console.log("-1");

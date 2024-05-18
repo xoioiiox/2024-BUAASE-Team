@@ -59,7 +59,7 @@ const getInfo = () => {
     .then((response) => {
       console.log(response);
       consecutiveDays.value = response.data.days;
-      inspiration.value = inspirations[consecutiveDays.value % inspirations.length]
+      inspiration.value = inspirations[Math.floor(Math.random() * inspirations.length)];
     })
     .catch((error) => {
       console.log(error);
@@ -79,6 +79,15 @@ const goHome = () => {
 
 const nextSet = () => {
   // 继续下一组的逻辑
+  axios.post('/api/word/next-group/')
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+    .finally(() => {
+    });
   router.push('/recite');
 }
 
