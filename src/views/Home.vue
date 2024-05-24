@@ -30,8 +30,11 @@ export default {
     },
 
     goToGame() {
-      //this.$router.push({ name: 'StartWordHome', meta: { requiresAuth: true } });
-      ElMessage.error("暂未开发完成");
+      // ElMessage.error("暂未开发完成");
+      this.$router.push({
+        name: "StartGameHome",
+        meta: { requiresAuth: true },
+      });
     },
   },
 };
@@ -153,7 +156,7 @@ export default {
   width: 150px;
   height: 60px;
   overflow-wrap: break-word;
-  font: bold;
+  font-weight: bold;
 }
 
 /*
