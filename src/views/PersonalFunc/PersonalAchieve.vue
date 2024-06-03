@@ -1,72 +1,443 @@
 <template>
+	<div class="bg">
+		<img
+			class="shrink-0 image_2 pos_74"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
+		<img
+			class="shrink-0 image_2 pos_68"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
 	<div>
-			<el-row :gutter="20">
-				<el-col :span="6">
-					<PersonalSide></PersonalSide>
-				</el-col>
-				<el-col :span="18">
-					<h2>个人成就</h2>
-					<div class="achieveList">
-						<div>
-							<div class="box-space">
-								<el-row>
-									<el-col v-for="(item, index) in achieveCards" :key="index" :span="4">
-										<el-card shadow="hover"  class="achieveCard">
-											<p>{{item}}</p>
-										</el-card>
-									</el-col>
-								</el-row>
-							</div>
-							<el-card shadow="never" class="shelf s1"></el-card>
-							<div class="box-space"></div>
-							<el-card shadow="never" class="shelf s2"></el-card>
-							<div class="box-space"></div>
-							<el-card shadow="never" class="shelf s3"></el-card>
-						</div>
+		<div class="back-home" @click="goBackHome()">
+			<span class="font_13">乐词不疲</span>
+		</div>
+		<el-row :gutter="20">
+			<div class="header">
+				<div class="text-wrapper_10">
+					<span class="font_16 text_22">成就展示</span>
+				</div>
+			</div>
+			<div class="Personalside">
+				<div class="text-wrapper_14 pos_79" @click="toChooseBook">
+					<span class="font_18 text_40">选择词书</span>
+				</div>
+				<div class="text-wrapper_14 pos_80" @click="toStatistics">
+					<span class="font_18 text_40">统计信息</span>
+				</div>
+				<div class="section_1 pos_81" @click="toAchieve">
+					<img
+						class="image_1"
+						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
+					/>
+					<span class="font_19 text_2 ml-11">成就展示</span>
+				</div>
+				<div class="text-wrapper_14 pos_82" @click="toRank">
+					<span class="font_18 text_40">排行榜</span>
+				</div>
+				<div class="text-wrapper_14 pos_83" @click="toEditInfo">
+					<span class="font_18 text_40">个人信息</span>
+				</div>
+			</div>
+				<!--div class="setting">
+					<el-button type="primary" @click="studySetting()">学习设置</el-button>
+					<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
+				</div-->
+				<div class="card-container">
+					<div class="inner-card-container">
+
 					</div>
-				</el-col>
-			</el-row>
+				</div>
+		</el-row>
+	</div>
 	</div>
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
+import yaml from 'js-yaml'
+
 export default {
 	components: {PersonalSide},
-	async create() {
-		await axios.get('').then((res)=> {
-			
+	async created() {
+		/*获取当前词书*/
+		await axios.get('/api/word/get-now-word-book/')
+		.then((res)=>{
+			//console.log(res)
+			this.curBook = res.data.book_name
+		})
+		/*获取全部词书*/
+		await axios.get('/api/word/get-all-word-book/')
+		.then((res)=>{
+			//console.log(res)
+			this.wordBooks = res.data.word_books
+		})
+		await axios.get('/api/word/get-plan/')
+		.then((res)=>{
+			this.settingForm.new_number = res.data.num
+		})
+		await axios.get('/api/word/get-review-limit/')
+		.then((res)=>{
+			this.settingForm.review_number = res.data.limit
 		})
 	},
 	data() {
 		return {
-			achieveCards: ["one", "two", "three"],
-
+			wordBookDialog: false,
+			// 用于存储当前选择的文件
+			currentFile: null,
+			uploadBookName: "",
+			settingDialog: false,
+			settingForm: {
+				new_number: "10",
+				review_number: "10"
+			},
+			options: [
+				{value: '10', label: '10'},
+				{value: '15', label: '15'},
+				{value: '20', label: '20'},
+			],
+			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书"],
+			curBook: "大学英语四级"
 		}
 	},
 	methods: {
+		goBackHome() {
+			this.$router.push('/')
+		},
+		toChooseBook() {
+			this.$router.push({ path: "/PersonalBook/" });
+		},
+		toEditInfo() {
+			this.$router.push({ path: "/PersonalInfo/" });
+		},
+		toAchieve() {
+			this.$router.push({ path: "/PersonalAchieve/" });
+		},
+		toSavedWords() {
+			this.$router.push({ path: "/SavedWords" });
+		},
+		toRank() {
+			this.$router.push({ path: "/PersonalRank" });
+		},
+		toStatistics() {
+			this.$router.push({ path: "/Statistics" });
+		},
+		ChooseThisBook(bookname) {
+			console.log(bookname)
+			this.curBook = bookname
+			axios.post('/api/word/change-now-book/', {
+					bookname: bookname
+			}).then((res)=> {
+				console.log('choose: ', res)
+				this.$message({
+					type: 'success',
+					message: "选择成功"
+				});
+			})
+		},
+		studySetting() {
+			this.settingDialog = true;
+		},
+		submitInfo() {
+			console.log("new:" + this.settingForm.new_number)
+			console.log("new:" + this.settingForm.new_number)
+			/*修改每日计划新词*/
+			axios.post('/api/word/set-plan/', {
+					num: this.settingForm.new_number
+			}).then((res)=> {
+			})
+			/*修改每日复习上限*/
+			axios.post('/api/word/set-review-limit/', {
+					num: this.settingForm.review_number
+			}).then((res)=> {
+				
+			})
+			this.settingDialog = false
+			this.$message({
+				type: 'success',
+				message: "修改成功"
+			});
+		},
+
+		/*   以下为上传词书操作   */
+		wordBookSetting() {
+			this.wordBookDialog = true
+		},
+		handleChange(file) {
+			// file 参数包含了当前选择的文件信息
+			this.currentFile = file.raw; // 'raw' 是原生文件对象
+			// 可以在这里添加上传逻辑或进一步处理文件
+
+		},
+		handleExceed(files, fileList) {
+			// 当上传的文件数量超过限制数量时触发
+			this.$message.error('只能选择一个文件进行上传');
+		},
+
+
+		async readFile(file) {
+			const reader = new FileReader()
+			const promise = new Promise((resolve, reject) => {
+				reader.onload = function () {
+					resolve(reader.result)
+				}
+				reader.onerror = function (e) {
+					reader.abort()
+					reject(e)
+				}
+			})
+			reader.readAsText(file, 'UTF-8') // 将文件读取为文本
+
+			return promise
+		},
+
+
+
+		async submitUpload() {
+			console.log(this.currentFile)
+
+			const isTXT = this.currentFile.type === 'text/plain';
+			console.log(isTXT)
+			if (!isTXT) {
+				this.$message.error('只可上传 TXT 格式文本文件');
+				return ; // 仅当文件类型为 TXT 时返回 true，否则返回 false
+			}
+
+
+			let res = await this.readFile(this.currentFile) // res 为文件中内容
+
+			const fileName = this.currentFile.name
+			this.uploadBookName =  fileName.split('.').slice(0, -1).join('.')
+
+			console.log(this.uploadBookName)
+
+			try {
+				// res 为 yaml 格式的内容（从文本文件中取得）
+
+
+
+				const json = yaml.load(res) // 输出为 json 格式
+
+			 /* console.log(json)
+				console.log(typeof json)*/
+
+				const wordArray = json.split(/\s+/)
+
+			/*  console.log(wordArray)
+				console.log(typeof wordArray)*/
+
+				axios({
+					method: 'post',
+					url: '/api/word/import/',
+					data: {
+						book_name: this.uploadBookName,
+						words: wordArray
+					}
+				}).then((res)=> {
+				})
+
+
+			} catch (e) {
+				this.$message({ message: "格式转换错误，请重新选择文件上传", type: 'error', duration: 2000 })
+			}
+
+			this.wordBookDialog = false
+			this.currentFile = null
+			this.uploadBookName = ""
+			this.$refs.upload.clearFiles()
+		}
+
+
 
 	}
 }
 </script>
 
 <style scoped>
-.shelf {
-	height: 10px;
-	box-shadow: rgba(0, 0, 0, 0.101) 4px 2px 3px;
-	margin-right: 50px;
-	background-color:lightgrey;
+.bg {
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+	background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
 }
-.box-space {
-	height: 150px;
+.image_2 {
+	width: 876px;
+	height: 546px;
 }
-.achieveCard {
+.pos_74 {
+	position: absolute;
+	left: 90px;
+	top: 100px;
+}
+.pos_68 {
+	position: absolute;
+	right: 90px;
+	top: 100px;
+}
+.setting {
+	margin-left: 800px;
+}
+/*home*/
+.back-home {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 50px;
+	cursor: pointer;
+	z-index: 99; /*绝对定位下，需要设置高优先级*/
+}
+.font_13 {
+	font-size: 38px;
+	font-family: Poppins;
+	line-height: 44.5px;
+	color: #ffffff;
+	text-shadow: 0px 4px 10px #fbdd6f;
+}
+/*header*/
+.header {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.text-wrapper_10 {
+	position: absolute;
+	display: flex;
+	justify-content: center;
 	margin-top: 40px;
-	height: 120px;
-	width: 120px;
+	margin-left: 100px;
+	padding: 16px 0;
+	background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
+	border-radius: 12px;
+	width: 280px;
 }
-.s1 {
-	margin-top: 10px;
+.font_16 {
+	font-size: 40px;
+	font-family: Poppins;
+	line-height: 46px;
+	font-weight: 800;
+	color: #2c0b6c;
+}
+.text_22 {
+	line-height: 45.5px;
+}
+/*高亮标签*/
+.section_1 {
+	padding: 20px 0;
+	background-color: #fffefe;
+	border-radius: 10px 0px 0px 10px;
+	box-shadow: 0px 4px 4px #ffd217;
+	width: 200px;
+	border: solid 2px #fbdd6f;
+	position: absolute;
+	cursor: pointer;
+	z-index: 99;
+}
+.image_1 {
+	margin-left: 20px;
+	width: 30px;
+	height: 30px;
+}
+.text_2 {
+	line-height: 34px;
+	font-size: 30px;
+	font-family: Poppins;
+	line-height: 34px;
+	font-weight: 800;
+	color: #ffd033;
+	margin-left: 10px;
+}
+/*灰色标签*/
+.text-wrapper_14 {
+	padding: 20px 0;
+	background-color: #f5f0f8;
+	border-radius: 10px 0px 0px 10px;
+	width: 150px;
+	cursor: pointer;
+	z-index: 99;
+}
+.pos_79 {
+	position: absolute;
+	left: 150px;
+	top: 180px;
+}
+.pos_80 {
+	position: absolute;
+	left: 150px;
+	top: 270px;
+}
+.pos_81 {
+	position: absolute;
+	left: 100px;
+	top: 355px;
+}
+.pos_82 {
+	position: absolute;
+	left: 150px;
+	top: 450px;
+}
+.pos_83 {
+	position: absolute;
+	left: 150px;
+	top: 540px;
+}
+.font_18 {
+	font-size: 26px;
+	font-family: Poppins;
+	line-height: 30.5px;
+	font-weight: 800;
+	color: #888888;
+	line-height: 30.5px;
+	margin-left: 30px;
+}
+/*收藏生词本*/
+.section_34 {
+	background-color: #ddf0ff;
+	border-radius: 36px;
+	width: 160px;
+	height: 160px;
+	border: solid 2px #5c7fac96;
+}
+.image_27 {
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+	margin: 10px 0 10px 40px;
+}
+.text-wrapper_15 {
+	display: flex;
+	justify-content: center;
+	margin: 0 10px;
+	padding: 8px 0;
+	background-color: #ffffff;
+	border-radius: 20px;
+	border: solid 1px #5c7fac;
+	cursor: pointer;
+	z-index: 99;
+}
+.font_21 {
+	font-size: 20px;
+	font-family: Poppins;
+	color: #150437;
+}
+/*选择容器*/
+.card-container {
+	margin-top: 80px;
+	margin-left: 300px;
+	margin-right: 120px;
+	padding: 28px 0;
+	background-color: #fce6c6;
+	border-radius: 80px;
+	width: 1000px;
+	height: 560px;
+}
+.inner-card-container {
+	padding: 60px 50px;
+	background-color: #fff9ed;
+	border-radius: 80px;
+	width: 820px;
+	height: 440px;
+	margin: 0 40px;
+	display: flex; /*解决块级元素不能一行显示*/
 }
 </style>

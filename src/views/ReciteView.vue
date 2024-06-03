@@ -22,7 +22,7 @@
         <div class="word-container-above">
         <img
           class="image_13 pos_42"
-          src="https://ide.code.fun/api/image?token=66557494a16e9e00125033f8&name=f501e932e66d1649c7ec82cc48ec3403.png"
+          src="../assets/recite-bg.png"
         />
         <el-card class="word-container">
           <!-- 单词 -->
@@ -35,7 +35,7 @@
         </div>
         <img
           class="image_20 pos_55"
-          src="https://ide.code.fun/api/image?token=66557494a16e9e00125033f8&name=cb0ddd5e3a5cc636a8de786573b52a0c.png"
+          src="../assets/right-arrow.png"
         />
         <!-- 下方认识程度选择区域 -->
         <!-- 选择按钮区域 -->
