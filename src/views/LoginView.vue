@@ -1,6 +1,13 @@
 <template>
   <div class="login-container">
-
+    <img
+			class="shrink-0 image_2 pos_74"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
+		<img
+			class="shrink-0 image_2 pos_68"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
     <el-card class="login-card">
       <!-- 显示单词英语区域 -->
       <!--img src="../assets/user.svg" alt="Logo" class="logo" /-->
@@ -158,6 +165,21 @@ const register = () => {
   background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
 }
 
+.image_2 {
+  width: 876px;
+  height: 546px;
+}
+.pos_74 {
+  position: absolute;
+  left: 90px;
+  top: 100px;
+}
+.pos_68 {
+  position: absolute;
+  right: 30px;
+  top: 100px;
+}
+
 .login-card {
   padding: 10px 60px 50px;
   background-color: #5782c147;
@@ -240,5 +262,10 @@ const register = () => {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+}
+
+/deep/.el-form-item__label {
+  font-size: 14px;
+  color: #ffffff;
 }
 </style>
