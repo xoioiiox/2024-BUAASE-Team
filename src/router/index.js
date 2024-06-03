@@ -4,7 +4,7 @@ import PersonalSetting from "../views/PersonalFunc/PersonalSetting.vue";
 import PersonalRank from "../views/PersonalFunc/PersonalRank.vue";
 import PersonalAchieve from "../views/PersonalFunc/PersonalAchieve.vue";
 
-import WordDetail from "../components/WordDetail.vue";
+import WordDetail from "../views/WordDetail.vue";
 import PersonalInfo from "../views/PersonalFunc/PersonalInfo.vue";
 import Home from "@/views/Home.vue";
 import SavedWords from "../views/PersonalFunc/SavedWords.vue";
