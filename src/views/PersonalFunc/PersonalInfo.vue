@@ -1,438 +1,329 @@
 <template>
-	<div class="bg">
-		<img
-			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
-		<img
-			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
 	<div>
-		<div class="back-home" @click="goBackHome()">
-			<span class="font_13">乐词不疲</span>
-		</div>
 		<el-row :gutter="20">
-			<div class="header">
-				<div class="text-wrapper_10">
-					<span class="font_16 text_22">个人信息</span>
-				</div>
-			</div>
-			<div class="Personalside">
-				<div class="text-wrapper_14 pos_79" @click="toChooseBook">
-					<span class="font_18 text_40">选择词书</span>
-				</div>
-				<div class="text-wrapper_14 pos_80" @click="toStatistics">
-					<span class="font_18 text_40">统计信息</span>
-				</div>
-				<div class="text-wrapper_14 pos_81" @click="toAchieve">
-					<span class="font_18 text_40">成就展示</span>
-				</div>
-				<div class="text-wrapper_14 pos_82" @click="toRank">
-					<span class="font_18 text_40">排行榜</span>
-				</div>
-				<div class="section_1 pos_83" @click="toEditInfo">
-					<img
-						class="image_1"
-						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
-					/>
-					<span class="font_19 text_2 ml-11">个人信息</span>
-				</div>
-			</div>
-				<div class="card-container">
-					<div class="inner-card-container">
-
+			<el-col :span="6">
+				<PersonalSide ref="side"></PersonalSide>
+			</el-col>
+			<el-col :span="18">
+				<h2>个人信息</h2>
+				<div class="Info">
+					<div>
+						<el-row>
+							<el-col :span="3">
+								<el-avatar :size="100" :src="this.infoForm.avatar"></el-avatar>
+							</el-col>
+							<el-col :span="4" class="upload_avatar">
+								<!--el-tooltip
+									class="box-item"
+									effect="dark"
+									content="上传头像"
+									placement="top">
+								</el-tooltip-->
+								<el-button type="text" @click="uploadAvatar()">
+									<el-icon><Upload /></el-icon>上传头像
+								</el-button>
+							</el-col>
+						</el-row>
+						<div class="infoForm">
+							<el-descriptions column="2" size="large">
+								<el-descriptions-item label="用户名">{{this.infoForm.username}}</el-descriptions-item>
+								<el-descriptions-item label="等级">
+									<el-tag size="small">{{this.infoForm.level}}</el-tag>
+								</el-descriptions-item>
+								<el-descriptions-item label="绑定手机号">{{this.infoForm.phone}}</el-descriptions-item>
+								<el-descriptions-item label="绑定微信">{{this.infoForm.wechat}}</el-descriptions-item>
+							</el-descriptions>
+						</div>
+						<div class="modify">
+							<el-button size="large" @click="changePassword()">修改密码</el-button>
+							<el-button size="large" @click="modifyInfo()">修改信息</el-button>
+						</div>
+						<div>
+							<el-dialog title="修改密码" v-model="passwordDialog" width="30%">
+								<el-form :model="passwordForm" label-width="auto" :rules="rules">
+									<el-form-item label="原密码" prop="old_password">
+									<el-input v-model="passwordForm.old_password" autocomplete="off"></el-input>
+									</el-form-item>
+									<el-form-item label="新密码" prop="new_password">
+									<el-input v-model="passwordForm.new_password" autocomplete="off"></el-input>
+									</el-form-item>
+									<el-form-item label="确认密码" prop="new_password_again">
+									<el-input v-model="passwordForm.new_password_again" autocomplete="off"></el-input>
+									</el-form-item>
+								</el-form>
+								<div slot="footer" class="dialog-footer">
+									<el-button @click="passwordDialog = false">取 消</el-button>
+									<el-button type="primary" @click="submitPassword()">确 定</el-button>
+								</div>
+							</el-dialog>
+						</div>
+						<div>
+							<el-dialog title="修改信息" v-model="infoDialog" width="30%">
+								<el-form :model="infoForm" label-width="auto" :rules="rules">
+									<!--el-form-item label="用户名" prop="username">
+									<el-input v-model="infoForm.username" autocomplete="off"></el-input>
+									</el-form-item-->
+									<el-form-item label="绑定手机号" prop="phone">
+									<el-input v-model="infoForm.phone" autocomplete="off"></el-input>
+									</el-form-item>
+									<el-form-item label="绑定微信" prop="wechat">
+									<el-input v-model="infoForm.wechat" autocomplete="off"></el-input>
+									</el-form-item>
+								</el-form>
+								<div slot="footer" class="dialog-footer">
+									<el-button @click="infoDialog = false">取 消</el-button>
+									<el-button type="primary" @click="submitInfo()">确 定</el-button>
+								</div>
+							</el-dialog>
+						</div>
+						<div class="avatarDialog">
+							<el-dialog title="上传头像" v-model="uploadDialog" width="30%">
+								<el-upload
+									class="avatar-uploader"
+									action="#"
+									:http-request="upload"
+									:show-file-list="false"
+									:on-change="handleAvatarPreview"
+									:before-upload="beforeAvatarUpload">
+									<img v-if="imageUrl" :src="imageUrl" class="avatar" />
+									<el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+								</el-upload>
+								<div style="margin-top:20px">
+									<el-button type="primary" @click="submitAvatar()">确认</el-button>
+									<el-button @click="uploadDialog=false">取消</el-button>
+								</div>
+							</el-dialog>
+						</div>
 					</div>
 				</div>
+			</el-col>
 		</el-row>
-	</div>
 	</div>
 </template>
 
 <script>
+import PersonalSide from "../../components/PersonalSide.vue"
+import {useUserStore} from "@/stores/userStore.js"
 import axios from "axios"
-import yaml from 'js-yaml'
-
 export default {
 	components: {PersonalSide},
 	async created() {
-		/*获取当前词书*/
-		await axios.get('/api/word/get-now-word-book/')
+		await axios.get('/api/word/get-info/')
 		.then((res)=>{
-			//console.log(res)
-			this.curBook = res.data.book_name
-		})
-		/*获取全部词书*/
-		await axios.get('/api/word/get-all-word-book/')
-		.then((res)=>{
-			//console.log(res)
-			this.wordBooks = res.data.word_books
-		})
-		await axios.get('/api/word/get-plan/')
-		.then((res)=>{
-			this.settingForm.new_number = res.data.num
-		})
-		await axios.get('/api/word/get-review-limit/')
-		.then((res)=>{
-			this.settingForm.review_number = res.data.limit
+			console.log(res)
+			this.infoForm.avatar = res.data.avatar;
+			this.infoForm.username = res.data.username;
+			this.infoForm.phone = res.data.phone;
+			this.infoForm.wechat = res.data.wechat;
 		})
 	},
 	data() {
 		return {
-			wordBookDialog: false,
-			// 用于存储当前选择的文件
-			currentFile: null,
-			uploadBookName: "",
-			settingDialog: false,
-			settingForm: {
-				new_number: "10",
-				review_number: "10"
+			passwordDialog: false,
+			infoDialog: false,
+			uploadDialog: false,
+			imageUrl: '',
+			image_formData: new FormData(),
+			infoForm: {
+				avatar: "",
+				username: "",
+				level: "1",
+				phone: "",
+				wechat: ""
 			},
-			options: [
-				{value: '10', label: '10'},
-				{value: '15', label: '15'},
-				{value: '20', label: '20'},
-			],
-			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书"],
-			curBook: "大学英语四级"
+			passwordForm: {
+				old_password: "",
+				new_password: "",
+				new_password_again: "",
+			},
+			rules: {
+				old_password: [
+					{ required: true, message: "请输入原密码", trigger: "blur" },
+				],
+				new_password: [
+					{ required: true, message: "请输入新密码", trigger: "blur" },
+				],
+				new_password_again: [
+					{ required: true, message: "请再次输入新密码", trigger: "blur" },
+				],
+			},
 		}
 	},
 	methods: {
-		goBackHome() {
-			this.$router.push('/')
+		changePassword() {
+			this.passwordDialog = true
 		},
-		toChooseBook() {
-			this.$router.push({ path: "/PersonalBook/" });
-		},
-		toEditInfo() {
-			this.$router.push({ path: "/PersonalInfo/" });
-		},
-		toAchieve() {
-			this.$router.push({ path: "/PersonalAchieve/" });
-		},
-		toSavedWords() {
-			this.$router.push({ path: "/SavedWords" });
-		},
-		toRank() {
-			this.$router.push({ path: "/PersonalRank" });
-		},
-		toStatistics() {
-			this.$router.push({ path: "/Statistics" });
-		},
-		ChooseThisBook(bookname) {
-			console.log(bookname)
-			this.curBook = bookname
-			axios.post('/api/word/change-now-book/', {
-					bookname: bookname
-			}).then((res)=> {
-				console.log('choose: ', res)
-				this.$message({
-					type: 'success',
-					message: "选择成功"
-				});
-			})
-		},
-		studySetting() {
-			this.settingDialog = true;
+		modifyInfo() {
+			this.infoDialog = true
 		},
 		submitInfo() {
-			console.log("new:" + this.settingForm.new_number)
-			console.log("new:" + this.settingForm.new_number)
-			/*修改每日计划新词*/
-			axios.post('/api/word/set-plan/', {
-					num: this.settingForm.new_number
+			console.log('info-form: ', this.infoForm)
+			axios.put('/api/word/change-info/', {
+					//username: this.infoForm.username,
+					avatar: this.infoForm.avatar,
+					phone: this.infoForm.phone,
+					wechat: this.infoForm.wechat
 			}).then((res)=> {
-			})
-			/*修改每日复习上限*/
-			axios.post('/api/word/set-review-limit/', {
-					num: this.settingForm.review_number
-			}).then((res)=> {
-				
-			})
-			this.settingDialog = false
-			this.$message({
-				type: 'success',
-				message: "修改成功"
-			});
-		},
-
-		/*   以下为上传词书操作   */
-		wordBookSetting() {
-			this.wordBookDialog = true
-		},
-		handleChange(file) {
-			// file 参数包含了当前选择的文件信息
-			this.currentFile = file.raw; // 'raw' 是原生文件对象
-			// 可以在这里添加上传逻辑或进一步处理文件
-
-		},
-		handleExceed(files, fileList) {
-			// 当上传的文件数量超过限制数量时触发
-			this.$message.error('只能选择一个文件进行上传');
-		},
-
-
-		async readFile(file) {
-			const reader = new FileReader()
-			const promise = new Promise((resolve, reject) => {
-				reader.onload = function () {
-					resolve(reader.result)
-				}
-				reader.onerror = function (e) {
-					reader.abort()
-					reject(e)
+				console.log('submit-info: ', res)
+				if (res.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改个人信息成功"
+					});
 				}
 			})
-			reader.readAsText(file, 'UTF-8') // 将文件读取为文本
-
-			return promise
+			this.infoDialog = false
 		},
-
-
-
-		async submitUpload() {
-			console.log(this.currentFile)
-
-			const isTXT = this.currentFile.type === 'text/plain';
-			console.log(isTXT)
-			if (!isTXT) {
-				this.$message.error('只可上传 TXT 格式文本文件');
-				return ; // 仅当文件类型为 TXT 时返回 true，否则返回 false
-			}
-
-
-			let res = await this.readFile(this.currentFile) // res 为文件中内容
-
-			const fileName = this.currentFile.name
-			this.uploadBookName =  fileName.split('.').slice(0, -1).join('.')
-
-			console.log(this.uploadBookName)
-
-			try {
-				// res 为 yaml 格式的内容（从文本文件中取得）
-
-
-
-				const json = yaml.load(res) // 输出为 json 格式
-
-			 /* console.log(json)
-				console.log(typeof json)*/
-
-				const wordArray = json.split(/\s+/)
-
-			/*  console.log(wordArray)
-				console.log(typeof wordArray)*/
-
-				axios({
-					method: 'post',
-					url: '/api/word/import/',
-					data: {
-						book_name: this.uploadBookName,
-						words: wordArray
+		submitPassword() {
+			console.log(this.passwordForm)
+			axios.post('/api/word/reset-password/', {
+					original_password: this.passwordForm.old_password,
+					password: this.passwordForm.new_password,
+					password_again: this.passwordForm.new_password_again
+			}).then((res)=> {
+				console.log('submit-res: ', res)
+				if (res.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改密码成功"
+					});
+				}
+				else {
+					if (res.errors[0].code == 400) {
+						this.$message({
+							type: 'error',
+							message: '新密码输入不一致'
+						});
 					}
-				}).then((res)=> {
-				})
+					else {
+						this.$message({
+							type: 'error',
+							message: '原密码错误'
+						});
+					}
+				}
+			})
+		},
+		uploadAvatar() {
+			this.uploadDialog = true
+		},
+		handleAvatarPreview(file) {
 
+			let fd = new FormData()
+			fd.append('smfile', file.raw)
+			this.image_formData = fd
 
-			} catch (e) {
-				this.$message({ message: "格式转换错误，请重新选择文件上传", type: 'error', duration: 2000 })
+			axios.post('/api/word/uploadAvatar/', this.image_formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+					/*'Authorization': "u6OmOCWVF8lXN6tN2rP8zaJWbWOWRatv",*/
+					// 'Content-Type': 'application/json'
+				}
+			}).then(response => {
+			}).catch(err => {
+				console.log(err)
+			});
+
+      axios.get('/api/word/get-info/')
+          .then((res)=>{
+            console.log(res)
+            this.imageUrl = res.data.avatar
+          })
+
+		},
+		beforeAvatarUpload(file) {
+			const isJPG = file.type === 'image/jpeg';
+			const isLt5M = file.size / 1024 / 1024 < 5;
+
+			if (!isJPG) {
+				this.$message.error('只可上传 JPG 格式图片');
 			}
 
-			this.wordBookDialog = false
-			this.currentFile = null
-			this.uploadBookName = ""
-			this.$refs.upload.clearFiles()
+			if (!isLt5M) {
+      			this.$message.error('图片大小不能超过 5MB!');
+    		}
+			return isJPG && isLt5M;
+		},
+		submitAvatar() {
+			this.infoForm.avatar = this.imageUrl
+			console.log("in" + this.infoForm.avatar)
+			axios.put('/api/word/change-info/', {
+					avatar: this.infoForm.avatar,
+					phone: this.infoForm.phone,
+					wechat: this.infoForm.wechat
+			}).then((res)=> {
+				console.log('avatar: ', res)
+				if (res.status == 200) {
+					this.$message({
+						type: 'success',
+						message: "修改头像成功"
+					});
+				}
+			})
+			this.$refs.side.changeAvatar(this.imageUrl);
+			this.imageUrl = '';
+			this.uploadDialog = false
 		}
-
-
-
 	}
 }
 </script>
 
 <style scoped>
-.bg {
-	height: 100vh;
-	background-size: cover;
-	background-position: center;
-	background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
-}
-.image_2 {
-	width: 876px;
-	height: 546px;
-}
-.pos_74 {
-	position: absolute;
-	left: 90px;
-	top: 100px;
-}
-.pos_68 {
-	position: absolute;
-	right: 90px;
-	top: 100px;
-}
-.setting {
-	margin-left: 800px;
-}
-/*home*/
-.back-home {
-	position: absolute;
-	margin-top: 20px;
-	margin-left: 50px;
-	cursor: pointer;
-	z-index: 99; /*绝对定位下，需要设置高优先级*/
-}
-.font_13 {
-	font-size: 38px;
-	font-family: Poppins;
-	line-height: 44.5px;
-	color: #ffffff;
-	text-shadow: 0px 4px 10px #fbdd6f;
-}
-/*header*/
-.header {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-.text-wrapper_10 {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
-	margin-left: 100px;
-	padding: 16px 0;
-	background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
-	border-radius: 12px;
-	width: 280px;
-}
-.font_16 {
-	font-size: 40px;
-	font-family: Poppins;
-	line-height: 46px;
-	font-weight: 800;
-	color: #2c0b6c;
-}
-.text_22 {
-	line-height: 45.5px;
-}
-/*高亮标签*/
-.section_1 {
-	padding: 20px 0;
-	background-color: #fffefe;
-	border-radius: 10px 0px 0px 10px;
-	box-shadow: 0px 4px 4px #ffd217;
-	width: 200px;
-	border: solid 2px #fbdd6f;
-	position: absolute;
-	cursor: pointer;
-	z-index: 99;
-}
-.image_1 {
-	margin-left: 20px;
-	width: 30px;
-	height: 30px;
-}
-.text_2 {
-	line-height: 34px;
-	font-size: 30px;
-	font-family: Poppins;
-	line-height: 34px;
-	font-weight: 800;
-	color: #ffd033;
-	margin-left: 10px;
-}
-/*灰色标签*/
-.text-wrapper_14 {
-	padding: 20px 0;
-	background-color: #f5f0f8;
-	border-radius: 10px 0px 0px 10px;
-	width: 150px;
-	cursor: pointer;
-	z-index: 99;
-}
-.pos_79 {
-	position: absolute;
-	left: 150px;
-	top: 180px;
-}
-.pos_80 {
-	position: absolute;
-	left: 150px;
-	top: 270px;
-}
-.pos_81 {
-	position: absolute;
-	left: 150px;
-	top: 360px;
-}
-.pos_82 {
-	position: absolute;
-	left: 150px;
-	top: 450px;
-}
-.pos_83 {
-	position: absolute;
-	left: 100px;
-	top: 535px;
-}
-.font_18 {
-	font-size: 26px;
-	font-family: Poppins;
-	line-height: 30.5px;
-	font-weight: 800;
-	color: #888888;
-	line-height: 30.5px;
+.Info {
+	margin-top: 80px;
 	margin-left: 30px;
 }
-/*收藏生词本*/
-.section_34 {
-	background-color: #ddf0ff;
-	border-radius: 36px;
-	width: 160px;
-	height: 160px;
-	border: solid 2px #5c7fac96;
+.el-card {
+	width: 180px;
+	height: 220px;
 }
-.image_27 {
-	border-radius: 50%;
-	width: 80px;
-	height: 80px;
-	margin: 10px 0 10px 40px;
+.infoForm {
+	width: 600px;
+	margin-left: 10px;
+	margin-top: 20px;
 }
-.text-wrapper_15 {
-	display: flex;
-	justify-content: center;
-	margin: 0 10px;
-	padding: 8px 0;
-	background-color: #ffffff;
-	border-radius: 20px;
-	border: solid 1px #5c7fac;
-	cursor: pointer;
-	z-index: 99;
+.el-input {
+	max-width: 200px;
 }
-.font_21 {
-	font-size: 20px;
-	font-family: Poppins;
-	color: #150437;
+.modify {
+	margin-top: 30px;
 }
-/*选择容器*/
-.card-container {
+.upload_avatar {
 	margin-top: 80px;
-	margin-left: 300px;
-	margin-right: 120px;
-	padding: 28px 0;
-	background-color: #fce6c6;
-	border-radius: 80px;
-	width: 1000px;
-	height: 560px;
 }
-.inner-card-container {
-	padding: 60px 50px;
-	background-color: #fff9ed;
-	border-radius: 80px;
-	width: 820px;
-	height: 440px;
-	margin: 0 40px;
-	display: flex; /*解决块级元素不能一行显示*/
+/deep/.el-descriptions__label {
+	font-size: medium;
+	font-weight: normal;
+}
+/*/deep/.el-descriptions__content {
+	font-size: medium;
+}*/
+.avatar-uploader .el-upload {
+	border: 1px dashed var(--el-border-color);
+	border-radius: 6px;
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+	transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+	border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+	font-size: 28px;
+	color: #8c939d;
+	width: 178px;
+	height: 178px;
+	text-align: center;
+}
+.avatar-uploader .avatar {
+	width: 178px;
+	height: 178px;
+	display: block;
+}
+.avatarDialog {
+	text-align: center
 }
 </style>

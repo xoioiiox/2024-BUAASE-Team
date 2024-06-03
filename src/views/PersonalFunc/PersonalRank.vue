@@ -51,11 +51,16 @@
 								<div class="text-wrapper_19 ml-190"><span class="font_26">LV.97</span></div>
 							</div>
 						</div>
-						<div class="mt-22 flex-row items-center section_53">
-							<div class="flex-row justify-start items-center text-wrapper_19"><span class="font_16 text_58">NO.2</span></div>
-							<div class="flex-row justify-start text-wrapper_20"><span class="font_25">username</span></div>
-							<div class="flex-row justify-start items-center text-wrapper_19 view_11"><span class="font_26">LV.95</span></div>
+						<div class="mt-22 section_53">
+							<div class="text-wrapper_19"><span class="font_16 text_58">NO.2</span></div>
+							<div class="text-wrapper_20"><span class="font_25">username</span></div>
+							<div class="text-wrapper_19 view_11"><span class="font_26">LV.95</span></div>
 						</div>
+						<!--div class="mt-22 flex-row section_54">
+							<span class="font_26">NO.3</span>
+							<span class="font_25 ml-240">username</span>
+							<span class="font_26 text_60 ml-240">LV.92</span>
+						</div-->
 					</div>
 				</div>
 		</el-row>
@@ -286,24 +291,23 @@ export default {
 	width: 820px;
 	height: 440px;
 	margin: 0 40px;
-	display: flex; /*解决块级元素不能一行显示*/
 }
 /*排行列表*/
 .ml-190 {
-  margin-left: 190px;
+  margin-left: 150px;
 }
 .section_52 {
-	width: 100%;
+	width: 90%;
 	height: 0;
-  margin-right: 10px;
-  padding: 30px 40px;
+  margin-right: 30px;
+  padding: 10px 30px;
 	border-top: 100px solid #e9a522;
   border-right: 25px solid transparent;
   border-left: 25px solid transparent;
 }
 .inner-text {
-	display: flex;
-	margin-top: -100px;
+	display: flex;/*解决块级元素不能一行显示*/
+	margin-top: -85px;
 }
 .text-wrapper_19 {
   width: 80px;
@@ -335,8 +339,27 @@ export default {
   font-weight: 800;
   color: #2c0b6c;
 }
-.text-wrapper_19 {
-  width: 195px;
+.section_53 {
+  margin-right: 40px;
+  padding: 20px 10px;
+  background-color: #d9d9d9;
+	display: flex;
+	width: 100%;
+}
+.text_58 {
+  color: #000000;
+  line-height: 36px;
+}
+.text-wrapper_20 {
+  margin-left: 180px;
+}
+.view_11 {
+  margin-left: 230px;
+  margin-right: 50px;
+}
+/*other layer*/
+.ml-240 {
+  margin-left: 240px;
 }
 .font_25 {
   font-size: 36px;
@@ -352,21 +375,13 @@ export default {
   font-weight: 800;
   color: #000000;
 }
-.section_53 {
-  margin-left: 38px;
-  margin-right: 40px;
-  padding: 32px 0 34px;
+.section_54 {
+  margin-left: 56px;
+  margin-right: 64px;
+  padding: 24px 24px 34px;
   background-color: #d9d9d9;
 }
-.text_58 {
-  color: #000000;
-  line-height: 36px;
-}
-.text-wrapper_20 {
-  margin-left: 172px;
-}
-.view_11 {
-  margin-left: 230px;
-  margin-right: 50px;
+.text_60 {
+  margin-right: 64px;
 }
 </style>
