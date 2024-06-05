@@ -1,4 +1,7 @@
 <template>
+    <div class="back-home" @click="goBackHome()">
+			<span class="font_13">乐词不疲</span>
+		</div>
   <div class="login-container">
     <img
 			class="shrink-0 image_2 pos_74"
@@ -77,6 +80,10 @@ import { useUserStore } from "@/stores/userStore";
 interface Form {
   username: string;
   password: string;
+}
+
+const goBackHome= ()=> {
+  router.push('/')
 }
 
 const loginForm = reactive<Form>({
@@ -164,7 +171,20 @@ const register = () => {
   background-position: center;
   background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
 }
-
+.back-home {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 50px;
+	cursor: pointer;
+	z-index: 99; /*绝对定位下，需要设置高优先级*/
+}
+.font_13 {
+	font-size: 38px;
+	font-family: Poppins;
+	line-height: 44.5px;
+	color: #ffffff;
+	text-shadow: 0px 4px 10px #fbdd6f;
+}
 .image_2 {
   width: 876px;
   height: 546px;

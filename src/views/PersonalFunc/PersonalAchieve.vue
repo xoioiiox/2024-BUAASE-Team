@@ -45,7 +45,14 @@
 				</div-->
 				<div class="card-container">
 					<div class="inner-card-container">
-
+						<el-row :gutter="20">
+							<el-col v-for="(item, index) in achieveCards" :key="index" :span="6">
+								<el-card shadow="hover" :class="item.owned == true? 'achieveCard-y': 'achieveCard-g'">
+									<p class="achieve-title">{{item.name}}</p>
+									<p>{{item.description}}</p>
+								</el-card>
+							</el-col>
+						</el-row>
 					</div>
 				</div>
 		</el-row>
@@ -61,45 +68,20 @@ import yaml from 'js-yaml'
 export default {
 	components: {PersonalSide},
 	async created() {
-		/*获取当前词书*/
-		await axios.get('/api/word/get-now-word-book/')
-		.then((res)=>{
-			//console.log(res)
-			this.curBook = res.data.book_name
-		})
-		/*获取全部词书*/
-		await axios.get('/api/word/get-all-word-book/')
-		.then((res)=>{
-			//console.log(res)
-			this.wordBooks = res.data.word_books
-		})
-		await axios.get('/api/word/get-plan/')
-		.then((res)=>{
-			this.settingForm.new_number = res.data.num
-		})
-		await axios.get('/api/word/get-review-limit/')
-		.then((res)=>{
-			this.settingForm.review_number = res.data.limit
+		await axios.get('').then((res)=> {
+			this.achieveCards = res.data.achieve_list
 		})
 	},
 	data() {
 		return {
-			wordBookDialog: false,
-			// 用于存储当前选择的文件
-			currentFile: null,
-			uploadBookName: "",
-			settingDialog: false,
-			settingForm: {
-				new_number: "10",
-				review_number: "10"
-			},
-			options: [
-				{value: '10', label: '10'},
-				{value: '15', label: '15'},
-				{value: '20', label: '20'},
+			achieveCards: [
+				{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: true, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
 			],
-			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书"],
-			curBook: "大学英语四级"
 		}
 	},
 	methods: {
@@ -124,133 +106,6 @@ export default {
 		toStatistics() {
 			this.$router.push({ path: "/Statistics" });
 		},
-		ChooseThisBook(bookname) {
-			console.log(bookname)
-			this.curBook = bookname
-			axios.post('/api/word/change-now-book/', {
-					bookname: bookname
-			}).then((res)=> {
-				console.log('choose: ', res)
-				this.$message({
-					type: 'success',
-					message: "选择成功"
-				});
-			})
-		},
-		studySetting() {
-			this.settingDialog = true;
-		},
-		submitInfo() {
-			console.log("new:" + this.settingForm.new_number)
-			console.log("new:" + this.settingForm.new_number)
-			/*修改每日计划新词*/
-			axios.post('/api/word/set-plan/', {
-					num: this.settingForm.new_number
-			}).then((res)=> {
-			})
-			/*修改每日复习上限*/
-			axios.post('/api/word/set-review-limit/', {
-					num: this.settingForm.review_number
-			}).then((res)=> {
-				
-			})
-			this.settingDialog = false
-			this.$message({
-				type: 'success',
-				message: "修改成功"
-			});
-		},
-
-		/*   以下为上传词书操作   */
-		wordBookSetting() {
-			this.wordBookDialog = true
-		},
-		handleChange(file) {
-			// file 参数包含了当前选择的文件信息
-			this.currentFile = file.raw; // 'raw' 是原生文件对象
-			// 可以在这里添加上传逻辑或进一步处理文件
-
-		},
-		handleExceed(files, fileList) {
-			// 当上传的文件数量超过限制数量时触发
-			this.$message.error('只能选择一个文件进行上传');
-		},
-
-
-		async readFile(file) {
-			const reader = new FileReader()
-			const promise = new Promise((resolve, reject) => {
-				reader.onload = function () {
-					resolve(reader.result)
-				}
-				reader.onerror = function (e) {
-					reader.abort()
-					reject(e)
-				}
-			})
-			reader.readAsText(file, 'UTF-8') // 将文件读取为文本
-
-			return promise
-		},
-
-
-
-		async submitUpload() {
-			console.log(this.currentFile)
-
-			const isTXT = this.currentFile.type === 'text/plain';
-			console.log(isTXT)
-			if (!isTXT) {
-				this.$message.error('只可上传 TXT 格式文本文件');
-				return ; // 仅当文件类型为 TXT 时返回 true，否则返回 false
-			}
-
-
-			let res = await this.readFile(this.currentFile) // res 为文件中内容
-
-			const fileName = this.currentFile.name
-			this.uploadBookName =  fileName.split('.').slice(0, -1).join('.')
-
-			console.log(this.uploadBookName)
-
-			try {
-				// res 为 yaml 格式的内容（从文本文件中取得）
-
-
-
-				const json = yaml.load(res) // 输出为 json 格式
-
-			 /* console.log(json)
-				console.log(typeof json)*/
-
-				const wordArray = json.split(/\s+/)
-
-			/*  console.log(wordArray)
-				console.log(typeof wordArray)*/
-
-				axios({
-					method: 'post',
-					url: '/api/word/import/',
-					data: {
-						book_name: this.uploadBookName,
-						words: wordArray
-					}
-				}).then((res)=> {
-				})
-
-
-			} catch (e) {
-				this.$message({ message: "格式转换错误，请重新选择文件上传", type: 'error', duration: 2000 })
-			}
-
-			this.wordBookDialog = false
-			this.currentFile = null
-			this.uploadBookName = ""
-			this.$refs.upload.clearFiles()
-		}
-
-
-
 	}
 }
 </script>
@@ -390,36 +245,6 @@ export default {
 	line-height: 30.5px;
 	margin-left: 30px;
 }
-/*收藏生词本*/
-.section_34 {
-	background-color: #ddf0ff;
-	border-radius: 36px;
-	width: 160px;
-	height: 160px;
-	border: solid 2px #5c7fac96;
-}
-.image_27 {
-	border-radius: 50%;
-	width: 80px;
-	height: 80px;
-	margin: 10px 0 10px 40px;
-}
-.text-wrapper_15 {
-	display: flex;
-	justify-content: center;
-	margin: 0 10px;
-	padding: 8px 0;
-	background-color: #ffffff;
-	border-radius: 20px;
-	border: solid 1px #5c7fac;
-	cursor: pointer;
-	z-index: 99;
-}
-.font_21 {
-	font-size: 20px;
-	font-family: Poppins;
-	color: #150437;
-}
 /*选择容器*/
 .card-container {
 	margin-top: 80px;
@@ -439,5 +264,23 @@ export default {
 	height: 440px;
 	margin: 0 40px;
 	display: flex; /*解决块级元素不能一行显示*/
+}
+/*成就卡片*/
+.achieveCard-y {
+	background-color: #fcdd64;
+  border-radius: 20px;
+  width: 180px;
+  height: 200px;
+}
+.achieveCard-g {
+	background-color: #00000040;
+  border-radius: 20px;
+  width: 180px;
+  height: 200px;
+}
+.achieve-title {
+  font-size: 28px;
+  font-family: Poppins;
+  font-weight: 800;
 }
 </style>

@@ -1,4 +1,7 @@
 <template>
+    <div class="back-home" @click="goBackHome()">
+			<span class="font_13">乐词不疲</span>
+		</div>
   <div class="register-container">
     <img
 			class="shrink-0 image_2 pos_74"
@@ -169,6 +172,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
 const login= ()=>{
   router.push('/login')
 }
+
+const goBackHome= ()=> {
+  router.push('/')
+}
 </script>
 
 <style scoped>
@@ -196,7 +203,20 @@ const login= ()=>{
   right: 30px;
   top: 100px;
 }
-
+.back-home {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 50px;
+	cursor: pointer;
+	z-index: 99; /*绝对定位下，需要设置高优先级*/
+}
+.font_13 {
+	font-size: 38px;
+	font-family: Poppins;
+	line-height: 44.5px;
+	color: #ffffff;
+	text-shadow: 0px 4px 10px #fbdd6f;
+}
 .register-card {
   padding: 10px 60px 50px;
   background-color: #5782c147;
