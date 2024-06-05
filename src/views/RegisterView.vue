@@ -1,5 +1,13 @@
 <template>
   <div class="register-container">
+    <img
+			class="shrink-0 image_2 pos_74"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
+		<img
+			class="shrink-0 image_2 pos_68"
+			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+		/>
     <el-card class="register-card">
       <!--img src="../assets/user.svg" alt="Logo" class="logo"-->
       <h2 class="register-title">用户注册</h2>
@@ -174,6 +182,20 @@ const login= ()=>{
   background-position: center;
   background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
 }
+.image_2 {
+  width: 876px;
+  height: 546px;
+}
+.pos_74 {
+  position: absolute;
+  left: 90px;
+  top: 100px;
+}
+.pos_68 {
+  position: absolute;
+  right: 30px;
+  top: 100px;
+}
 
 .register-card {
   padding: 10px 60px 50px;
@@ -241,4 +263,8 @@ const login= ()=>{
   color: #2c0b6c;
 }
 
+/deep/.el-form-item__label {
+  font-size: 14px;
+  color: #ffffff;
+}
 </style>

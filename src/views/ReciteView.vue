@@ -1,59 +1,42 @@
 <template>
-
+  <img
+    class="shrink-0 image_2 pos_43"
+    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+  />
+  <img
+    class="shrink-0 image_2 pos_37"
+    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+  />
   <div class="common-layout">
-    <el-container>
-      <!-- 浏览器上方区域 -->
-      <div aria-label="A complete example of page header">
-        <!-- 返回主页箭头 -->
-        <el-page-header @back="back2home">
-          <template #content>
-          </template>
-          <!-- 收藏删除按钮区域 -->
-          <template #extra>
-            <div class="flex items-center">
-              <!-- 收藏按钮 -->
-              <el-button @click="collectWord(newWord)">收藏</el-button>
-              <!-- 删除按钮，双重确认 -->
-              <el-popconfirm title="Are you sure to delete this?" @confirm="deleteWord(newWord)">
-                <template #reference>
-                  <el-button type="primary" class="ml-2">删除</el-button>
-                </template>
-              </el-popconfirm>
-            </div>
-          </template>
-        </el-page-header>
+    <!-- 返回主页箭头 -->
+      <span @click="back2home" class="back-to-home">back</span>
+    <!-- 顶部区域 -->
+      <div class="centered-content">
+        <div class="demo-progress">
+          <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
+        </div>
       </div>
-      <!-- 顶部区域 -->
-      <el-header>
-        <!-- 进度显示区域 -->
-        <el-row type="flex" justify="center" align="middle" style="height: 20vh;">
-          <el-col :span="18">
-            <div class="centered-content">
-              <div class="demo-progress">
-                <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
-              </div>
-            </div>
-          </el-col>
-        </el-row>
-      </el-header>
       <!-- 展示主体区域 -->
       <el-main>
         <!-- 显示单词英语区域 -->
+        <div class="word-container-above">
+        <img
+          class="image_13 pos_42"
+          src="../assets/recite-bg.png"
+        />
         <el-card class="word-container">
           <!-- 单词 -->
-          <div class="timeNewRomanCard" align="center" style="margin-top: 10px;">
-            <!--            hello-->
-            {{ newWord }}
-          </div>
+          <div class="timeNewRomanCard" align="center" style="margin-top: 40px;">{{ newWord }}</div>
           <!-- 音标 -->
-          <div class="black-body" align="center" style="margin-top: 10px;">
-            <!--            /həˈləʊ/-->
-          </div>
+          <div class="black-body" align="center" style="margin-top: 10px;"></div>
           <!-- 例句 -->
-          <div class="black-body" align="center" style="margin-top: 100px;">
-            <!--            This is a sentence about hello.-->
-          </div>
+          <div class="black-body" align="center" style="margin-top: 100px;"></div>
         </el-card>
+        </div>
+        <img
+          class="image_20 pos_55"
+          src="../assets/right-arrow.png"
+        />
         <!-- 下方认识程度选择区域 -->
         <!-- 选择按钮区域 -->
         <!-- 跳转到单词详细释义界面，打上不认识标签 -->
@@ -80,7 +63,6 @@
           </el-col>
         </el-row>
       </el-main>
-    </el-container>
   </div>
 </template>
 
@@ -89,7 +71,6 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
 import { onMounted, ref, onUnmounted, watch } from "vue";
-
 
 const route1 = useRoute();
 const enterTime = ref(null);
@@ -247,7 +228,6 @@ const TagWord = (newWord, rate) => {
     }
   })
   //跳转到单词释义界面
-
   router.push({ path: '/WordDetail', query: { word: newWord } })// 单词详细释义路由
 }
 
@@ -308,9 +288,85 @@ const router = useRouter();
 
 
 <style scoped>
+.image_2 {
+  width: 876px;
+  height: 546px;
+}
+.pos_43 {
+  position: absolute;
+  left: 100px;
+  top: 100px;
+}
+.pos_37 {
+  position: absolute;
+  right: 100px;
+  top: 100px;
+}
+.back-to-home {
+  margin-top: 20px;
+}
+.common-layout {
+  /*display: flex;
+  justify-content: center;
+  align-items: center;*/
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
+}
+.demo-progress {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+.el-progress {
+  width: 100%;
+  border-radius: 50px;
+  border-left: solid 8px #fbdd6f;
+  border-right: solid 8px #fbdd6f;
+  border-top: solid 8px #fbdd6f;
+  border-bottom: solid 8px #fbdd6f;
+}
+.star-icon {
+  color: yellow;
+  cursor: pointer;
+  font-size: 24px; /* 根据需要调整大小 */
+}
+/*背景卡片*/
+.image_13 {
+  border-radius: 24px;
+  filter: drop-shadow(0px 4px 2px #00000040);
+  width: 700px;
+  height: 400px;
+}
+.pos_42 {
+  position: absolute;
+  right: 230px;
+  bottom: 210px;
+}
+/*右箭头*/
+.image_20 {
+  width: 70px;
+  height: 120px;
+}
+.pos_55 {
+  position: absolute;
+  right: 112px;
+  bottom: 360px;
+}
+
 .choice-button {
-  width: 200px;
-  height: 100px;
+  width: 80%;
+  height: 100%;
+  padding: 14px 0;
+  border-radius: 10px;
+  background-color: #2c0b6c;
+  /*font*/
+  font-size: 16px;
+  font-family: Poppins;
+  line-height: 19px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .choice-button-container {
@@ -347,12 +403,26 @@ const router = useRouter();
   font-family: 'Time New Roman', Times, serif;
   font-size: 80px;
 }
-
+.word-container-above {
+  display: flex;
+  justify-content: center;  
+}
 .word-container {
+  z-index: 1; /*使得卡片显示在上层*/
   display: flex;
   justify-content: center;
-  height: 50vh;
-  margin-top: 25px;
+  /*height: 50vh;
+  margin-top: 25px;*/
+  padding: 64px 0 90px;
+  background-color: #fefbf0;
+  border-radius: 24px;
+  box-shadow: 0px 6px 10px #00000066;
+  width: 800px;
+  height: 250px;
+  border-left: solid 1px #c8b058;
+  border-right: solid 1px #c8b058;
+  border-top: solid 1px #c8b058;
+  border-bottom: solid 1px #c8b058;
 }
 
 .black-body {

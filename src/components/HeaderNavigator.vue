@@ -12,6 +12,7 @@ export default {
 </script>
 
 <template>
+  <div class="bg">
   <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -34,12 +35,16 @@ export default {
     </el-menu-item>
 
   </el-menu>
+  </div>
 </template>
 
 
 
 
 <style scoped>
+.bg {
+  background-image: linear-gradient(180deg, #16093d 0%, #2c0b6c 100%);
+}
 .flex-grow {
   flex-grow: 1;
 }
