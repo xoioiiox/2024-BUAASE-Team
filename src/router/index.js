@@ -29,7 +29,9 @@ import event3 from "@/components/eventCards/event3.vue";
 
 import StartGameHome from "@/views/StartGameHome.vue"
 
+import SnakeGame from "@/views/SnakeGame/SnakeGame.vue"
 
+import GameChoose from "@/views/GameChoose.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -138,7 +140,20 @@ const router = createRouter({
       path: '/StartGameHome',
       name: 'StartGameHome',
       component: StartGameHome
+    },
+    {
+      path: '/SnakeGame',
+      name: 'SnakeGame',
+      component: SnakeGame
+    },
+    {
+      path: '/GameChoose',
+      name: 'GameChoose',
+      component: GameChoose
     }
+
+
+
   ]
 })
 
