@@ -18,6 +18,7 @@ import Guide from "@/views/Guide.vue";
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
+import DrawView from '../views/DrawView.vue'
 
 
 import { useUserStore } from '@/stores/userStore.js';
@@ -140,6 +141,11 @@ const router = createRouter({
       path: '/StartGameHome',
       name: 'StartGameHome',
       component: StartGameHome
+    },
+    {
+      path: '/DrawView',
+      name: 'DrawView',
+      component: DrawView
     },
     {
       path: '/SnakeGame',
