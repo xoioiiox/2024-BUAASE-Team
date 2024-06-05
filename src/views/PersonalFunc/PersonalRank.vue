@@ -44,23 +44,27 @@
 			</div>
 				<div class="card-container">
 					<div class="inner-card-container">
+						<el-scrollbar height="450px">
+						<div class="scrollbar-card">
 						<div class="section_52">
 							<div class="inner-text">
-								<div class="text-wrapper_19"><span class="text_54">NO.1</span></div>
-								<div class="ml-190"><span class="font_25">username</span></div>
-								<div class="text-wrapper_19 ml-190"><span class="font_26">LV.97</span></div>
+								<span class="text_54 wd_300">NO.1</span>
+								<span class="text_50 wd_280">{{this.rankList[0].username}}</span>
+								<span class="text_50">LV.{{this.rankList[0].level}}</span>
 							</div>
 						</div>
 						<div class="mt-22 section_53">
-							<div class="text-wrapper_19"><span class="font_16 text_58">NO.2</span></div>
-							<div class="text-wrapper_20"><span class="font_25">username</span></div>
-							<div class="text-wrapper_19 view_11"><span class="font_26">LV.95</span></div>
+							<span class="text_58 ml-20 wd_300">NO.2</span>
+							<span class="font_26 wd_300">{{this.rankList[1].username}}</span>
+							<span class="font_26">LV.{{this.rankList[1].level}}</span>
 						</div>
-						<!--div class="mt-22 flex-row section_54">
-							<span class="font_26">NO.3</span>
-							<span class="font_25 ml-240">username</span>
-							<span class="font_26 text_60 ml-240">LV.92</span>
-						</div-->
+						<div v-for="(item, index) in rankList.slice(2)" :key="index" class="mt-22 section_54">
+							<span class="font_26 ml-20 wd_280">NO.{{index + 3}}</span>
+							<span class="font_26 wd_280">{{item.username}}</span>
+							<span class="font_26">LV.{{item.level}}</span>
+						</div>
+						</div>
+						</el-scrollbar>
 					</div>
 				</div>
 		</el-row>
@@ -75,11 +79,21 @@ import yaml from 'js-yaml'
 export default {
 	components: {},
 	async created() {
-		
+		await axios.get('/api/game/get-ranking-list/').then((res)=> {
+			this.rankList = res.data.rank_list
+		})
 	},
 	data() {
 		return {
-
+			rankList: [
+				{username: 'a', level: '43', exp: '400'},
+				{username: 'weqwb', level: '37', exp: '400'},
+				{username: 'sc', level: '34', exp: '400'},
+				{username: 'd', level: '30', exp: '400'},
+				{username: 'wwwe', level: '23', exp: '400'},
+				{username: 'fwqqew', level: '28', exp: '400'},
+				{username: 'g', level: '9', exp: '400'},
+			],
 		}
 	},
 	methods: {
@@ -292,16 +306,19 @@ export default {
 	height: 440px;
 	margin: 0 40px;
 }
+.scrollbar-card {
+	width: 96%;
+}
 /*排行列表*/
 .ml-190 {
-  margin-left: 150px;
+  margin-left: 165px;
 }
 .section_52 {
 	width: 90%;
 	height: 0;
   margin-right: 30px;
   padding: 10px 30px;
-	border-top: 100px solid #e9a522;
+	border-top: 100px solid #FFDA53;
   border-right: 25px solid transparent;
   border-left: 25px solid transparent;
 }
@@ -319,11 +336,18 @@ export default {
   font-weight: 800;
   line-height: 47.5px;
 }
-.font_25 {
-  font-size: 36px;
+.text_50 {
+  color: #000000;
+  font-size: 40px;
   font-family: Poppins;
   font-weight: 800;
-  color: #000000;
+  line-height: 47.5px;
+}
+.wd_280 {
+	width: 280px;
+}
+.wd_300 {
+	width: 300px;
 }
 .font_26 {
   font-size: 36px;
@@ -342,24 +366,31 @@ export default {
 .section_53 {
   margin-right: 40px;
   padding: 20px 10px;
-  background-color: #d9d9d9;
+  background-color: #FFE9D4;
 	display: flex;
 	width: 100%;
 }
 .text_58 {
+	width: 300px;
+  font-size: 48px;
+  font-family: Poppins;
+  line-height: 46px;
+  font-weight: 800;
   color: #000000;
   line-height: 36px;
+	margin-left: 10px;
+	margin-right: -20px;
 }
 .text-wrapper_20 {
   margin-left: 180px;
 }
 .view_11 {
-  margin-left: 230px;
+  margin-left: 200px;
   margin-right: 50px;
 }
 /*other layer*/
 .ml-240 {
-  margin-left: 240px;
+  margin-left: 180px;
 }
 .font_25 {
   font-size: 36px;
@@ -376,12 +407,16 @@ export default {
   color: #000000;
 }
 .section_54 {
-  margin-left: 56px;
-  margin-right: 64px;
-  padding: 24px 24px 34px;
-  background-color: #d9d9d9;
+	display: flex;
+  margin-left: 30px;
+	margin-top: 20px;
+  padding: 20px 10px;
+  background-color: #FFE9D4;
 }
 .text_60 {
   margin-right: 64px;
+}
+.ml-20 {
+	margin-left: 30px;
 }
 </style>
