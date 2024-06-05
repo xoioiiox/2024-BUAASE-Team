@@ -1,0 +1,38 @@
+.header {
+  background-color: transparent;
+  height: 70px;
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  background-color: #00000010 !important;
+  font-weight: bold !important;
+  color: #fbdd6f !important;
+  border: none !important;
+  padding: 0px 46px !important;
+  height: 70px !important;
+}
+
+.header-button-after {
+  height: 50px !important;
+  color: #fbdd6f !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+
+.header-button-before {
+  height: 50px !important;
+  border: 2px solid #fbdd6f !important;
+  border-radius: 12rem !important;
+  color: #fbdd6f !important;
+}
+
+.header-button:hover {
+  background-color: #fbdd6f !important;
+  color: #2c0b6c !important;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}

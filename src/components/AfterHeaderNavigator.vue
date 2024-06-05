@@ -1,8 +1,7 @@
 <script>
 import axios from "axios";
-import {useUserStore} from "@/stores/userStore.js";
-
-
+import { useUserStore } from "@/stores/userStore.js";
+import "../assets/styles/header.css";
 
 export default {
   name: "AfterHeaderNavigator",
@@ -14,90 +13,69 @@ export default {
 
   data() {
     return {
-      userStore: null // 初始化为null
+      userStore: null, // 初始化为null
     };
   },
 
   methods: {
     goToGuide() {
       // 用户点击按钮时导航到需要登录权限的页面
-      this.$router.push({path: '/guide'});
+      this.$router.push({ path: "/guide" });
     },
 
     goToPersonal() {
       // 用户点击按钮时导航到需要登录权限的页面
-      this.$router.push({name: 'PersonalBook'});
+      this.$router.push({ name: "PersonalBook" });
     },
 
-    goToLogOut(){
-      axios.post('/api/word/logout/', {
-        params:{
+    goToLogOut() {
+      axios
+        .post("/api/word/logout/", {
+          params: {},
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.$router.push({ path: "/" });
 
-        }
-      })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-          .finally(() => {
-              this.$router.push({path: '/'});
-
-              this.userStore.logout();
-          });
-    
-    
-
-    }
-  }
-
-}
+          this.userStore.logout();
+        });
+    },
+  },
+};
 </script>
 
-<template>
-  <div class="bg">
+<template class="header">
   <el-menu
-      :default-active="activeIndex"
-      class="el-menu-demo"
-      mode="horizontal"
-      :ellipsis="false"
-      @select="handleSelect"
+    :default-active="activeIndex"
+    class="header-menu"
+    mode="horizontal"
+    :ellipsis="false"
+    @select="handleSelect"
   >
-    <el-menu-item index="0">
-      <router-link to="/">
-      <img
-          style="width: 200px"
-          src="https://s2.loli.net/2024/04/29/cwvlMF4oL83Z5Vt.png"
-          alt="Element logo"
-      />
-      </router-link>
-    </el-menu-item>
-    <div class="flex-grow" />
+    <el-menu-item index="0"> </el-menu-item>
+    <div class="flex-grow"></div>
 
-    <el-menu-item index="1" @click="goToGuide">
-     使用说明
+    <el-menu-item class="header-button-after" index="1" @click="goToGuide">
+      使用说明
     </el-menu-item>
-    <el-menu-item index="2" @click="goToPersonal">
+    <el-menu-item class="header-button-after" index="2" @click="goToPersonal">
       个人中心
     </el-menu-item>
-    <el-menu-item index="3" @click="goToLogOut">
+    <el-menu-item class="header-button-after" index="3" @click="goToLogOut">
       登出
     </el-menu-item>
-
-
   </el-menu>
-  </div>
 </template>
 
+<style scoped></style>
 
-
-
-<style scoped>
-.bg {
-  background-image: linear-gradient(180deg, #16093d 0%, #2c0b6c 100%);
-}
-.flex-grow {
-  flex-grow: 1;
-}
-</style>
+<!-- <img
+        style="width: 200px"
+        src="https://s2.loli.net/2024/04/29/cwvlMF4oL83Z5Vt.png"
+        alt="Element logo"
+/> -->
