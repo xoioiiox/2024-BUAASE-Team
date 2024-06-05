@@ -15,10 +15,11 @@ export default {
 <template class="header">
   <el-menu
     :default-active="activeIndex"
-    class="header-menu"
-    mode="horizontal"
     :ellipsis="false"
     @select="handleSelect"
+    active-text-color="#2c0b6c"
+    mode="horizontal"
+    class="header-menu"
   >
     <el-menu-item index="0"> </el-menu-item>
     <div class="flex-grow"></div>

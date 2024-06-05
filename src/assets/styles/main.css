@@ -3,8 +3,8 @@
 }
 
 body {
-  background: url(../assets/Stars.svg) top repeat-x,
-    linear-gradient(#2c0b6c, #974fc7) no-repeat;
+  background: url(../Stars.svg) top repeat-x,
+    linear-gradient(#2c0b6c, #974fc7) no-repeat !important;
   max-width: 100vw;
   max-height: 100vh;
   margin: 0;
