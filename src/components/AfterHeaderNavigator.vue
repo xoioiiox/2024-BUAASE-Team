@@ -16,8 +16,10 @@ export default {
       userStore: null, // 初始化为null
     };
   },
-
   methods: {
+    goBackHome() {
+      this.$router.push({ path: "/" });
+    },
     goToGuide() {
       // 用户点击按钮时导航到需要登录权限的页面
       this.$router.push({ path: "/guide" });
@@ -41,7 +43,6 @@ export default {
         })
         .finally(() => {
           this.$router.push({ path: "/" });
-
           this.userStore.logout();
         });
     },
@@ -57,7 +58,15 @@ export default {
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="0"> </el-menu-item>
+    <el-menu-item index="0">
+      <div
+        v-if="$route.name != 'Home'"
+        class="header-logo font_13"
+        @click="goBackHome()"
+      >
+        乐词不疲
+      </div>
+    </el-menu-item>
     <div class="flex-grow"></div>
 
     <el-menu-item class="header-button-after" index="1" @click="goToGuide">

@@ -38,3 +38,16 @@
   background-color: #fbdd6f !important;
   box-shadow: 0px 0px 120px #ffd749;
 }
+
+.el-menu-item:active {
+  color: #2c0b6c !important;
+  background-color: #fbdd6f !important;
+  box-shadow: 0px 0px 120px #ffd749;
+}
+
+.font_13 {
+  font-size: 38px;
+  line-height: 44.5px;
+  color: #ffffff;
+  text-shadow: 0px 4px 10px #fbdd6f;
+}
