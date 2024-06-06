@@ -32,7 +32,7 @@ export default {
     goToGame() {
       // ElMessage.error("暂未开发完成");
       this.$router.push({
-        name: "StartGameHome",
+        name: "GameChoose",
         meta: { requiresAuth: true },
       });
     },

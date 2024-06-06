@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import PersonalBook from "../views/PersonalFunc/PersonalBook.vue";
-import PersonalSetting from "../views/PersonalFunc/PersonalSetting.vue";
 import PersonalRank from "../views/PersonalFunc/PersonalRank.vue";
 import PersonalAchieve from "../views/PersonalFunc/PersonalAchieve.vue";
 
@@ -18,6 +17,7 @@ import Guide from "@/views/Guide.vue";
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
+import DrawView from '../views/DrawView.vue'
 
 
 import { useUserStore } from '@/stores/userStore.js';
@@ -29,7 +29,9 @@ import event3 from "@/components/eventCards/event3.vue";
 
 import StartGameHome from "@/views/StartGameHome.vue"
 
+import SnakeGame from "@/views/SnakeGame/SnakeGame.vue"
 
+import GameChoose from "@/views/GameChoose.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -71,11 +73,6 @@ const router = createRouter({
       path: "/PersonalBook",
       name: "PersonalBook",
       component: PersonalBook,
-    },
-    {
-      path: "/PersonalSetting",
-      name: "PersonalSetting",
-      component: PersonalSetting,
     },
     {
       path: "/PersonalRank",
@@ -138,7 +135,25 @@ const router = createRouter({
       path: '/StartGameHome',
       name: 'StartGameHome',
       component: StartGameHome
+    },
+    {
+      path: '/DrawView',
+      name: 'DrawView',
+      component: DrawView
+    },
+    {
+      path: '/SnakeGame',
+      name: 'SnakeGame',
+      component: SnakeGame
+    },
+    {
+      path: '/GameChoose',
+      name: 'GameChoose',
+      component: GameChoose
     }
+
+
+
   ]
 })
 

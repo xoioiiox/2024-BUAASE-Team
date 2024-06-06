@@ -13,7 +13,7 @@
     <!-- 顶部区域 -->
       <div class="centered-content">
         <div class="demo-progress">
-          <el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
+          <el-progress :text-inside="true" :stroke-width="35" :percentage="IntRatio * 100" />
         </div>
       </div>
       <!-- 展示主体区域 -->
@@ -132,7 +132,8 @@ const back2home = () => {
   router.push('/')// 主页路由
 }
 
-const Ratio = ref(0)
+const Ratio = ref(0.11111)
+let IntRatio = ref(0)//只保留整数部分
 const getDayRatio = () => {
   const response = axios.get('/api/word/get-daily-ratio/');
   console.log(response.data)
@@ -140,11 +141,13 @@ const getDayRatio = () => {
     console.log(response.data)
     if (response.status === 200) {
       //console.log(response.data)
-      Ratio.value = response.data.ratio
-      /*ElMessage({
-        message: '获取日常学习数据成功',
-        type: 'success'
-      })*/
+      Ratio.value =  response.data.ratio
+      //保留前两位小数
+      IntRatio.value = Math.floor(Ratio.value * 100) / 100
+      //不超过1
+      if (IntRatio.value >= 1){
+        IntRatio.value = 1;
+      }
     } else {
       ElMessage({
         message: '获取日常学习数据失败',
@@ -156,12 +159,19 @@ const getDayRatio = () => {
 }
 
 const BookRatio = ref(0)
+let IntBookRatio = ref(0)
 const getAllBookRatio = () => {
   const response = axios.get('/api/word/now-book-ratio/');
   response.then(function (response) {
     console.log(response.data)
     //console.log(response.data)
     BookRatio.value = response.data.ratio
+    //保留前两位小数
+    IntBookRatio.value = Math.floor(BookRatio.value * 100) / 100
+    //不超过1
+    if (IntBookRatio.value >= 1){
+      IntBookRatio.value = 1;
+    }
   })
 }
 
@@ -178,9 +188,15 @@ onMounted(() => {
 
 //跳转到打卡
 const toPunchIn = () => {
-  if (Ratio.value >= 1 - 0.005 && Ratio.value <= 1 + 0.005) {
+  /*if (Ratio.value >= 1 - 0.005 && Ratio.value <= 1 + 0.005) {
     router.push('/PunchIn' );
   } else if (BookRatio.value >= 1 - 0.00001 && BookRatio.value <= 1 + 0.00001) {
+    router.push('/PunchIn' );
+  }*/
+  //保证背完当天单词后跳转到打卡界面 or 背完当前词书后不留在背单词界面
+  if (IntRatio.value >= 1) {
+    router.push('/PunchIn' );
+  }  else if (IntBookRatio.value >= 1) {
     router.push('/PunchIn' );
   }
 }
