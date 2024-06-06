@@ -40,6 +40,12 @@
 
 .el-button:hover {
   box-shadow: 0px 0px 120px #ffd749;
+  background-color: #ffd749;
+}
+
+.el-button:active {
+  box-shadow: 0px 0px 120px #ffd749;
+  background-color: #ffd749;
 }
 
 .logo-orbit-in,
