@@ -5,11 +5,11 @@
   <div class="login-container">
     <img
 			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../assets/bg-star.png"
 		/>
 		<img
 			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../assets/bg-star.png"
 		/>
     <el-card class="login-card">
       <!-- 显示单词英语区域 -->

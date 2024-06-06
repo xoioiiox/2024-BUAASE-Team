@@ -2,11 +2,11 @@
 	<div class="bg">
 		<img
 			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../../assets/bg-star.png"
 		/>
 		<img
 			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../../assets/bg-star.png"
 		/>
 	<div>
 		<div class="back-home" @click="goBackHome()">
@@ -22,7 +22,7 @@
 				<div class="flex-row section_1 pos_77">
 					<img
 						class="image_1"
-						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
+						src="../../assets/personal-center/side-4.png"
 					/>
 					<span class="font_19 text_2 ml-11">选择词书</span>
 				</div>
@@ -48,7 +48,7 @@
 						<div class="section_34" @click="toSavedWords">
 							<img
 								class="image_27"
-								src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=b909b02d47ef11a1aa18e4efb24cbfc5.png"
+								src="../../assets/personal-center/side-4.png"
 							/>
 							<div class="text-wrapper_15">
 								<span class="font_21 text_32">收藏生词本</span>

@@ -2,11 +2,11 @@
 	<div class="bg">
 		<img
 			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../../assets/bg-star.png"
 		/>
 		<img
 			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
+			src="../../assets/bg-star.png"
 		/>
 	<div>
 		<div class="back-home" @click="goBackHome()">
@@ -34,7 +34,7 @@
 				<div class="section_1 pos_83" @click="toEditInfo">
 					<img
 						class="image_1"
-						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
+						src="../../assets/personal-center/side-4.png"
 					/>
 					<span class="font_19 text_2 ml-11">个人信息</span>
 				</div>

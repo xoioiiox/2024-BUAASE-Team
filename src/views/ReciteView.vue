@@ -1,11 +1,11 @@
 <template>
   <img
     class="shrink-0 image_2 pos_43"
-    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+    src="../assets/bg-star.png"
   />
   <img
     class="shrink-0 image_2 pos_37"
-    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+    src="../assets/bg-star.png"
   />
   <div class="common-layout">
     <!-- 返回主页箭头 -->
