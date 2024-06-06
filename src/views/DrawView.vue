@@ -22,47 +22,56 @@
         </el-header>
         <el-main>
            <!--剩余抽卡次数-->
-            <div>
-              <p class="circle-bordered">
-                剩余{{Count}} 次
-              </p>
+        <div class="flex-container">
+          <div>
+             <p class="circle-bordered">
+               剩余{{Count}} 次
+             </p>
+          </div>
+        </div>
+        <div class="box">
+          <div v-for="(item,index) in list" :key="index">
+            <div :class="'item'" @click="DrawCard(item)">
+              <div :class="(item.status > 0) ? 'card1 hide' : 'card1' ">
+                <template v-if="(item.status > 0)">
+                  {{CardContent.event_description}}
+                </template>
+                <template v-else>
+                  <div class="cardcover">?</div>
+                </template>
+              </div>
+              <div :class="{'card2 show':item.status == 1 , 'card2':item.status == 0 } ">
+                    <el-button color="#626aef" :dark="isDark" @click="fulfillEvent()">
+                      {{CardContent.event_description}}                                   <!--点击前往完成相应的事件-->
+                    </el-button>
+              </div>
             </div>
-           <!--选择卡片-->
-          <el-row :gutter="30">
-            <el-col :span="8">
-              <div class="grid-content ep-bg-purple" />
-              <div class="choice-button-container">
-                <el-button class="choice-button" @click="DrawCard">事件卡</el-button>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content ep-bg-purple" />
-              <div class="choice-button-container">
-                <el-button class="choice-button" @click="DrawCard">事件卡</el-button>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content ep-bg-purple" />
-              <div class="choice-button-container">
-                <el-button class="choice-button" @click="DrawCard">事件卡</el-button>
-              </div>
-            </el-col>
-          </el-row>
+          </div>
+        </div>
         </el-main>
       </el-container>
     </div>
   </template>
 
-  
+
+
   <script setup>
   import { useRouter } from "vue-router";
   import { ElMessage } from 'element-plus'
   import axios from "axios";
   import { onMounted, ref } from "vue";
+
+
+  const list = ref([
+    { id: 1, name: '事件卡1', is: true ,status:0 },
+    { id: 2, name: '事件卡2', is: true ,status:0 },
+    { id: 3, name: '事件卡3', is: true ,status:0 },
+  ])
+
   
   //返回主页
   const back2home = () => {
-    router.push('/')// 主页路由
+    router.push('/GameChoose')// 主页路由
   }
 
   //获取用户当前个人经验值
@@ -103,35 +112,50 @@
     )
   }
 
+  const CardContent = ref({
+    event_description: "事件描述",
+    event_name: "事件事件",
+    event_type: "道具类",
+  });
+
   //抽卡动作
-  const DrawCard = () => {
-    //router.push('/event2');
+  const DrawCard = (item) => {
+    if(Count.value <= 0){
+      return
+    }
+    //标记选中的卡片status为1，被翻了过来
+    item.status = 1 
+    //router.push('/event1');
     const response = axios.post('/api/game/get-event');
     response.then(function (response) {
       if (response.status === 200) {
         //console.log(response.data)
-        if(response.data.event_type=="道具类") {
-            //console.log("道具抽卡")
-
-
-
-
-        } else if (response.data.event_type=="任务类"){
-            if (response.data.event_name=="汉译英-填空事件") {
-              router.push('/event1');
-            } else if (response.data.event_name=="汉译英-选择事件") {
-              router.push('/event2');
-            } else { //英译汉-选择题
-              router.push('/event3');
-            }
+        CardContent.value = response.data;
+        //console.log(CardContent.data)
       } else {
         ElMessage({
           message: '抽卡失败',
           type: 'error'
         });
       }
+    })
+  }
+
+  //点击前往完成相应的事件
+  const fulfillEvent = () => {
+    if(CardContent.value.event_type=="道具类") {
+      //若为道具类，翻拍瞬间后端已经完成，此处仅需翻转回来卡片即可
+      //刷新界面，实现翻转效果
+      router.go(0)
+    } else if (CardContent.value.event_type=="任务类"){
+      if (CardContent.value.event_name=="汉译英-填空事件") {               //汉译英-填空事件
+          router.push('/event1');
+      } else if (CardContent.value.event_name=="汉译英-选择事件") {        //汉译英-选择事件
+          router.push('/event2');
+      } else {                                                            //英译汉-选择题
+          router.push('/event3');
+      }
     }
-  })
   }
 
   const noMoreCard = () => {//抽卡次数用尽，返回游戏开始页面
@@ -157,47 +181,12 @@
   
   
   <style scoped>
-  .choice-button {
-    width: 250px;
-    height: 300px;
-  }
-  
-  .choice-button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0px;
-  }
-  
-  .el-row {
-    margin-bottom: 20px;
-  }
-  
-  .el-row:last-child {
-    margin-bottom: 0;
-  }
-  
-  .el-col {
-    border-radius: 4px;
-  }
-  
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  
-  
-  .demo-progress .el-progress--line {
-    margin-bottom: 15px;
-    max-width: 1000px;
-  }
-  /*.circle {
-    width: 100px;
-    height: 100px;
-    align-items: center;
-    border-radius: 50%;
-    background-color: rgb(0, 153, 255);
-   }*/
+
+.flex-container {
+  display: flex; /* 启用Flexbox布局 */
+  align-items: center; /* 垂直居中对齐 */
+  justify-content: space-around; /* 子元素之间的间距平均分布 */
+}
 
 .circle-bordered {
   margin-top: 50px;
@@ -214,5 +203,77 @@
   font-weight: bold;       /* 根据需要设置字体粗细 */
   line-height: 150px;      /* 与高度相匹配的行高以垂直居中文本 */
 }
+
+
+.cardcover {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 25px; /* 调整字符间距 */
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  color: rgb(241, 235, 235);
+  font-size: 247.2px;
+ }
+
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.item {
+  position: relative;
+  margin: 20px;
+  width: 247.2px;
+  height: 300px;
+}
+
+.card1,
+.card2 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  text-align: center;
+  transition: transform .4s
+}
+
+.card1 {
+  background-color: #ff8800;
+  color: #fff;
+}
+
+.card2 {
+  color: #ff8800;
+  border: 1px solid #ff8800;
+  padding: 0 10px;
+  transform: scaleX(0);
+  background-color: #ffe6c9;
+}
+
+.hide {
+  transform: scaleX(0);
+}
+
+
+.show {
+  transform: scaleX(1);
+}
+
+.show-result {
+  transform: scaleX(1);
+  opacity: 0.5;
+}
+
+
 </style>
 
