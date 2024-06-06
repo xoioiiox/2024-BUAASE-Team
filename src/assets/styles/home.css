@@ -1,0 +1,124 @@
+.home-container {
+  /* height: calc(100vh - 80px); */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-logo {
+  position: relative;
+  height: 400px;
+  width: 700px;
+  margin-top: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* logo text */
+  font-size: 80px;
+  color: #fff;
+  animation: logo-light 5s infinite ease-in-out;
+}
+
+.home-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.el-button {
+  background-color: #ffd749;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 0px 3px 3px #a39c00;
+  color: #2c0b6c;
+  width: 170px;
+  height: 60px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.el-button:hover {
+  box-shadow: 0px 0px 120px #ffd749;
+  background-color: #ffd749;
+}
+
+.el-button:active {
+  box-shadow: 0px 0px 120px #ffd749;
+  background-color: #ffd749;
+}
+
+.logo-orbit-in,
+.logo-orbit-out {
+  position: absolute;
+  border: 3px solid #fce48c;
+  border-radius: 50%;
+  transform-origin: center;
+}
+
+.logo-orbit-in {
+  height: 160px;
+  width: 540px;
+  animation: see-saw-in 10s infinite ease-in-out;
+}
+
+.logo-orbit-out {
+  height: 170px;
+  width: 580.45px;
+  animation: see-saw-out 10s infinite ease-in-out;
+}
+
+.logo-planet {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: #ffee39;
+  border-radius: 50%;
+  top: 20px;
+  right: 20px;
+  box-shadow: 0 0 60px 10px #fff, 0 0 100px 10px #f0f;
+}
+
+@keyframes see-saw-in {
+  0%,
+  100% {
+    transform: rotate(-17deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes see-saw-out {
+  0%,
+  100% {
+    transform: rotate(17deg);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes logo-light {
+  0%,
+  100% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fbdd6f;
+  }
+  25% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fbdd6f;
+  }
+  50% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #fbdd6f,
+      0 0 35px #fbdd6f;
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(150deg) translateX(70px) rotate(-140deg);
+    z-index: -1;
+  }
+  to {
+    transform: rotate(504deg) translateX(70px) rotate(-500deg);
+  }
+}
