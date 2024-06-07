@@ -130,7 +130,10 @@ const playAudio = () => {
 // 确认单词的方法
 const confirmWord = () => {
   console.log('确认单词:', inputWord.value);
-
+  setTimeout(() => {
+    //跳转到抽卡界面
+    router.push('/DrawView');
+  }, 3000);
   if (word.value.theWord == inputWord.value) {
     ElMessage({
       type: 'success',
@@ -147,9 +150,7 @@ const confirmWord = () => {
     commited.value = true;
     postResult();
   }
-  setTimeout(() => {
-    //跳转到抽卡界面
-  }, 3000);
+
 }
 
 // 启动倒计时

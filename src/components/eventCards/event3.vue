@@ -91,6 +91,10 @@ function playAudio() {
 // 选择选项
 function selectOption(index) {
     console.log('选中的单词:', index);
+    setTimeout(() => {
+        //跳转到抽卡界面
+        router.push('/DrawView');
+    }, 3000);
 
     if (numbers[index] == 0) {
         ElMessage({
@@ -108,9 +112,6 @@ function selectOption(index) {
         commited.value = true;
         postResult();
     }
-    setTimeout(() => {
-        //跳转到抽卡界面
-    }, 3000);
 }
 
 const getWords = () => {
