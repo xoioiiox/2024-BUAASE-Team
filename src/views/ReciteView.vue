@@ -1,11 +1,11 @@
 <template>
   <img
     class="shrink-0 image_2 pos_43"
-    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+    src="../assets/bg-star.png"
   />
   <img
     class="shrink-0 image_2 pos_37"
-    src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=96e0a52d0a4761524369d783382cf534.png"
+    src="../assets/bg-star.png"
   />
   <div class="common-layout">
     <!-- 返回主页箭头 -->
@@ -434,11 +434,8 @@ const router = useRouter();
   border-radius: 24px;
   box-shadow: 0px 6px 10px #00000066;
   width: 800px;
-  height: 250px;
-  border-left: solid 1px #c8b058;
-  border-right: solid 1px #c8b058;
-  border-top: solid 1px #c8b058;
-  border-bottom: solid 1px #c8b058;
+  height: 420px;
+  border: solid 1px #c8b058;
 }
 
 .black-body {
