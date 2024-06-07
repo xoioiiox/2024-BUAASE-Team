@@ -1,13 +1,4 @@
 <template>
-	<div class="bg">
-		<img
-			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
-		<img
-			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
 	<div>
 		<div class="back-home" @click="goBackHome()">
 			<span class="font_13">乐词不疲</span>
@@ -22,7 +13,7 @@
 				<div class="flex-row section_1 pos_77">
 					<img
 						class="image_1"
-						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
+						src="../../assets/personal-center/side-4.png"
 					/>
 					<span class="font_19 text_2 ml-11">选择词书</span>
 				</div>
@@ -43,12 +34,12 @@
 					<el-button type="primary" @click="studySetting()">学习设置</el-button>
 					<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
 				</div-->
-				<div class="ChooseBook">
-					<div class="inner-chooseBook">
+				<div class="card-container">
+					<div class="inner-card-container">
 						<div class="section_34" @click="toSavedWords">
 							<img
 								class="image_27"
-								src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=b909b02d47ef11a1aa18e4efb24cbfc5.png"
+								src="../../assets/personal-center/side-4.png"
 							/>
 							<div class="text-wrapper_15">
 								<span class="font_21 text_32">收藏生词本</span>
@@ -79,21 +70,6 @@
 								</div>
 							</el-col>
 						</el-row>
-						<!--el-row>
-							<el-col :span="6">
-								<el-card shadow="hover" class="bookCard curbook">
-									<p>{{this.curBook}}</p>
-									<p>
-										<el-tag type="primary" >当前词书</el-tag>
-									</p>
-								</el-card>
-							</el-col>
-							<el-col v-for="(item, index) in wordBooks" :key="index" :span="6">
-								<el-card shadow="hover" @click="ChooseThisBook(item)" class="bookCard">
-									<p>{{item}}</p>
-								</el-card>
-							</el-col>
-						</el-row-->
 					</div>
 				</div>
 		</el-row>
@@ -160,13 +136,13 @@
 			</el-upload>
 		</el-dialog>
 	</div>
-	</div>
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
 import yaml from 'js-yaml'
+import "../../assets/styles/center.css"
 
 export default {
 	components: {PersonalSide},
@@ -366,108 +342,10 @@ export default {
 </script>
 
 <style scoped>
-.bg {
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
-}
-.image_2 {
-  width: 876px;
-  height: 546px;
-}
-.pos_74 {
-  position: absolute;
-  left: 90px;
-  top: 100px;
-}
-.pos_68 {
-  position: absolute;
-  right: 90px;
-  top: 100px;
-}
 .setting {
 	margin-left: 800px;
 }
-/*home*/
-.back-home {
-	position: absolute;
-	margin-top: 20px;
-	margin-left: 50px;
-	cursor: pointer;
-	z-index: 99; /*绝对定位下，需要设置高优先级*/
-}
-.font_13 {
-  font-size: 38px;
-  font-family: Poppins;
-  line-height: 44.5px;
-  color: #ffffff;
-  text-shadow: 0px 4px 10px #fbdd6f;
-}
-/*header*/
-.header {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-.text-wrapper_10 {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
-	margin-left: 100px;
-  padding: 16px 0;
-  background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
-  border-radius: 12px;
-  width: 280px;
-}
-.font_16 {
-  font-size: 40px;
-  font-family: Poppins;
-  line-height: 46px;
-  font-weight: 800;
-  color: #2c0b6c;
-}
-.text_22 {
-  line-height: 45.5px;
-}
-/*高亮标签*/
-.section_1 {
-  padding: 20px 0;
-  background-color: #fffefe;
-  border-radius: 10px 0px 0px 10px;
-  box-shadow: 0px 4px 4px #ffd217;
-  width: 200px;
-  border: solid 2px #fbdd6f;
-  position: absolute;
-  left: 100px;
-  top: 165px;
-	cursor: pointer;
-	z-index: 99;
-}
-.image_1 {
-	margin-left: 20px;
-  width: 30px;
-  height: 30px;
-}
-.text_2 {
-  line-height: 34px;
-  font-size: 30px;
-  font-family: Poppins;
-  line-height: 34px;
-  font-weight: 800;
-  color: #ffd033;
-  margin-left: 10px;
-}
-/*灰色标签*/
-.text-wrapper_14 {
-  padding: 20px 0;
-  background-color: #f5f0f8;
-  border-radius: 10px 0px 0px 10px;
-  width: 150px;
-	cursor: pointer;
-	z-index: 99;
-}
+/*标签位置*/
 .pos_80 {
   position: absolute;
   left: 150px;
@@ -501,8 +379,8 @@ export default {
 .section_34 {
   background-color: #ddf0ff;
   border-radius: 36px;
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border: solid 2px #5c7fac96;
 }
 .image_27 {
@@ -537,8 +415,8 @@ export default {
 }
 /*当前词书*/
 .section_35 {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   background-color: #fcda59;
   border-radius: 36px;
   box-shadow: 0px -10px 50px 10px #ffffffb3 inset;
@@ -547,18 +425,18 @@ export default {
 	z-index: 99;
 }
 .image_29 {
-	margin-left: 40px;
+	margin-left: 50px;
 	margin-top: 10px;
   width: 80px;
   height: 80px;
 }
 .text-wrapper_16 {
-  margin-left: 20px;
-	margin-top: 10px;
+  margin-left: 30px;
+	margin-top: 20px;
 }
 /*所有词书*/
 .image_28 {
-	margin-left: 40px;
+	margin-left: 50px;
 	margin-top: 10px;
   width: 80px;
   height: 80px;
@@ -566,8 +444,8 @@ export default {
 .section_31 {
   background-color: #ffe9d4;
   border-radius: 36px;
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border: solid 4px #d8a8aa;
 	cursor: pointer;
 	z-index: 99;
@@ -575,28 +453,8 @@ export default {
 .choosing {
 	width: 600px;
 }
-/*选择容器*/
-.ChooseBook {
-	margin-top: 80px;
-	margin-left: 300px;
-	margin-right: 120px;
-	padding: 28px 0;
-  background-color: #fce6c6;
-  border-radius: 80px;
-  width: 1000px;
-	height: 560px;
-}
-.inner-chooseBook {
-	padding: 60px 50px;
-  background-color: #fff9ed;
-  border-radius: 80px;
-  width: 820px;
-	height: 440px;
-	margin: 0 40px;
-	display: flex; /*解决块级元素不能一行显示*/
-}
 .bookCard {
-	width: 180px;
+	width: 200px;
 	height: 220px;
 	margin-bottom: 20px;
 	box-shadow: rgba(0, 0, 0, 0.101) 4px 6px 3px;

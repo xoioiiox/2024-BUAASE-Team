@@ -1,13 +1,4 @@
 <template>
-	<div class="bg">
-		<img
-			class="shrink-0 image_2 pos_74"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
-		<img
-			class="shrink-0 image_2 pos_68"
-			src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=ab4179d6056f986189aeff77097e5805.png"
-		/>
 	<div>
 		<div class="back-home" @click="goBackHome()">
 			<span class="font_13">乐词不疲</span>
@@ -28,7 +19,7 @@
 				<div class="section_1 pos_81" @click="toAchieve">
 					<img
 						class="image_1"
-						src="https://ide.code.fun/api/image?token=665d8464a16e9e001251394b&name=c3ecd12054e7bd3b61b232611bff59d9.png"
+						src="../../assets/personal-center/side-4.png"
 					/>
 					<span class="font_19 text_2 ml-11">成就展示</span>
 				</div>
@@ -57,16 +48,15 @@
 				</div>
 		</el-row>
 	</div>
-	</div>
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
 import yaml from 'js-yaml'
+import "../../assets/styles/center.css"
 
 export default {
-	components: {PersonalSide},
 	async created() {
 		await axios.get('').then((res)=> {
 			this.achieveCards = res.data.achieve_list
@@ -111,105 +101,8 @@ export default {
 </script>
 
 <style scoped>
-.bg {
-	height: 100vh;
-	background-size: cover;
-	background-position: center;
-	background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
-}
-.image_2 {
-	width: 876px;
-	height: 546px;
-}
-.pos_74 {
-	position: absolute;
-	left: 90px;
-	top: 100px;
-}
-.pos_68 {
-	position: absolute;
-	right: 90px;
-	top: 100px;
-}
 .setting {
 	margin-left: 800px;
-}
-/*home*/
-.back-home {
-	position: absolute;
-	margin-top: 20px;
-	margin-left: 50px;
-	cursor: pointer;
-	z-index: 99; /*绝对定位下，需要设置高优先级*/
-}
-.font_13 {
-	font-size: 38px;
-	font-family: Poppins;
-	line-height: 44.5px;
-	color: #ffffff;
-	text-shadow: 0px 4px 10px #fbdd6f;
-}
-/*header*/
-.header {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-.text-wrapper_10 {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
-	margin-left: 100px;
-	padding: 16px 0;
-	background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
-	border-radius: 12px;
-	width: 280px;
-}
-.font_16 {
-	font-size: 40px;
-	font-family: Poppins;
-	line-height: 46px;
-	font-weight: 800;
-	color: #2c0b6c;
-}
-.text_22 {
-	line-height: 45.5px;
-}
-/*高亮标签*/
-.section_1 {
-	padding: 20px 0;
-	background-color: #fffefe;
-	border-radius: 10px 0px 0px 10px;
-	box-shadow: 0px 4px 4px #ffd217;
-	width: 200px;
-	border: solid 2px #fbdd6f;
-	position: absolute;
-	cursor: pointer;
-	z-index: 99;
-}
-.image_1 {
-	margin-left: 20px;
-	width: 30px;
-	height: 30px;
-}
-.text_2 {
-	line-height: 34px;
-	font-size: 30px;
-	font-family: Poppins;
-	line-height: 34px;
-	font-weight: 800;
-	color: #ffd033;
-	margin-left: 10px;
-}
-/*灰色标签*/
-.text-wrapper_14 {
-	padding: 20px 0;
-	background-color: #f5f0f8;
-	border-radius: 10px 0px 0px 10px;
-	width: 150px;
-	cursor: pointer;
-	z-index: 99;
 }
 .pos_79 {
 	position: absolute;
@@ -244,26 +137,6 @@ export default {
 	color: #888888;
 	line-height: 30.5px;
 	margin-left: 30px;
-}
-/*选择容器*/
-.card-container {
-	margin-top: 80px;
-	margin-left: 300px;
-	margin-right: 120px;
-	padding: 28px 0;
-	background-color: #fce6c6;
-	border-radius: 80px;
-	width: 1000px;
-	height: 560px;
-}
-.inner-card-container {
-	padding: 60px 50px;
-	background-color: #fff9ed;
-	border-radius: 80px;
-	width: 820px;
-	height: 440px;
-	margin: 0 40px;
-	display: flex; /*解决块级元素不能一行显示*/
 }
 /*成就卡片*/
 .achieveCard-y {
