@@ -58,7 +58,7 @@ import "../../assets/styles/center.css"
 
 export default {
 	async created() {
-		await axios.get('').then((res)=> {
+		await axios.get('/api/word/get-achieve-list/').then((res)=> {
 			this.achieveCards = res.data.achieve_list
 		})
 	},
