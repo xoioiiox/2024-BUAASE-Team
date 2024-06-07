@@ -206,7 +206,7 @@ const register = () => {
   border-radius: 40px;
   border-image-slice: 1;
   backdrop-filter: blur(12.5px);
-  width: 400px;
+  width: 500px;
   border-left: solid 3px #5882c17d;
   border-right: solid 3px #5882c17d;
   border-top: solid 3px #5882c17d;

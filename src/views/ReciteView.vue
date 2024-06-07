@@ -434,11 +434,8 @@ const router = useRouter();
   border-radius: 24px;
   box-shadow: 0px 6px 10px #00000066;
   width: 800px;
-  height: 250px;
-  border-left: solid 1px #c8b058;
-  border-right: solid 1px #c8b058;
-  border-top: solid 1px #c8b058;
-  border-bottom: solid 1px #c8b058;
+  height: 420px;
+  border: solid 1px #c8b058;
 }
 
 .black-body {

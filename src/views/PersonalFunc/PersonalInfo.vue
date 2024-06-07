@@ -1,13 +1,4 @@
 <template>
-	<div class="bg">
-		<img
-			class="shrink-0 image_2 pos_74"
-			src="../../assets/bg-star.png"
-		/>
-		<img
-			class="shrink-0 image_2 pos_68"
-			src="../../assets/bg-star.png"
-		/>
 	<div>
 		<div class="back-home" @click="goBackHome()">
 			<span class="font_13">乐词不疲</span>
@@ -41,15 +32,18 @@
 			</div>
 				<div class="card-container">
 					<div class="inner-card-container">
-						<div class="section_10"></div>
+						<div class="left-area">
+							<div class="section_10"></div>
 							<!--el-avatar :size="100" :src="this.infoForm.avatar"></el-avatar-->
-							<el-button type="text" @click="uploadAvatar()" style="margin-top: 200px;">
+							<el-button type="text" @click="uploadAvatar()" style="margin-top: 200px;width: 70px">
 								<el-icon style="color:#888888"><Upload /></el-icon>
-								<span class="upload-text">upload</span>
+								<!--span class="upload-text">upload</span-->
 							</el-button>
 							<div class="mt-16 section_12">
 								<span class="text-name">{{this.infoForm.username}}</span>
-							</div>
+							</div>	
+						</div>
+						
 						<div class="right-area">
 							<div class="section_11"><span class="text-name">LV.{{this.infoForm.level}}</span></div>
 							<div class="section_11"><span class="text-name">手机号 {{this.infoForm.phone}}</span></div>
@@ -122,13 +116,13 @@
 				</div>
 		</el-row>
 	</div>
-	</div>
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
 import yaml from 'js-yaml'
+import "../../assets/styles/center.css"
 
 export default {
 	async created() {
@@ -313,105 +307,8 @@ export default {
 </script>
 
 <style scoped>
-.bg {
-	height: 100vh;
-	background-size: cover;
-	background-position: center;
-	background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
-}
-.image_2 {
-	width: 876px;
-	height: 546px;
-}
-.pos_74 {
-	position: absolute;
-	left: 90px;
-	top: 100px;
-}
-.pos_68 {
-	position: absolute;
-	right: 90px;
-	top: 100px;
-}
 .setting {
 	margin-left: 800px;
-}
-/*home*/
-.back-home {
-	position: absolute;
-	margin-top: 20px;
-	margin-left: 50px;
-	cursor: pointer;
-	z-index: 99; /*绝对定位下，需要设置高优先级*/
-}
-.font_13 {
-	font-size: 38px;
-	font-family: Poppins;
-	line-height: 44.5px;
-	color: #ffffff;
-	text-shadow: 0px 4px 10px #fbdd6f;
-}
-/*header*/
-.header {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-}
-.text-wrapper_10 {
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
-	margin-left: 100px;
-	padding: 16px 0;
-	background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
-	border-radius: 12px;
-	width: 280px;
-}
-.font_16 {
-	font-size: 40px;
-	font-family: Poppins;
-	line-height: 46px;
-	font-weight: 800;
-	color: #2c0b6c;
-}
-.text_22 {
-	line-height: 45.5px;
-}
-/*高亮标签*/
-.section_1 {
-	padding: 20px 0;
-	background-color: #fffefe;
-	border-radius: 10px 0px 0px 10px;
-	box-shadow: 0px 4px 4px #ffd217;
-	width: 200px;
-	border: solid 2px #fbdd6f;
-	position: absolute;
-	cursor: pointer;
-	z-index: 99;
-}
-.image_1 {
-	margin-left: 20px;
-	width: 30px;
-	height: 30px;
-}
-.text_2 {
-	line-height: 34px;
-	font-size: 30px;
-	font-family: Poppins;
-	line-height: 34px;
-	font-weight: 800;
-	color: #ffd033;
-	margin-left: 10px;
-}
-/*灰色标签*/
-.text-wrapper_14 {
-	padding: 20px 0;
-	background-color: #f5f0f8;
-	border-radius: 10px 0px 0px 10px;
-	width: 150px;
-	cursor: pointer;
-	z-index: 99;
 }
 .pos_79 {
 	position: absolute;
@@ -447,26 +344,6 @@ export default {
 	line-height: 30.5px;
 	margin-left: 30px;
 }
-/*选择容器*/
-.card-container {
-	margin-top: 80px;
-	margin-left: 300px;
-	margin-right: 120px;
-	padding: 28px 0;
-	background-color: #fce6c6;
-	border-radius: 80px;
-	width: 1000px;
-	height: 560px;
-}
-.inner-card-container {
-	padding: 60px 50px;
-	background-color: #fff9ed;
-	border-radius: 80px;
-	width: 820px;
-	height: 440px;
-	margin: 0 40px;
-	display: flex; /*解决块级元素不能一行显示*/
-}
 /*头像*/
 .section_10 {
 	background-color: #9d9bf4;
@@ -487,10 +364,10 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 250px -270px;
+	margin: 250px -235px;
 	background-color: #ffe9d4;
 	border-radius: 20px;
-	height: 35px;
+	height: 50px;
 	width: 160px;
 	border: solid 4px #d8a8aa;
 }
@@ -511,9 +388,13 @@ export default {
 	width: 350px;
 	border: solid 4px #d8a8aa;
 }
-.right-area {
+.left-area {
+	display: flex;
+	margin-top: 20px;
+	margin-left: 80px;
 	width: 400px;
-	margin-left: 500px;
+}
+.right-area {
 	margin-top: 50px;
 }
 .section_14 {
