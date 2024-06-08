@@ -83,7 +83,7 @@ const getExperience = () => {
     console.log(response.data)
     if (response.status === 200) {
       //console.log(response.data)
-      Experience.value = response.data.Experience
+      Experience.value = response.data.exp
     } else {
       ElMessage({
         message: '获取经验总值数据失败',
@@ -101,7 +101,7 @@ const getCount = () => {
   response.then(function (response) {
     if (response.status === 200) {
       //console.log(response.data)
-      Count.value = response.data.Count
+      Count.value = response.data.draw_count
     } else {
       ElMessage({
         message: '获取剩余抽卡次数失败',
