@@ -153,37 +153,37 @@ export default {
 }
 /*排行列表*/
 .ml-190 {
-  margin-left: 165px;
+	margin-left: 165px;
 }
 .section_52 {
 	width: 100%;
 	height: 0;
-  margin-right: 30px;
-  padding: 10px 30px;
+	margin-right: 30px;
+	padding: 10px 30px;
 	border-top: 100px solid #FFDA53;
-  border-right: 25px solid transparent;
-  border-left: 25px solid transparent;
+	border-right: 25px solid transparent;
+	border-left: 25px solid transparent;
 }
 .inner-text {
 	display: flex;/*解决块级元素不能一行显示*/
 	margin-top: -85px;
 }
 .text-wrapper_19 {
-  width: 80px;
+	width: 80px;
 }
 .text_54 {
-  color: #000000;
-  font-size: 58px;
-  font-family: Poppins;
-  font-weight: 800;
-  line-height: 47.5px;
+	color: #000000;
+	font-size: 58px;
+	font-family: Poppins;
+	font-weight: 800;
+	line-height: 47.5px;
 }
 .text_50 {
-  color: #000000;
-  font-size: 40px;
-  font-family: Poppins;
-  font-weight: 800;
-  line-height: 47.5px;
+	color: #000000;
+	font-size: 40px;
+	font-family: Poppins;
+	font-weight: 800;
+	line-height: 47.5px;
 }
 .wd_280 {
 	width: 280px;
@@ -192,72 +192,72 @@ export default {
 	width: 300px;
 }
 .font_26 {
-  font-size: 36px;
-  font-family: Poppins;
-  font-weight: 800;
-  color: #000000;
+	font-size: 36px;
+	font-family: Poppins;
+	font-weight: 800;
+	color: #000000;
 }
 /*layer2*/
 .font_16 {
-  font-size: 48px;
-  font-family: Poppins;
-  line-height: 46px;
-  font-weight: 800;
-  color: #2c0b6c;
+	font-size: 48px;
+	font-family: Poppins;
+	line-height: 46px;
+	font-weight: 800;
+	color: #2c0b6c;
 }
 .section_53 {
-  margin-right: 40px;
-  padding: 20px 10px;
-  background-color: #FFE9D4;
+	margin-right: 40px;
+	padding: 20px 10px;
+	background-color: #FFE9D4;
 	display: flex;
 	width: 100%;
 }
 .text_58 {
 	width: 300px;
-  font-size: 48px;
-  font-family: Poppins;
-  line-height: 46px;
-  font-weight: 800;
-  color: #000000;
-  line-height: 36px;
+	font-size: 48px;
+	font-family: Poppins;
+	line-height: 46px;
+	font-weight: 800;
+	color: #000000;
+	line-height: 36px;
 	margin-left: 10px;
 	margin-right: -20px;
 }
 .text-wrapper_20 {
-  margin-left: 180px;
+	margin-left: 180px;
 }
 .view_11 {
-  margin-left: 200px;
-  margin-right: 50px;
+	margin-left: 200px;
+	margin-right: 50px;
 }
 /*other layer*/
 .ml-240 {
-  margin-left: 180px;
+	margin-left: 180px;
 }
 .font_25 {
-  font-size: 36px;
-  font-family: Poppins;
-  line-height: 20.5px;
-  font-weight: 800;
-  color: #000000;
+	font-size: 36px;
+	font-family: Poppins;
+	line-height: 20.5px;
+	font-weight: 800;
+	color: #000000;
 }
 .font_26 {
-  font-size: 36px;
-  font-family: Poppins;
-  line-height: 27px;
-  font-weight: 800;
-  color: #000000;
+	font-size: 36px;
+	font-family: Poppins;
+	line-height: 27px;
+	font-weight: 800;
+	color: #000000;
 }
 .section_54 {
 	width: 95%;
 	display: flex;
-  margin-left: 25px;
+	margin-left: 25px;
 	margin-top: 20px;
-  padding: 20px 10px;
-  background-color: #FFE9D4;
+	padding: 20px 10px;
+	background-color: #FFE9D4;
 }
 .text_60 {
-  margin-right: 64px;
+	margin-right: 64px;
 }
 .ml-20 {
 	margin-left: 30px;
