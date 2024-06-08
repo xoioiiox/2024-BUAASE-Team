@@ -129,9 +129,9 @@ const DrawCard = (item) => {
   const response = axios.get('/api/word/get-event');
   response.then(function (response) {
     if (response.status === 200) {
-      //console.log(response.data)
+      console.log(response.data)
       CardContent.value = response.data;
-      //console.log(CardContent.data)
+      console.log(CardContent.data)
     } else {
       ElMessage({
         message: '抽卡失败',
