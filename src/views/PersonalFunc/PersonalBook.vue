@@ -46,30 +46,35 @@
 							</div>
 						</div>
 						<div class="section_36"></div>
-						<el-row class="choosing">
-							<el-col :span="8">
-								<div class="flex-col relative section_35">
-									<img
-										class="image_29"
-										src="../../assets/personal-center/ball.png"
-									/>
-									<div class="text-wrapper_16">
-										<span class="font_21 text_42">{{this.curBook}}</span>
-									</div>
-								</div>
-							</el-col>
-							<el-col v-for="(item, index) in wordBooks" :key="index" :span="8">
-								<div class="flex-col items-center section_31" @click="ChooseThisBook(item)">
-									<img
-										class="image_29"
-										src="../../assets/personal-center/ball2.png"
-									/>
-									<div class="text-wrapper_16">
-										<span class="font_21 text_42">{{item}}</span>
-									</div>
-								</div>
-							</el-col>
-						</el-row>
+						<div class="choosing">
+							<el-scrollbar height="450px">
+								<el-row>
+									<el-col :span="8">
+										<div class="section_35">
+											<img
+												class="image_29"
+												src="../../assets/personal-center/ball.png"
+											/>
+											<div class="text-wrapper_16">
+												<span class="font_21 text_42">{{this.curBook}}</span>
+											</div>
+										</div>
+									</el-col>
+									<el-col v-for="(item, index) in wordBooks" :key="index" :span="8">
+										<div class="section_31" @click="ChooseThisBook(item)">
+											<img
+												class="image_29"
+												src="../../assets/personal-center/ball2.png"
+											/>
+											<div class="text-wrapper_16">
+												<span class="font_21 text_42">{{item}}</span>
+											</div>
+										</div>
+									</el-col>
+								</el-row>	
+							</el-scrollbar>
+						</div>
+						
 					</div>
 				</div>
 		</el-row>
@@ -184,7 +189,7 @@ export default {
 				{value: '15', label: '15'},
 				{value: '20', label: '20'},
 			],
-			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书"],
+			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书","1","2","3","4"],
 			curBook: "大学英语四级"
 		}
 	},
@@ -415,6 +420,10 @@ export default {
 }
 /*当前词书*/
 .section_35 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
   width: 180px;
   height: 180px;
   background-color: #fcda59;
@@ -423,25 +432,26 @@ export default {
   border: solid 4px #b4aecc;
 	cursor: pointer;
 	z-index: 99;
+	margin-bottom: 20px;
+	padding: 10px 10px;
 }
 .image_29 {
-	margin-left: 50px;
-	margin-top: 10px;
   width: 80px;
   height: 80px;
 }
 .text-wrapper_16 {
-  margin-left: 30px;
 	margin-top: 20px;
 }
 /*所有词书*/
 .image_28 {
-	margin-left: 50px;
-	margin-top: 10px;
   width: 80px;
   height: 80px;
 }
 .section_31 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
   background-color: #ffe9d4;
   border-radius: 36px;
   width: 180px;
@@ -449,8 +459,11 @@ export default {
   border: solid 4px #d8a8aa;
 	cursor: pointer;
 	z-index: 99;
+	margin-bottom: 20px;
+	padding: 10px 10px;
 }
 .choosing {
+	height: 500px;
 	width: 600px;
 }
 .bookCard {
