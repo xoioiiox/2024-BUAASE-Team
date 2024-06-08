@@ -1,7 +1,7 @@
 
 <template>
   <div class='app-content'>
-    <Map :map='state.map'></Map>  <!-- 调用组件 -->
+    <Map :map='state.map' :specialChars='specialChars'></Map>  <!-- 调用组件 -->
 
     <Controller :is-live='isLive'
                 @start='start'
@@ -10,14 +10,14 @@
               @changeDirection='change'></KeyBoard>   <!-- 调用组件 -->
 
 
-<!--    <audio controls-->
-<!--           ref="audio"-->
-<!--           class="audio"-->
-<!--           loop-->
-<!--           autoplay>-->
-<!--      <source src="https://img.tukuppt.com/newpreview_music/09/01/69/5c8a0553e18db46234.mp3"-->
-<!--              type="audio/mpeg" />-->
-<!--    </audio>-->
+    <!--    <audio controls-->
+    <!--           ref="audio"-->
+    <!--           class="audio"-->
+    <!--           loop-->
+    <!--           autoplay>-->
+    <!--      <source src="https://img.tukuppt.com/newpreview_music/09/01/69/5c8a0553e18db46234.mp3"-->
+    <!--              type="audio/mpeg" />-->
+    <!--    </audio>-->
 
     <div class="sidebar">
       <p>Level：1</p>
@@ -44,10 +44,38 @@ import Map from '../../components/snakeGame/Map.vue';
 import Controller from '../../components/snakeGame/Controller.vue';
 import KeyBoard from '../../components/snakeGame/KeyBoard.vue';
 import { initGame } from './game';
-import { reactive, ref } from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import { StateType } from './types';
+import axios from "axios";
+
 
 const audio = ref(null);
+
+
+// 定义响应式数据
+const word = ref('');
+const pronunciation = ref('');
+const definition = ref('');
+const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
+
+// 获取单词数据
+onMounted(async () => {
+  const response = await axios.get('/api/word/get-next-word/').then((response) => {
+    if (response.status === 200) {//状态码200，请求正确
+      word.value = response.data.word;
+    }
+  }) .catch((error) => {
+
+  })
+  // const data = await getWordData(); // 调api
+  // word.value = data.word;
+  // pronunciation.value = data.pronunciation;
+  // definition.value = data.definition;
+  // 根据实际情况可能需要更新specialChars
+});
+
+
+
 
 // 地图
 const state = reactive<StateType>({
