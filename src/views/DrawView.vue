@@ -126,7 +126,7 @@ const DrawCard = (item) => {
   //标记选中的卡片status为1，被翻了过来
   item.status = 1
   //router.push('/event1');
-  const response = axios.post('/api/word/get-event');
+  const response = axios.get('/api/word/get-event');
   response.then(function (response) {
     if (response.status === 200) {
       //console.log(response.data)
