@@ -1,10 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import PersonalBook from "../views/PersonalFunc/PersonalBook.vue";
-import PersonalSetting from "../views/PersonalFunc/PersonalSetting.vue";
 import PersonalRank from "../views/PersonalFunc/PersonalRank.vue";
 import PersonalAchieve from "../views/PersonalFunc/PersonalAchieve.vue";
 
-import WordDetail from "../components/WordDetail.vue";
+import WordDetail from "../views/WordDetail.vue";
 import PersonalInfo from "../views/PersonalFunc/PersonalInfo.vue";
 import Home from "@/views/Home.vue";
 import SavedWords from "../views/PersonalFunc/SavedWords.vue";
@@ -18,11 +17,21 @@ import Guide from "@/views/Guide.vue";
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
+import DrawView from '../views/DrawView.vue'
 
 
 import { useUserStore } from '@/stores/userStore.js';
 
 import PunchIn from '../components/PunchIn.vue'
+import event1 from "@/components/eventCards/event1.vue";
+import event2 from "@/components/eventCards/event2.vue";
+import event3 from "@/components/eventCards/event3.vue";
+
+import StartGameHome from "@/views/StartGameHome.vue"
+
+import SnakeGame from "@/views/SnakeGame/SnakeGame.vue"
+
+import GameChoose from "@/views/GameChoose.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -66,11 +75,6 @@ const router = createRouter({
       component: PersonalBook,
     },
     {
-      path: "/PersonalSetting",
-      name: "PersonalSetting",
-      component: PersonalSetting,
-    },
-    {
       path: "/PersonalRank",
       name: "PersonalRank",
       component: PersonalRank,
@@ -111,7 +115,44 @@ const router = createRouter({
       path: '/guide',
       name: 'guide',
       component: Guide
+    },
+    {
+      path: '/event1',
+      name: 'evnet1',
+      component: event1
+    },
+    {
+      path: '/event2',
+      name: 'evnet2',
+      component: event2
+    },
+    {
+      path: '/event3',
+      name: 'evnet3',
+      component: event3
+    },
+    {
+      path: '/StartGameHome',
+      name: 'StartGameHome',
+      component: StartGameHome
+    },
+    {
+      path: '/DrawView',
+      name: 'DrawView',
+      component: DrawView
+    },
+    {
+      path: '/SnakeGame',
+      name: 'SnakeGame',
+      component: SnakeGame
+    },
+    {
+      path: '/GameChoose',
+      name: 'GameChoose',
+      component: GameChoose
     }
+
+
 
   ]
 })
