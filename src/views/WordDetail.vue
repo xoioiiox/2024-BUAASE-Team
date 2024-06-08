@@ -97,6 +97,11 @@
 			means: ''
 		}
 	]);
+
+		//返回主页
+	const back2home = () => {
+		router.push('/')// 主页路由
+	}
 	
 	const Ratio = ref(0)
 	const getDayRatio = () => {
