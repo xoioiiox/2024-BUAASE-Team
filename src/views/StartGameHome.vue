@@ -1,6 +1,14 @@
 <script setup>
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 import router from "@/router";
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
+
+onMounted(() => {
+  getCount();
+  getTasks()
+})
 
 const goToRank  = () => {
   router.push({
@@ -15,7 +23,6 @@ const goToArchive = () => {
 
 }
 
-
 const goToDrawCard = () => {
   router.push({
     path: '/DrawView'
@@ -23,11 +30,55 @@ const goToDrawCard = () => {
 }
 
 
+//获取当前用户的剩余抽卡次数
+const Count = ref(5)
+const getCount = () => {
+  const response = axios.get('/api/word/get-draw-count/');
+  response.then(function (response) {
+        if (response.status === 200) {
+          //console.log(response.data)
+          Count.value = response.data.Count
+        } else {
+          ElMessage({
+            message: '获取剩余抽卡次数失败',
+            type: 'error'
+          })
+        }
+      }
+  )
+}
+
+
+// 获取用户每日任务
+const Task = ref([])
+const getTasks = () => {
+  const response = axios.get('/api/word/get-tasks/');
+  response.then(function (response) {
+        if (response.status === 200) {
+          //console.log(response.data)
+          Task.value = response.data
+        } else {
+          ElMessage({
+            message: '获取每日任务失败',
+            type: 'error'
+          })
+        }
+      }
+  )
+}
+
+
+function filterTasks() {
+  // 过滤出done为false的任务
+  return Task.filter(task => !task.done);
+}
+
+
 </script>
 
 <template>
   <div>
-   <AfterHeaderNavigator></AfterHeaderNavigator>
+    <AfterHeaderNavigator></AfterHeaderNavigator>
   </div>
 
 
@@ -35,19 +86,19 @@ const goToDrawCard = () => {
 
 
 
-        <el-button type="primary" @click="goToArchive">成就展示</el-button>
+    <el-button type="primary" @click="goToArchive">成就展示</el-button>
 
-        <div>
-          <p class="circle-bordered">
-            8 次
-          </p>
-
-
-          <p style="margin-left: 25px;">今日剩余次数</p>
-        </div>
+    <div>
+      <p class="circle-bordered">
+        剩余 {{Count}} 次
+      </p>
 
 
-        <el-button type="primary" @click="goToRank">排行榜</el-button>
+
+    </div>
+
+
+    <el-button type="primary" @click="goToRank">排行榜</el-button>
 
 
 
@@ -56,9 +107,7 @@ const goToDrawCard = () => {
 
   <div class="flex-card-container">
     <!-- 按钮居中 -->
-
     <el-button type="primary" round class="center" @click="goToDrawCard">开始游戏</el-button>
-
     <!-- 卡片靠右 -->
     <el-card class="right">
       <template #header>
@@ -66,7 +115,9 @@ const goToDrawCard = () => {
           <span>每日任务列表</span>
         </div>
       </template>
-      <p v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</p>
+      <p v-for="task in filterTasks" :key="task.task_name" class="text item">
+        {{ task.task_name }} - {{ task.task_description }}
+      </p>
     </el-card>
   </div>
 
