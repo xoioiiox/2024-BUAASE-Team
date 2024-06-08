@@ -1,35 +1,56 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
+
 #
 # For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
 #
 # You can copy and paste this template into a new `.gitlab-ci.yml` file.
 # You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
 #
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
+
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
+image: node:alpine
+
 stages:          # List of stages for jobs, and their order of execution
+  - install
   - build
   - deploy
+
+  # 因为每个任务中所有操作产生的新的文件在进行到下一个任务时都会被清除
+# 但有些我们不希望清楚，所以我们用到缓存，cache中定义的paths下的文件会被缓存到下一个任务中
+cache:
+  key: modules-cache
+  paths:
+    - node_modules
+    - dist
+
+
+install-job:
+  stage: install # 这里代表我们当前的任务处于install阶段
+  script: # 每个任务都必须有script，顾名思义就是执行的语句
+    #- cd ./words-game-frontend/
+    - npm install # 前面说的我们处于一个有node环境的虚拟机，那这句话就是在这个虚拟机的我们当前项目里执行npm instal
+
+
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    #- cd ./words-game-frontend/
+    - npm run build
 
 
 deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
+  stage: deploy
+  image: docker # 因为这里我们用到docker指令所以要把node环境切换到docker
   script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    # 这里是通过我们项目根目录下的Dockerfile文件创建一个新的镜像
+    # # 不懂可以理解成打包成一个安装包
+    #- export DOCKER_HOST="tcp://60.205.14.77"
+    - docker build -t vue-frontend . 
+    # # 这里是查看当前的服务器上有没有正在运行或者存在我们之前运行过的项目容器，如果有删除了
+    - if [ $(docker ps -aq --filter name=vue-frontend-main) ];then docker rm -f vue-frontend-main;fi
+    # # 这里是运行我们刚才创建的新的镜像
+    # # 不懂得可以理解成安装我们刚才打包好的安装包，安装过后会把你的项目运行在nginx里面，外网就可以访问你的项目了
+    - docker run -d -p 80:80 --name=vue-frontend-main --network words-game-network vue-frontend 
+    - echo "Deploy finished."
