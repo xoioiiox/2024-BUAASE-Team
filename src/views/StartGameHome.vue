@@ -15,6 +15,13 @@ const goToArchive = () => {
 
 }
 
+const goToDraw = () => {
+  router.push({
+    path: '/DrawView'
+  });
+
+}
+
 
 </script>
 
@@ -49,7 +56,7 @@ const goToArchive = () => {
 
   <div class="flex-card-container">
     <!-- 按钮居中 -->
-    <el-button type="primary" round class="center" >开始游戏</el-button>
+    <el-button type="primary" round class="center" @click="goToDraw">开始游戏</el-button>
     <!-- 卡片靠右 -->
     <el-card class="right">
       <template #header>

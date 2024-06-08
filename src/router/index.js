@@ -149,7 +149,8 @@ const router = createRouter({
     {
       path: '/GameChoose',
       name: 'GameChoose',
-      component: GameChoose
+      component: GameChoose,
+      meta: { requiresAuth: true }
     }
 
 
