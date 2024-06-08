@@ -1,0 +1,198 @@
+/*personal-side*/
+.stat-personal-side {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  gap: 20px;
+  height: 620px;
+}
+
+.side-item {
+  color: #898989;
+  background-color: #f5f0f8;
+  width: 150px;
+  height: 75px;
+  text-align: center;
+  border-radius: 10px 0 0 10px;
+  padding: 10%;
+  font-size: 26px;
+  font-family: Poppins;
+  line-height: 30.5px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/*高亮标签*/
+.side-item-selected {
+  width: 200px;
+  padding: 20px 0;
+  background-color: #fffefe;
+  border: solid 2px #fbdd6f;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow: 0px 4px 4px #ffd217;
+  cursor: pointer;
+  z-index: 99;
+
+  font-size: 30px;
+  font-family: Poppins;
+  line-height: 34px;
+  font-weight: 800;
+  color: #ffd033;
+  margin-left: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.side-item-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/*选择容器*/
+.stat-card-container {
+  max-width: 1000px;
+  width: 90%;
+  height: 620px;
+  margin-right: 100px;
+  padding: 28px 40px;
+  background-color: #fce6c6;
+  border-radius: 80px;
+  position: relative;
+}
+.stat-inner-card-container {
+  padding: 60px 50px;
+  background-color: #fff9ed;
+  border-radius: 80px;
+  height: 550px;
+  display: flex; /*解决块级元素不能一行显示*/
+}
+
+/* personal center page header */
+.personal-page-header {
+  width: 280px;
+  height: 77px;
+  padding: 16px 0;
+  margin: 0 auto;
+  position: absolute;
+  top: -35px;
+  margin-left: calc(50% - 180px);
+
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
+
+  line-height: 45px;
+  font-size: 40px;
+  font-weight: 800;
+  font-style: Poppins;
+  color: #2c0b6c;
+}
+
+.stat-page {
+  /* border: 1px solid red; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.stat-windows {
+  /* border: 1px solid blue; */
+  border-radius: 4px;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px; */
+}
+
+.stat-study {
+  /* border: 1px solid red; */
+  height: 100%;
+  gap: 5px;
+}
+
+.stat-daily-row {
+  padding-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-daily-header {
+  padding-left: 30px;
+}
+
+.stat-daily-cards {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5%;
+  border-radius: 24px;
+  background-color: #ffd217;
+}
+
+.stat-card {
+  height: 100%;
+  border-radius: 4px;
+  background-color: var(--el-bg-color-overlay);
+  text-align: center;
+  /* background-color: #fce6c6; */
+  background-color: #ffd217;
+}
+
+.stat-card-title {
+  display: inline-flex;
+  align-items: center;
+}
+
+.stat-weekly-row {
+  margin-top: 40px;
+  height: 20%;
+}
+
+.stat-weekly-graph {
+  padding: 10px 20px 4px 10px;
+  height: 100%;
+}
+
+.el-statistic {
+  --el-statistic-content-font-size: 28px;
+  --el-statistic-title-color: #fff;
+  --el-statistic-content-color: #fff;
+  --el-statistic-content-font-weight: 500;
+  --el-statistic-title-font-weight: 400;
+}
+
+.el-calendar {
+  --el-calendar-cell-width: 36px;
+  --el-fill-color-blank: #fce6c6;
+  --el-calendar-border: 1px solid #d7a15b;
+  /* border: 2px solid blue; */
+  border-radius: 24px;
+}
+
+.el-divider {
+  height: 50px;
+}
+
+.is-checked {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: auto;
+  border: 3px double #00ff00;
+  border-radius: 50%;
+  font-size: 16px;
+  text-align: center;
+  background-color: #b2ffb2;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #fff,
+    #fff 7px,
+    transparent 0,
+    transparent 14px
+  );
+}

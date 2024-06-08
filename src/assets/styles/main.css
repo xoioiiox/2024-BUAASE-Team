@@ -9,3 +9,13 @@ body {
   height: 100vh;
   margin: 0;
 }
+
+.page-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.header-container {
+  height: 80px;
+  width: 100%;
+}
