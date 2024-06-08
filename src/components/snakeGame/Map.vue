@@ -11,7 +11,8 @@
            v-for='col in gameCol'
            :key='col'>
         <!-- 小格子 -->
-        <Cell :type='map[row-1][col-1]'></Cell>
+        <Cell :type='map[row-1][col-1]'
+              :character='specialChars'></Cell>
       </div>
     </div>
   </div>
@@ -22,7 +23,12 @@ import Cell from './Cell.vue';
 import { gameRow, gameCol } from '../../views/SnakeGame/game/map';
 import { defineProps } from 'vue';
 
-defineProps(['map']);
+defineProps(['map', 'specialChars']);
+
+
+
+
+
 </script>
 
 <style lang='scss' scoped>
