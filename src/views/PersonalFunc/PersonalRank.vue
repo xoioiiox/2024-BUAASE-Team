@@ -70,7 +70,7 @@ import "../../assets/styles/center.css"
 export default {
 	components: {},
 	async created() {
-		await axios.get('/api/game/get-ranking-list/').then((res)=> {
+		await axios.get('/api/word/get-ranking-list-today/').then((res)=> {
 			this.rankList = res.data.rank_list
 		})
 	},
