@@ -1,35 +1,77 @@
 <template>
 	<div>
+		<div class="back-home" @click="goBackHome()">
+			<span class="font_13">乐词不疲</span>
+		</div>
 		<el-row :gutter="20">
-			<el-col :span="6">
-				<PersonalSide></PersonalSide>
-			</el-col>
-			<el-col :span="18">
-				<h2>选择词书</h2>
-				<div class="setting">
+			<div class="header">
+				<div class="text-wrapper_10">
+					<span class="font_16 text_22">选择词书</span>
+				</div>
+			</div>
+			<div class="Personalside">
+				<div class="flex-row section_1 pos_77">
+					<img
+						class="image_1"
+						src="../../assets/personal-center/side-4.png"
+					/>
+					<span class="font_19 text_2 ml-11">选择词书</span>
+				</div>
+				<div class="text-wrapper_14 pos_80" @click="toStatistics">
+					<span class="font_18 text_40">统计信息</span>
+				</div>
+				<div class="text-wrapper_14 pos_81" @click="toAchieve">
+					<span class="font_18 text_40">成就展示</span>
+				</div>
+				<div class="text-wrapper_14 pos_82" @click="toRank">
+					<span class="font_18 text_40">排行榜</span>
+				</div>
+				<div class="text-wrapper_14 pos_83" @click="toEditInfo">
+					<span class="font_18 text_40">个人信息</span>
+				</div>
+			</div>
+				<!--div class="setting">
 					<el-button type="primary" @click="studySetting()">学习设置</el-button>
 					<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
+				</div-->
+				<div class="card-container">
+					<div class="inner-card-container">
+						<div class="section_34" @click="toSavedWords">
+							<img
+								class="image_27"
+								src="../../assets/personal-center/side-4.png"
+							/>
+							<div class="text-wrapper_15">
+								<span class="font_21 text_32">收藏生词本</span>
+							</div>
+						</div>
+						<div class="section_36"></div>
+						<el-row class="choosing">
+							<el-col :span="8">
+								<div class="flex-col relative section_35">
+									<img
+										class="image_29"
+										src="../../assets/personal-center/ball.png"
+									/>
+									<div class="text-wrapper_16">
+										<span class="font_21 text_42">{{this.curBook}}</span>
+									</div>
+								</div>
+							</el-col>
+							<el-col v-for="(item, index) in wordBooks" :key="index" :span="8">
+								<div class="flex-col items-center section_31" @click="ChooseThisBook(item)">
+									<img
+										class="image_29"
+										src="../../assets/personal-center/ball2.png"
+									/>
+									<div class="text-wrapper_16">
+										<span class="font_21 text_42">{{item}}</span>
+									</div>
+								</div>
+							</el-col>
+						</el-row>
+					</div>
 				</div>
-				<div class="ChooseBook">
-					<el-row>
-						<el-col :span="6">
-							<el-card shadow="hover" class="bookCard curbook">
-								<p>{{this.curBook}}</p>
-								<!--p class="number">{{item.wordnum}}词</p-->
-								<p>
-									<el-tag type="primary" >当前词书</el-tag>
-								</p>
-							</el-card>
-						</el-col>
-						<el-col v-for="(item, index) in wordBooks" :key="index" :span="6">
-							<el-card shadow="hover" @click="ChooseThisBook(item)" class="bookCard">
-								<p>{{item}}</p>
-								<!--p class="number">{{item.wordnum}}词</p-->
-							</el-card>
-						</el-col>
-					</el-row>
-				</div>
-			</el-col>
 		</el-row>
 	</div>
 	<div>
@@ -94,13 +136,13 @@
 			</el-upload>
 		</el-dialog>
 	</div>
-
 </template>
 
 <script>
 import PersonalSide from "../../components/PersonalSide.vue"
 import axios from "axios"
 import yaml from 'js-yaml'
+import "../../assets/styles/center.css"
 
 export default {
 	components: {PersonalSide},
@@ -147,6 +189,27 @@ export default {
 		}
 	},
 	methods: {
+		goBackHome() {
+			this.$router.push('/')
+		},
+		toChooseBook() {
+      this.$router.push({ path: "/PersonalBook/" });
+    },
+    toEditInfo() {
+      this.$router.push({ path: "/PersonalInfo/" });
+    },
+    toAchieve() {
+      this.$router.push({ path: "/PersonalAchieve/" });
+    },
+    toSavedWords() {
+      this.$router.push({ path: "/SavedWords" });
+    },
+    toRank() {
+      this.$router.push({ path: "/PersonalRank" });
+    },
+    toStatistics() {
+      this.$router.push({ path: "/Statistics" });
+    },
 		ChooseThisBook(bookname) {
 			console.log(bookname)
 			this.curBook = bookname
@@ -154,12 +217,10 @@ export default {
 					bookname: bookname
 			}).then((res)=> {
 				console.log('choose: ', res)
-				if (res.status == 200) {
-					this.$message({
-						type: 'success',
-						message: "选择成功"
-					});
-				}
+				this.$message({
+					type: 'success',
+					message: "选择成功"
+				});
 			})
 		},
 		studySetting() {
@@ -284,13 +345,116 @@ export default {
 .setting {
 	margin-left: 800px;
 }
-.ChooseBook {
+/*标签位置*/
+.pos_80 {
+  position: absolute;
+  left: 150px;
+  top: 270px;
+}
+.pos_81 {
+  position: absolute;
+  left: 150px;
+  top: 360px;
+}
+.pos_82 {
+  position: absolute;
+  left: 150px;
+  top: 450px;
+}
+.pos_83 {
+  position: absolute;
+  left: 150px;
+  top: 540px;
+}
+.font_18 {
+  font-size: 26px;
+  font-family: Poppins;
+  line-height: 30.5px;
+  font-weight: 800;
+  color: #888888;
+  line-height: 30.5px;
+	margin-left: 30px;
+}
+/*收藏生词本*/
+.section_34 {
+  background-color: #ddf0ff;
+  border-radius: 36px;
+  width: 180px;
+  height: 180px;
+  border: solid 2px #5c7fac96;
+}
+.image_27 {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+	margin: 10px 0 10px 40px;
+}
+.text-wrapper_15 {
+	display: flex;
+	justify-content: center;
+	margin: 0 10px;
+  padding: 8px 0;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: solid 1px #5c7fac;
+	cursor: pointer;
+	z-index: 99;
+}
+.font_21 {
+  font-size: 20px;
+  font-family: Poppins;
+  color: #150437;
+}
+/*分割线*/
+.section_36 {
+  background-color: #fce6c6;
+  width: 6px;
+  height: 450px;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+/*当前词书*/
+.section_35 {
+  width: 180px;
+  height: 180px;
+  background-color: #fcda59;
+  border-radius: 36px;
+  box-shadow: 0px -10px 50px 10px #ffffffb3 inset;
+  border: solid 4px #b4aecc;
+	cursor: pointer;
+	z-index: 99;
+}
+.image_29 {
+	margin-left: 50px;
 	margin-top: 10px;
-	margin-left: 10px;
-	margin-right: 120px;
+  width: 80px;
+  height: 80px;
+}
+.text-wrapper_16 {
+  margin-left: 30px;
+	margin-top: 20px;
+}
+/*所有词书*/
+.image_28 {
+	margin-left: 50px;
+	margin-top: 10px;
+  width: 80px;
+  height: 80px;
+}
+.section_31 {
+  background-color: #ffe9d4;
+  border-radius: 36px;
+  width: 180px;
+  height: 180px;
+  border: solid 4px #d8a8aa;
+	cursor: pointer;
+	z-index: 99;
+}
+.choosing {
+	width: 600px;
 }
 .bookCard {
-	width: 180px;
+	width: 200px;
 	height: 220px;
 	margin-bottom: 20px;
 	box-shadow: rgba(0, 0, 0, 0.101) 4px 6px 3px;

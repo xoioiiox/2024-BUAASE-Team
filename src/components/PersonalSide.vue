@@ -1,7 +1,7 @@
 <template>
   <el-row class="side">
     <el-col>
-      <img style="width: 100px"
+      <img style="width: 180px"
           src="../assets/logo.png"
           alt="Element logo"  @click="toHome()"/>
       <!--h5 class="mb-2" @click="toHome()">Default colors</h5-->

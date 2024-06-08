@@ -1,7 +1,18 @@
 <template>
+    <div class="back-home" @click="goBackHome()">
+			<span class="font_13">乐词不疲</span>
+		</div>
   <div class="register-container">
+    <img
+			class="shrink-0 image_2 pos_74"
+			src="../assets/bg-star.png"
+		/>
+		<img
+			class="shrink-0 image_2 pos_68"
+			src="../assets/bg-star.png"
+		/>
     <el-card class="register-card">
-      <img src="../assets/user.svg" alt="Logo" class="logo">
+      <!--img src="../assets/user.svg" alt="Logo" class="logo"-->
       <h2 class="register-title">用户注册</h2>
       <el-form
           ref="registerFormRef"
@@ -32,11 +43,11 @@
         </el-form-item>
         <!--按钮区域-->
         <div class="register-button-container">
-          <el-button type="primary" @click="submitForm(registerFormRef)">注册</el-button>
-          <el-button @click="resetForm(registerFormRef)">重置</el-button>
+          <el-button type="primary" @click="submitForm(registerFormRef)" class="register-button button1">注册</el-button>
+          <el-button @click="resetForm(registerFormRef)" class="register-button button2">重置</el-button>
         </div>
         <div class="register-button-container">
-          <el-button class="register-button" @click="login">已有账号，点我登录</el-button>
+          <el-button class="register-button button2" @click="login">已有账号，点我登录</el-button>
         </div>
 
       </el-form>
@@ -161,6 +172,10 @@ const resetForm = (formEl: FormInstance | undefined) => {
 const login= ()=>{
   router.push('/login')
 }
+
+const goBackHome= ()=> {
+  router.push('/')
+}
 </script>
 
 <style scoped>
@@ -169,17 +184,50 @@ const login= ()=>{
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-image: url("https://s2.loli.net/2024/04/29/B7Mjd4UkcOPzayH.jpg"); /* 替换为你的背景图片路径 */
+  //background-image: url("https://s2.loli.net/2024/04/29/B7Mjd4UkcOPzayH.jpg"); /* 替换为你的背景图片路径 */
   background-size: cover;
   background-position: center;
+  background-image: linear-gradient(180deg, #2c0b6c 30.1%, #974fc7 100%);
 }
-
+.image_2 {
+  width: 876px;
+  height: 546px;
+}
+.pos_74 {
+  position: absolute;
+  left: 90px;
+  top: 100px;
+}
+.pos_68 {
+  position: absolute;
+  right: 30px;
+  top: 100px;
+}
+.back-home {
+	position: absolute;
+	margin-top: 20px;
+	margin-left: 50px;
+	cursor: pointer;
+	z-index: 99; /*绝对定位下，需要设置高优先级*/
+}
+.font_13 {
+	font-size: 38px;
+	font-family: Poppins;
+	line-height: 44.5px;
+	color: #ffffff;
+	text-shadow: 0px 4px 10px #fbdd6f;
+}
 .register-card {
-  width: 400px;
-  padding: 30px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 10px 60px 50px;
+  background-color: #5782c147;
+  border-radius: 40px;
+  border-image-slice: 1;
+  backdrop-filter: blur(12.5px);
+  width: 500px;
+  border-left: solid 3px #5882c17d;
+  border-right: solid 3px #5882c17d;
+  border-top: solid 3px #5882c17d;
+  border-bottom: solid 3px #5882c17d;
 }
 
 .logo {
@@ -189,8 +237,11 @@ const login= ()=>{
 }
 
 .register-title {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 38px;
+  font-family: Poppins;
+  line-height: 35.5px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
 .register-button-container {
@@ -205,4 +256,35 @@ const login= ()=>{
   height: 100%;
 }
 
+.button1 {
+  width: 100%;
+  height: 100%;
+  padding: 14px 0;
+  border-radius: 10px;
+  background-color: #2c0b6c;
+  /*font*/
+  font-size: 16px;
+  font-family: Poppins;
+  line-height: 19px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.button2 {
+  width: 100%;
+  height: 100%;
+  padding: 14px 0;
+  border-radius: 10px;
+  /*font*/
+  font-size: 16px;
+  font-family: Poppins;
+  line-height: 19px;
+  font-weight: 700;
+  color: #2c0b6c;
+}
+
+/deep/.el-form-item__label {
+  font-size: 14px;
+  color: #ffffff;
+}
 </style>
