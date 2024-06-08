@@ -6,6 +6,13 @@
 	cursor: pointer;
 	z-index: 99; /*绝对定位下，需要设置高优先级*/
 }
+.back-home-r {
+	position: absolute;
+	top: 30px;
+	left: 50px;
+	cursor: pointer;
+	z-index: 99; /*绝对定位下，需要设置高优先级*/
+}
 .font_13 {
 	font-size: 38px;
 	font-family: Poppins;
