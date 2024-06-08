@@ -101,7 +101,7 @@ const getCount = () => {
   response.then(function (response) {
     if (response.status === 200) {
       //console.log(response.data)
-      Count.value = response.data.draw_count
+      Count.value = response.data.count
     } else {
       ElMessage({
         message: '获取剩余抽卡次数失败',
@@ -131,7 +131,7 @@ const DrawCard = (item) => {
     if (response.status === 200) {
       console.log(response.data)
       CardContent.value = response.data;
-      console.log(CardContent.data)
+      console.log(CardContent)
     } else {
       ElMessage({
         message: '抽卡失败',
