@@ -130,7 +130,15 @@ const DrawCard = (item) => {
   response.then(function (response) {
     if (response.status === 200) {
       console.log(response.data)
-      CardContent.value = response.data;
+
+
+
+      CardContent.value.event_description = response.data.event_description;
+      CardContent.value.event_name = response.data.event_name;
+      CardContent.value.event_type = response.data.event_type;
+      
+
+
       console.log(CardContent)
     } else {
       ElMessage({
