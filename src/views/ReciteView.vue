@@ -136,7 +136,7 @@ const getDayRatio = () => {
 			//console.log(response.data)
 			Ratio.value =  response.data.ratio
 			//保留前两位小数
-			IntRatio.value = Math.floor(Ratio.value * 100) / 100
+			IntRatio.value = Math.floor(Ratio.value * 100) / 100 - Math.floor(Ratio.value)
 			//不超过1
 			if (IntRatio.value >= 1){
 				IntRatio.value = 1;
