@@ -144,9 +144,9 @@ const getWords = () => {
 }
 
 const postResult = () => {
-    axios.post('/api/word/card/curEventResult/', {
-        type: '英译汉选择',
-        result: (timeLeft != '时间到') && (numbers[index] == 0)
+    axios.post('/api/word/card/cur-event-result/', {
+        event_name: '英译汉选择',
+        event_result: (timeLeft != '时间到') && (numbers[index] == 0)
     })
         .then((response) => {
             console.log(response);

@@ -1,54 +1,12 @@
-<template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <PersonalSide />
-      </el-col>
-      <el-col :span="18" class="saved-words-page">
-        <h2>生词本记录</h2>
-        <!-- Words List -->
-        <el-empty v-if="!words[0]" description="暂无数据" />
-        <template v-else>
-          <el-scrollbar
-            class="saved-words-list"
-            max-height="600px"
-            height="100%"
-          >
-            <!-- Word Card/ -->
-            <div class="saved-words-card" v-for="word in words" :key="word">
-              <div class="word-card-body" @click="onShowWord(word)">
-                <div class="word-card-title">
-                  <div class="word-card-word">{{ word }}</div>
-                  <!-- Will be used in beta version -->
-                  <!-- <span class="word-card-speak" @click="onListenWord(word)">
-                    <IconSpeaker />
-                  </span> -->
-                </div>
-                <!-- <div class="word-card-desc" @click="onShowWord(word)">
-                  Lorem ipsum dolor sit amet consectetur
-                  <a> More >>></a>
-                </div> -->
-              </div>
-              <div class="word-card-saved">
-                <span class="word-card-saved-icon" @click="onUnsaveWord(word)">
-                  <IconStar />
-                </span>
-              </div>
-            </div>
-          </el-scrollbar>
-        </template>
-      </el-col>
-    </el-row>
-  </div>
-</template>
-
 <script setup>
+import "../../assets/styles/savedwords.css";
+import router from "@/router";
 import IconStar from "@/components/icons/IconStar.vue";
 import IconSpeaker from "@/components/icons/IconSpeaker.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
-import PersonalSide from "../../components/PersonalSide.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 
 //Data
 const words = ref([]);
@@ -109,70 +67,86 @@ const onDeleteWord = async (selectedWord) => {
       });
     });
 };
+
+function toChooseBook() {
+  router.push({ path: "/PersonalBook/" });
+}
+function toEditInfo() {
+  router.push({ path: "/PersonalInfo/" });
+}
+function toAchieve() {
+  router.push({ path: "/PersonalAchieve/" });
+}
+function toRank() {
+  router.push({ path: "/PersonalRank" });
+}
+function toStatistics() {
+  router.push({ path: "/Statistics" });
+}
 </script>
 
-<style scoped>
-* {
-  box-sizing: border-box;
-}
+<template class="page-container saved-words">
+  <div class="header-container">
+    <AfterHeaderNavigator />
+  </div>
+  <div class="stat-page">
+    <div class="stat-personal-side">
+      <div class="side-item-selected" @click="toChooseBook">
+        <img
+          class="side-item-icon"
+          src="../../assets/personal-center/side-4.png"
+        />
+        <span>选择词书</span>
+      </div>
+      <div class="side-item" @click="toStatistics">
+        <span>统计信息</span>
+      </div>
+      <div class="side-item" @click="toAchieve">
+        <span>成就展示</span>
+      </div>
+      <div class="side-item" @click="toRank">
+        <span>排行榜</span>
+      </div>
+      <div class="side-item" @click="toEditInfo">
+        <span>个人信息</span>
+      </div>
+    </div>
+    <div class="stat-card-container">
+      <div class="personal-page-header">生词本记录</div>
+      <div class="stat-inner-card-container">
+        <div class="saved-words-back" @click="toChooseBook">
+          <el-icon :size="36"><ArrowLeftBold /></el-icon>
+          <span> 选择词书 </span>
+        </div>
+        <!-- Words List -->
+        <el-empty v-if="!words[0]" description="暂无数据" />
+        <template v-else>
+          <el-scrollbar
+            class="saved-words-list"
+            max-height="600px"
+            height="100%"
+          >
+            <!-- Word Card/ -->
+            <div class="saved-words-card" v-for="word in words" :key="word">
+              <span class="word-card-speak" @click="onListenWord(word)">
+                <IconSpeaker />
+              </span>
+              <div class="word-card-body" @click="onShowWord(word)">
+                <div class="word-card-title">
+                  <div class="word-card-word">{{ word }}</div>
+                </div>
+              </div>
+              <div class="word-card-star">
+                <span class="word-card-star-icon" @click="onUnsaveWord(word)">
+                  <IconStar />
+                </span>
+              </div>
+            </div>
+          </el-scrollbar>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
 
-.saved-words-page {
-  padding-left: 30px;
-  height: 100%;
-}
-
-.saved-words-list {
-  max-width: 800px;
-  width: 100%;
-  padding: 10px;
-  background-color: inherit;
-  /* border: 1px solid red; */
-}
-
-.saved-words-card {
-  display: flex;
-  width: 100%;
-  height: 80px;
-  margin-bottom: 10px;
-  padding: 10px 12px;
-  box-shadow: rgba(0, 0, 0, 0.101) 0px 2px 4px;
-  border-radius: 10px;
-  border: 1px solid #e0e0e0d4;
-}
-
-.word-card-body {
-  width: 100%;
-}
-
-.word-card-title {
-  width: fit-content;
-  display: flex;
-  gap: 8px;
-  font-size: 24px;
-  padding: 5px 0 1px;
-  /* border: 1px solid red; */
-}
-
-.word-card-speak {
-  width: 40px;
-  height: 24px;
-  /* border: 1px solid red; */
-}
-
-.word-card-saved {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  /* border: 1px solid green; */
-}
-
-.word-card-saved-icon {
-  position: absolute;
-}
-
-.word-card-desc {
-  color: grey;
-  font-size: 14px;
-  /* border: 1px solid red; */
-}
-</style>
+<style scoped></style>

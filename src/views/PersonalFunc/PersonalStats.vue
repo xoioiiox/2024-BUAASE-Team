@@ -83,11 +83,11 @@ const getWordDataToday = async () => {
       dataToday.value = res.data;
     }
   } catch (error) {
-    // console.error("Error get today data:", error);
+    console.error("Error get today data:", error);
     dataToday.value = {
-      learn_num: 3,
-      review_num: 5,
-      time: "00:10:00",
+      learn_num: 0,
+      review_num: 0,
+      time: "00:00:00",
     };
   }
 };
@@ -102,44 +102,44 @@ const getWordDataWeek = () => {
       dataWeek.value = res.data.word_data;
     })
     .catch((err) => {
-      // console.log("Error get week data: ", err);
-      dataWeek.value = [
-        {
-          learn_num: 3,
-          review_num: 5,
-          time: "0:10:34",
-        },
-        {
-          learn_num: 0,
-          review_num: 10,
-          time: "0:20:02",
-        },
-        {
-          learn_num: 12,
-          review_num: 4,
-          time: "0:21:00",
-        },
-        {
-          learn_num: 10,
-          review_num: 12,
-          time: "1:30:02",
-        },
-        {
-          learn_num: 10,
-          review_num: 20,
-          time: "1:30:02",
-        },
-        {
-          learn_num: 7,
-          review_num: 12,
-          time: "1:30:02",
-        },
-        {
-          learn_num: 0,
-          review_num: 16,
-          time: "1:30:02",
-        },
-      ];
+      console.log("Error get week data: ", err);
+      // dataWeek.value = [
+      //   {
+      //     learn_num: 3,
+      //     review_num: 5,
+      //     time: "0:10:34",
+      //   },
+      //   {
+      //     learn_num: 0,
+      //     review_num: 10,
+      //     time: "0:20:02",
+      //   },
+      //   {
+      //     learn_num: 12,
+      //     review_num: 4,
+      //     time: "0:21:00",
+      //   },
+      //   {
+      //     learn_num: 10,
+      //     review_num: 12,
+      //     time: "1:30:02",
+      //   },
+      //   {
+      //     learn_num: 10,
+      //     review_num: 20,
+      //     time: "1:30:02",
+      //   },
+      //   {
+      //     learn_num: 7,
+      //     review_num: 12,
+      //     time: "1:30:02",
+      //   },
+      //   {
+      //     learn_num: 0,
+      //     review_num: 16,
+      //     time: "1:30:02",
+      //   },
+      // ];
     });
 };
 
@@ -157,7 +157,7 @@ const getDakaDetail = () => {
     .catch((err) => {
       console.log("Error get daka detail: ", err);
       //today, yesterday ...
-      dakaDetail.value = [true, true, true, false, false, true, false, true];
+      //dakaDetail.value = [true, true, true, false, false, true, false, true];
     });
   // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
 };
@@ -171,12 +171,12 @@ const chartData = computed(() => {
     datasets: [
       {
         label: "学习词数",
-        backgroundColor: "#8946BB",
+        backgroundColor: "#ad2a63",
         data: [],
       },
       {
         label: "复习词数",
-        backgroundColor: "#D7A15B",
+        backgroundColor: "#07814f",
         data: [],
       },
     ],
@@ -249,11 +249,12 @@ watch(dataWeek, () => {
               <!-- DAILY -->
               <el-row class="stat-daily-row stat-windows">
                 <span class="stat-daily-header">今日学习统计</span>
+
                 <div class="stat-daily-cards">
                   <!-- Card -->
                   <el-col :span="6" class="stat-card">
                     <div>
-                      <el-icon :size="35" color="#fff"><Reading /></el-icon>
+                      <el-icon :size="35" color="#2c0b6c"><Reading /></el-icon>
                       <el-statistic title="新学" :value="dataToday?.learn_num">
                         <template #suffix>
                           <el-icon style="font-size: medium"> 词 </el-icon>
@@ -266,7 +267,7 @@ watch(dataWeek, () => {
                   <!-- Card 2 -->
                   <el-col :span="6" class="stat-card">
                     <div>
-                      <el-icon :size="35" color="#fff"><Memo /></el-icon>
+                      <el-icon :size="35" color="#2c0b6c"><Memo /></el-icon>
                       <el-statistic title="复习" :value="dataToday?.review_num">
                         <template #suffix>
                           <el-icon style="font-size: medium"> 词 </el-icon>
@@ -279,7 +280,7 @@ watch(dataWeek, () => {
                   <!-- Card 3 -->
                   <el-col :span="8" class="stat-card">
                     <div>
-                      <el-icon :size="35" color="#fff"><Timer /></el-icon>
+                      <el-icon :size="35" color="#2c0b6c"><Timer /></el-icon>
                       <el-statistic
                         title="学习时长"
                         :value="
@@ -301,12 +302,14 @@ watch(dataWeek, () => {
 
               <!-- WEEKLY -->
               <el-row class="stat-weekly-row">
-                <el-col :span="24">
-                  <div class="stat-windows stat-weekly-graph">
-                    <span class="stat-daily-header">近7天学习统计</span>
-                    <LineChart :data="chartData" :options="chartOptions" />
-                  </div>
-                </el-col>
+                <!-- <el-col :span="24"> -->
+                <span class="stat-daily-header stat-weeky-header"
+                  >近7天学习统计</span
+                >
+                <div class="stat-windows stat-weekly-graph">
+                  <LineChart :data="chartData" :options="chartOptions" />
+                </div>
+                <!-- </el-col> -->
               </el-row>
             </div>
           </el-col>
