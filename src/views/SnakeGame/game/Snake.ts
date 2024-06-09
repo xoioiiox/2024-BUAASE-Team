@@ -6,10 +6,6 @@ import { SnakeBodies, SnakeHead } from '../types';
 import { Food } from './Food';
 import { hitFence, hitSelf } from './hit';
 
-import { state } from '../../../components/globalWord'
-import {updateGlobalVariable} from '../../../components/globalWord'
-import axios from "axios";
-
 
 export class Snake {
   bodies: SnakeBodies;
@@ -50,18 +46,6 @@ checkEat(food: Food, foodTwo: Food) {
           y: food.y,
           status: 1,
         });
-
-        console.log(state.myGlobalVariable);
-
-        const response = axios.get('/api/word/get-next-word/').then((response) => {
-          if (response.status === 200) {//状态码200，请求正确
-            const newWord = response.data.word;
-
-            updateGlobalVariable(newWord);
-          }
-        }) .catch((error) => {
-
-        })
 
       } else {
         throw new Error('游戏结束');
