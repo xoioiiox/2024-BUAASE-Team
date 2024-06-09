@@ -97,7 +97,7 @@
 	const examples = ref([
 		{
 			part: '',
-			means: 'hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqohjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98i983087'
+			means: ''
 		}
 	]);
 
