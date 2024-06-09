@@ -58,24 +58,18 @@ export default {
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="0">
-      <div
-        v-if="$route.name != 'Home'"
-        class="header-logo font_13"
-        @click="goBackHome()"
-      >
-        乐词不疲
-      </div>
-    </el-menu-item>
+    <div v-if="$route.name != 'Home'" class="header-logo" @click="goBackHome()">
+      乐词不疲
+    </div>
     <div class="flex-grow"></div>
 
-    <el-menu-item class="header-button-after" index="1" @click="goToGuide">
+    <el-menu-item class="header-button-after" index="0" @click="goToGuide">
       使用说明
     </el-menu-item>
-    <el-menu-item class="header-button-after" index="2" @click="goToPersonal">
+    <el-menu-item class="header-button-after" index="1" @click="goToPersonal">
       个人中心
     </el-menu-item>
-    <el-menu-item class="header-button-after" index="3" @click="goToLogOut">
+    <el-menu-item class="header-button-after" index="2" @click="goToLogOut">
       登出
     </el-menu-item>
   </el-menu>
