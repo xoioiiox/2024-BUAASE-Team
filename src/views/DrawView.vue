@@ -114,8 +114,8 @@ const getCount = () => {
 
 const CardContent = ref({
   event_description: "事件描述",
-  event_name: "事件事件",
-  event_type: "道具型",
+  event_name: "汉译英选择",
+  event_type: "任务型",
 });
 
 let onceAtime = true;
@@ -129,39 +129,39 @@ const DrawCard = (item) => {
   if (onceAtime) {
     onceAtime = false;
     item.status = 1;
-  //router.push('/event1');
-  const response = axios.get('/api/word/get-event');
-  response.then(function (response) {
-    if (response.status === 200) {
-      console.log(response.data)
+    //router.push('/event1');
+    const response = axios.get('/api/word/get-event/');
+    response.then(function (response) {
+      if (response.status === 200) {
+        console.log(response.data)
 
 
 
-      CardContent.value.event_description = response.data.event_description;
-      CardContent.value.event_name = response.data.event_name;
-      CardContent.value.event_type = response.data.event_type;
-      
+        CardContent.value.event_description = response.data.event_description;
+        CardContent.value.event_name = response.data.event_name;
+        CardContent.value.event_type = response.data.event_type;
 
 
-      console.log(CardContent)
-    } else {
-      ElMessage({
-        message: '抽卡失败',
-        type: 'error'
+
+        console.log(CardContent)
+      } else {
+        ElMessage({
+          message: '抽卡失败',
+          type: 'error'
+        });
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
       });
-    }
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+  }
 }
 
 //点击前往完成相应的事件
 const fulfillEvent = () => {
   onceAtime = true;
   if (CardContent.value.event_type == "道具型") {
-    router.push({name: 'PropCard', query: {event_description: CardContent.value.event_description}});
+    router.push({ name: 'PropCard', query: { event_description: CardContent.value.event_description } });
   } else if (CardContent.value.event_type == "任务型") {
     if (CardContent.value.event_name == "汉译英填空") {               //汉译英-填空事件
       router.push('/event1');
@@ -170,6 +170,8 @@ const fulfillEvent = () => {
     } else {                                                            //英译汉-选择题
       router.push('/event3');
     }
+  } else {
+    router.push('/event2');
   }
 }
 

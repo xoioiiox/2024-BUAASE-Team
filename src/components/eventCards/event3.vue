@@ -47,6 +47,7 @@ const word = ref({
 });
 
 // 释义选项列表
+const dict = ref('');
 let meanings = reactive(['中文1', '中文2', '中文3', '中文4']);
 let numbers = reactive([0, 1, 2, 3]);
 
@@ -124,14 +125,17 @@ const getWords = () => {
         .then((response) => {
             word.value.theWord = response.data.words[0].word;
             dict.value = response.data.words[0].meaning.result.trans_result[0].dict;
+            console.log("dict.value: " + dict.value);
+            console.log("parse(dict.value): " + JSON.parse(dict.value));
             word.value.phonetic = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+            console.log(" word.value.phonetic: " + word.value.phonetic);
             word.value.examples = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+            console.log(" word.value.examples: " + word.value.examples);
 
-            meanings = meanings.splice(0, meanings.length);
             for (let i = 0; i < 4; i++) {
-                meanings.push(JSON.parse(response.data.words[i].meaning.result.trans_result[0].dict)
+                meanings[i] = JSON.parse(response.data.words[i].meaning.result.trans_result[0].dict)
                     .word_result.simple_means.symbols[0].parts[0]
-                    .means);
+                    .means;
             }
             //startTimer();
             playAudio();
