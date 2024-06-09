@@ -137,10 +137,10 @@ export default {
 		return {
 			infoForm: {
 				avatar: "",
-				username: "xoioiiox",
-				phone: "18000000000",
-				wechat: "2133324324",
-				level: "1",
+				username: "",
+				phone: "",
+				wechat: "",
+				level: "",
 			},
 			passwordDialog: false,
 			infoDialog: false,

@@ -65,12 +65,12 @@ export default {
 	data() {
 		return {
 			achieveCards: [
-				{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				/*{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
 				{name:'b', description: 'b this is ...', owned: true, datetime: '2024-10-21'},
 				{name:'a', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
 				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
 				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
-				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},*/
 			],
 		}
 	},
