@@ -134,9 +134,9 @@ const getWords = () => {
             word.value.phonetic = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
             word.value.examples = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
 
-            words = words.splice(0, words.length);
+
             for (let i = 0; i < 4; i++) {
-                words.push(response.data.words[i].word);
+                words[i] = response.data.words[i].word;
             }
             //startTimer();
             playAudio();
