@@ -1,6 +1,6 @@
-// LineChart.vue
+<!-- // LineChart.vue -->
 <template>
-  <Line :data="data" :options="options" />
+  <Line :data="data" :options="options" class="line-chart" />
 </template>
 
 <script>
@@ -17,13 +17,13 @@ import {
 } from "chart.js";
 
 ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
 );
 
 export default {
@@ -31,3 +31,12 @@ export default {
   props: ["data", "options"],
 };
 </script>
+
+<style scoped>
+.line-chart {
+  color: #fff;
+  max-width: 400px !important;
+  width: 100% !important;
+  max-height: 180px;
+}
+</style>
