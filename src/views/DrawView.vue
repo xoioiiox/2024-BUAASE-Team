@@ -83,7 +83,7 @@ const getExperience = () => {
     console.log(response.data)
     if (response.status === 200) {
       //console.log(response.data)
-      Experience.value = response.data.exp
+      Experience.value = response.data.exp / 1000
     } else {
       ElMessage({
         message: '获取经验总值数据失败',
@@ -118,13 +118,17 @@ const CardContent = ref({
   event_type: "道具类",
 });
 
+let onceAtime = true;
+
 //抽卡动作
 const DrawCard = (item) => {
   if (Count.value <= 0) {
     return
   }
-  //标记选中的卡片status为1，被翻了过来
-  item.status = 1
+  //标记选中的卡片status为1，被翻了过来,保证只能翻过来一张
+  if (onceAtime) {
+    onceAtime = false;
+    item.status = 1;
   //router.push('/event1');
   const response = axios.get('/api/word/get-event');
   response.then(function (response) {
@@ -147,14 +151,17 @@ const DrawCard = (item) => {
       });
     }
   })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 }
 
 //点击前往完成相应的事件
 const fulfillEvent = () => {
+  onceAtime = true;
   if (CardContent.value.event_type == "道具类") {
-    //若为道具类，翻拍瞬间后端已经完成，此处仅需翻转回来卡片即可
-    //刷新界面，实现翻转效果
-    router.go(0)
+    router.push({name: 'PropCard', query: {event_description: CardContent.value.event_description}});
   } else if (CardContent.value.event_type == "任务类") {
     if (CardContent.value.event_name == "汉译英填空") {               //汉译英-填空事件
       router.push('/event1');

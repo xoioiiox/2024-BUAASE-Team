@@ -18,6 +18,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ReciteView from '../views/ReciteView.vue'
 import DrawView from '../views/DrawView.vue'
+import PropCard from "../views/PropCard.vue"
 
 
 import { useUserStore } from '@/stores/userStore.js';
@@ -151,7 +152,12 @@ const router = createRouter({
       name: 'GameChoose',
       component: GameChoose,
       meta: { requiresAuth: true }
-    }
+    },
+    {
+      path: '/PropCard',
+      name: 'PropCard',
+      component: PropCard
+    },
 
 
 
