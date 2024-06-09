@@ -116,7 +116,7 @@ function selectOption(index) {
 
     if (!(commited.value)) {
         commited.value = true;
-        postResult();
+        postResult(index);
     }
 
 }
@@ -148,7 +148,7 @@ const getWords = () => {
     startTimer();
 }
 
-const postResult = () => {
+const postResult = (index) => {
     axios.post('/api/word/card/cur-event-result/', {
         event_name: '汉译英选择',
         event_result: (timeLeft != '时间到') && (numbers[index] == 0)
