@@ -23,14 +23,15 @@
 
       <p>{{word.slice(0, -1).concat("_")}}</p>
 
-      <p></p>
+      <p>{{pronunciation}}</p>
 
-      <p>(大型)百货商店；储存，储备；商店，店铺</p>
+      <ul>
+        <li v-for="example in examples" :key="example">
+          {{ example.part + ' ' + example.means }}
+        </li>
+      </ul>
 
 
-      <p style="color: #d500f9">  : {{specialChars[0]}} </p>
-
-      <p style="color: #5bf900">  : {{ specialChars[1] }}</p>
 
     </div>
 
@@ -43,37 +44,56 @@ import Map from '../../components/snakeGame/Map.vue';
 import Controller from '../../components/snakeGame/Controller.vue';
 import KeyBoard from '../../components/snakeGame/KeyBoard.vue';
 import { initGame } from './game';
-import {onMounted, reactive, ref} from 'vue';
+import {onMounted, reactive, ref, onUnmounted} from 'vue';
 import { StateType } from './types';
 import axios from "axios";
 
 
-import { state } from '../../components/globalWord';
-import { updateGlobalVariable } from '../../components/globalWord';
 
 const audio = ref(null);
 
 
 // 定义响应式数据
 const word = ref('store');
+
+const dict = ref('');
 const pronunciation = ref('');
-const definition = ref('');
+const examples = ref([
+  {
+    part: '',
+    means: 'hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqohjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98i983087'
+  }
+]);
+
 const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
 
 // 获取单词数据
-onMounted(async () => {
+onMounted( () => {
+  fetchWordData(); // 初始获取单词数据
+  queryWord();
+
+  // 设置定时器，每10秒获取一次数据
+  const intervalId = setInterval(() => {
+    fetchWordData();
+    queryWord();
+    }, 10000);
+
+  // 销毁定时器，防止内存泄漏
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
+
+});
+
+
+// 定义获取单词数据的函数
+async function fetchWordData() {
+
   const response = await axios.get('/api/word/get-next-word/').then((response) => {
     if (response.status === 200) {//状态码200，请求正确
-      const newWord = response.data.word;
-
-      console.log(newWord)
-
-      console.log(state.myGlobalVariable)
-      updateGlobalVariable(newWord);
 
       word.value = response.data.word;
 
-      const myGlobalVariable = state.myGlobalVariable;
 
       let str = word.value;
       let letter = str.charAt(str.length-1);
@@ -83,12 +103,33 @@ onMounted(async () => {
   }) .catch((error) => {
 
   })
-  // const data = await getWordData(); // 调api
-  // word.value = data.word;
-  // pronunciation.value = data.pronunciation;
-  // definition.value = data.definition;
-  // 根据实际情况可能需要更新specialChars
-});
+
+
+}
+
+async function queryWord() {
+  const response = await axios.get('/api/word/query-word-ch-dict/', {
+    params: {
+      q: word.value
+    }
+  })
+      .then((response) => {
+        console.log(response);
+
+        dict.value = response.data.result.trans_result[0].dict;
+        //console.log("dict:" + response.data.result.trans_result[0].dict);
+        pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+        console.log(JSON.parse(dict.value).word_result.simple_means);
+
+        examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+        console.log(examples.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+
 
 function getRandomLetter(givenLetter) {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
