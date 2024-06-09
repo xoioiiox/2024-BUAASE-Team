@@ -1,5 +1,5 @@
 /*personal-side*/
-.stat-personal-side {
+.personal-side {
   width: 230px;
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@
 }
 
 /*选择容器*/
-.stat-card-container {
+.card-container {
   max-width: 1000px;
   width: 90%;
   height: 620px;
@@ -64,7 +64,7 @@
   border-radius: 80px;
   position: relative;
 }
-.stat-inner-card-container {
+.inner-card-container {
   padding: 60px 50px;
   background-color: #fff9ed;
   border-radius: 80px;
@@ -154,7 +154,7 @@
   align-items: center;
 }
 
-.el-divider {
+.stat-page .el-divider {
   height: 70%;
 }
 

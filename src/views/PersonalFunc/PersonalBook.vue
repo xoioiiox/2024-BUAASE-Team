@@ -1,112 +1,124 @@
-<template>
-  <div>
-    <div class="back-home" @click="goBackHome()">
-      <span class="font_13">乐词不疲</span>
+<template class="page-container">
+  <div class="header-container">
+    <AfterHeaderNavigator />
+  </div>
+  <div class="personal-book-page">
+    <div class="personal-side">
+      <div class="side-item-selected" @click="toChooseBook">
+        <img
+          class="side-item-icon"
+          src="../../assets/personal-center/side-4.png"
+        />
+        <span>选择词书</span>
+      </div>
+      <div class="side-item" @click="toStatistics">
+        <span>统计信息</span>
+      </div>
+      <div class="side-item" @click="toAchieve">
+        <span>成就展示</span>
+      </div>
+      <div class="side-item" @click="toRank">
+        <span>排行榜</span>
+      </div>
+      <div class="side-item" @click="toEditInfo">
+        <span>个人信息</span>
+      </div>
     </div>
-    <el-row :gutter="20">
-      <div class="header">
-        <div class="text-wrapper_10">
-          <span class="font_16 text_22">选择词书</span>
-        </div>
-      </div>
-      <div class="Personalside">
-        <div class="flex-row section_1 pos_77">
-          <img class="image_1" src="../../assets/personal-center/side-4.png" />
-          <span class="font_19 text_2 ml-11">选择词书</span>
-        </div>
-        <div class="text-wrapper_14 pos_80" @click="toStatistics">
-          <span class="font_18 text_40">统计信息</span>
-        </div>
-        <div class="text-wrapper_14 pos_81" @click="toAchieve">
-          <span class="font_18 text_40">成就展示</span>
-        </div>
-        <div class="text-wrapper_14 pos_82" @click="toRank">
-          <span class="font_18 text_40">排行榜</span>
-        </div>
-        <div class="text-wrapper_14 pos_83" @click="toEditInfo">
-          <span class="font_18 text_40">个人信息</span>
-        </div>
-      </div>
-      <!--div class="setting">
-					<el-button type="primary" @click="studySetting()">学习设置</el-button>
-					<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
-				</div-->
-				<div class="card-container">
-					<div class="inner-card-container">
-						<div class="section_34" @click="toSavedWords">
-							<img
-								class="image_27"
-								src="../../assets/personal-center/side-4.png"
-							/>
-							<div class="text-wrapper_15">
-								<span class="font_21 text_32">收藏生词本</span>
-							</div>
-						</div>
-						<div class="section_36"></div>
-						<div class="choosing">
-							<el-scrollbar height="450px">
-								<el-row>
-									<el-col :span="8">
-										<div class="section_35">
-											<img
-												class="image_29"
-												src="../../assets/personal-center/ball.png"
-											/>
-											<div class="text-wrapper_16">
-												<span class="font_21 text_42">{{this.curBook}}</span>
-											</div>
-										</div>
-									</el-col>
-									<el-col v-for="(item, index) in wordBooks" :key="index" :span="8">
-										<div class="section_31" @click="ChooseThisBook(item)">
-											<img
-												class="image_29"
-												src="../../assets/personal-center/ball2.png"
-											/>
-											<div class="text-wrapper_16">
-												<span class="font_21 text_42">{{item}}</span>
-											</div>
-										</div>
-									</el-col>
-								</el-row>	
-							</el-scrollbar>
-						</div>
-						
-					</div>
-				</div>
-		</el-row>
-	</div>
-	<div>
-		<el-dialog title="学习设置" v-model="settingDialog" width="30%">
-			<el-form :model="settingForm" label-width="auto">
-				<el-form-item label="每日计划新词">
-					<el-select v-model="settingForm.new_number">
-						<el-option
-							v-for="item in options"
-							:key="item.value"
-							:label="item.label"
-							:value="item.value"
-						/>
-					</el-select>
-				</el-form-item>
-				<el-form-item label="每日复习上限">
-					<el-select v-model="settingForm.review_number">
-						<el-option
-							v-for="item in options"
-							:key="item.value"
-							:label="item.label"
-							:value="item.value"
-						/>
-					</el-select>
-				</el-form-item>
-			</el-form>
-			<div slot="footer" class="dialog-footer">
-				<el-button @click="settingDialog = false">取 消</el-button>
-				<el-button type="primary" @click="submitInfo()">确 定</el-button>
-			</div>
-		</el-dialog>
-	</div>
+    <!--div class="setting">
+				<el-button type="primary" @click="studySetting()">学习设置</el-button>
+				<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
+		</div-->
+    <div class="card-container">
+      <div class="personal-page-header">选择词书</div>
+      <div class="inner-card-container personal-book-inner">
+        <!-- SAVED WORDS -->
+        <el-row>
+          <el-col :span="6">
+            <div class="book-card-saved" @click="toSavedWords">
+              <img
+                class="image_27"
+                src="../../assets/personal-center/side-4.png"
+              />
+              <div class="text-wrapper_15">
+                <span class="font_21 text_32">收藏生词本</span>
+              </div>
+            </div>
+          </el-col>
+          <el-col :span="1">
+            <el-divider direction="vertical" />
+          </el-col>
 
+          <el-col :span="17" class="book-choose-books">
+            <el-scrollbar height="450px">
+              <el-row>
+                <el-col :span="8">
+                  <div class="book-card-current">
+                    <img
+                      class="image_29"
+                      src="../../assets/personal-center/ball.png"
+                    />
+                    <div class="text-wrapper_16">
+                      <span class="font_21 text_42">{{ this.curBook }}</span>
+                    </div>
+                  </div>
+                </el-col>
+                <!-- BOOK CARDS -->
+                <el-col
+                  v-for="(item, index) in wordBooks"
+                  :key="index"
+                  :span="8"
+                >
+                  <div class="section_31" @click="ChooseThisBook(item)">
+                    <img
+                      class="image_29"
+                      src="../../assets/personal-center/ball2.png"
+                    />
+                    <div class="text-wrapper_16">
+                      <span class="font_21 text_42">{{ item }}</span>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
+            </el-scrollbar>
+          </el-col>
+        </el-row>
+
+        <!-- CURRENT WORDS BOOK -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD NEW BOOK MODAL -->
+  <div>
+    <el-dialog title="学习设置" v-model="settingDialog" width="30%">
+      <el-form :model="settingForm" label-width="auto">
+        <el-form-item label="每日计划新词">
+          <el-select v-model="settingForm.new_number">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="每日复习上限">
+          <el-select v-model="settingForm.review_number">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="settingDialog = false">取 消</el-button>
+        <el-button type="primary" @click="submitInfo()">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 
   <div>
     <el-dialog title="上传词书" v-model="wordBookDialog" width="30%">
@@ -137,60 +149,66 @@
 </template>
 
 <script>
-import PersonalSide from "../../components/PersonalSide.vue";
 import axios from "axios";
 import yaml from "js-yaml";
 import "../../assets/styles/center.css";
+import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 
 export default {
-	components: {PersonalSide},
-	async created() {
-		/*获取当前词书*/
-		await axios.get('/api/word/get-now-word-book/')
-		.then((res)=>{
-			//console.log(res)
-			this.curBook = res.data.book_name
-		})
-		/*获取全部词书*/
-		await axios.get('/api/word/get-all-word-book/')
-		.then((res)=>{
-			//console.log(res)
-			this.wordBooks = res.data.word_books
-		})
-		await axios.get('/api/word/get-plan/')
-		.then((res)=>{
-			this.settingForm.new_number = res.data.num
-		})
-		await axios.get('/api/word/get-review-limit/')
-		.then((res)=>{
-			this.settingForm.review_number = res.data.limit
-		})
-	},
-	data() {
-		return {
-			wordBookDialog: false,
-			// 用于存储当前选择的文件
-			currentFile: null,
-			uploadBookName: "",
-			settingDialog: false,
-			settingForm: {
-				new_number: "10",
-				review_number: "10"
-			},
-			options: [
-				{value: '10', label: '10'},
-				{value: '15', label: '15'},
-				{value: '20', label: '20'},
-			],
-			wordBooks: ["大学英语四级", "大学英语六级", "六级高频词汇", "四级高频词汇", "25考研英语红宝书","1","2","3","4"],
-			curBook: "大学英语四级"
-		}
-	},
-	methods: {
-		goBackHome() {
-			this.$router.push('/')
-		},
-		toChooseBook() {
+  components: { AfterHeaderNavigator },
+  async created() {
+    /*获取当前词书*/
+    await axios.get("/api/word/get-now-word-book/").then((res) => {
+      //console.log(res)
+      this.curBook = res.data.book_name;
+    });
+    /*获取全部词书*/
+    await axios.get("/api/word/get-all-word-book/").then((res) => {
+      //console.log(res)
+      this.wordBooks = res.data.word_books;
+    });
+    await axios.get("/api/word/get-plan/").then((res) => {
+      this.settingForm.new_number = res.data.num;
+    });
+    await axios.get("/api/word/get-review-limit/").then((res) => {
+      this.settingForm.review_number = res.data.limit;
+    });
+  },
+  data() {
+    return {
+      wordBookDialog: false,
+      // 用于存储当前选择的文件
+      currentFile: null,
+      uploadBookName: "",
+      settingDialog: false,
+      settingForm: {
+        new_number: "10",
+        review_number: "10",
+      },
+      options: [
+        { value: "10", label: "10" },
+        { value: "15", label: "15" },
+        { value: "20", label: "20" },
+      ],
+      wordBooks: [
+        "大学英语四级",
+        "大学英语六级",
+        "六级高频词汇",
+        "四级高频词汇",
+        "25考研英语红宝书",
+        "1",
+        "2",
+        "3",
+        "4",
+      ],
+      curBook: "大学英语四级",
+    };
+  },
+  methods: {
+    goBackHome() {
+      this.$router.push("/");
+    },
+    toChooseBook() {
       this.$router.push({ path: "/PersonalBook/" });
     },
     toEditInfo() {
@@ -334,6 +352,17 @@ export default {
 </script>
 
 <style scoped>
+.personal-book-page {
+  /* border: 1px solid red; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.personal-book-inner {
+  flex-direction: row !important;
+}
+
 .setting {
   margin-left: 800px;
 }
@@ -368,7 +397,7 @@ export default {
   margin-left: 30px;
 }
 /*收藏生词本*/
-.section_34 {
+.book-card-saved {
   background-color: #ddf0ff;
   border-radius: 36px;
   width: 180px;
@@ -398,36 +427,36 @@ export default {
   color: #150437;
 }
 /*分割线*/
-.section_36 {
+.el-divider {
   background-color: #fce6c6;
   width: 6px;
   height: 450px;
-  margin-left: 30px;
-  margin-right: 30px;
+  border: none;
 }
+
 /*当前词书*/
-.section_35 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+.book-card-current {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 180px;
   height: 180px;
   background-color: #fcda59;
   border-radius: 36px;
   box-shadow: 0px -10px 50px 10px #ffffffb3 inset;
   border: solid 4px #b4aecc;
-	cursor: pointer;
-	z-index: 99;
-	margin-bottom: 20px;
-	padding: 10px 10px;
+  cursor: pointer;
+  z-index: 99;
+  margin-bottom: 20px;
+  padding: 10px 10px;
 }
 .image_29 {
   width: 80px;
   height: 80px;
 }
 .text-wrapper_16 {
-	margin-top: 20px;
+  margin-top: 20px;
 }
 /*所有词书*/
 .image_28 {
@@ -435,24 +464,26 @@ export default {
   height: 80px;
 }
 .section_31 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background-color: #ffe9d4;
   border-radius: 36px;
   width: 180px;
   height: 180px;
   border: solid 4px #d8a8aa;
-	cursor: pointer;
-	z-index: 99;
-	margin-bottom: 20px;
-	padding: 10px 10px;
+  cursor: pointer;
+  z-index: 99;
+  margin-bottom: 20px;
+  padding: 10px 10px;
 }
-.choosing {
-	height: 500px;
-	width: 600px;
+
+.book-choose-books {
+  /* height: 100%; */
+  width: 100%;
 }
+
 .bookCard {
   width: 200px;
   height: 220px;

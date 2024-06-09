@@ -7,11 +7,11 @@
   z-index: 99; /*绝对定位下，需要设置高优先级*/
 }
 .back-home-r {
-	position: absolute;
-	top: 30px;
-	left: 50px;
-	cursor: pointer;
-	z-index: 99; /*绝对定位下，需要设置高优先级*/
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  cursor: pointer;
+  z-index: 99; /*绝对定位下，需要设置高优先级*/
 }
 .font_13 {
   font-size: 38px;
@@ -85,22 +85,26 @@
   z-index: 99;
 }
 /*选择容器*/
-.card-container {
+
+/* .card-container {
   margin-top: 20px;
   margin-left: 300px;
   margin-right: 120px;
   padding: 28px 0;
   background-color: #fce6c6;
   border-radius: 80px;
-  /* width: 1000px; */
+
   height: 620px;
-}
-.inner-card-container {
+} */
+
+/* .inner-card-container {
   padding: 60px 50px;
   background-color: #fff9ed;
   border-radius: 80px;
   width: 920px;
   height: 550px;
   margin: 0 40px;
-  display: flex; /*解决块级元素不能一行显示*/
-}
+  display: flex; 
+} */
+
+/*解决块级元素不能一行显示*/

@@ -90,7 +90,7 @@ function toStatistics() {
     <AfterHeaderNavigator />
   </div>
   <div class="stat-page">
-    <div class="stat-personal-side">
+    <div class="personal-side">
       <div class="side-item-selected" @click="toChooseBook">
         <img
           class="side-item-icon"
@@ -111,9 +111,9 @@ function toStatistics() {
         <span>个人信息</span>
       </div>
     </div>
-    <div class="stat-card-container">
+    <div class="card-container">
       <div class="personal-page-header">生词本记录</div>
-      <div class="stat-inner-card-container">
+      <div class="inner-card-container">
         <div class="saved-words-back" @click="toChooseBook">
           <el-icon :size="36"><ArrowLeftBold /></el-icon>
           <span> 选择词书 </span>

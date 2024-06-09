@@ -217,7 +217,7 @@ watch(dataWeek, () => {
   </div>
 
   <div class="stat-page">
-    <div class="stat-personal-side">
+    <div class="personal-side">
       <div class="side-item" @click="toChooseBook">
         <span>选择词书</span>
       </div>
@@ -239,9 +239,9 @@ watch(dataWeek, () => {
       </div>
     </div>
 
-    <div class="stat-card-container">
+    <div class="card-container">
       <div class="personal-page-header">统计信息</div>
-      <div class="stat-inner-card-container">
+      <div class="inner-card-container">
         <el-row :gutter="20">
           <el-col :span="12">
             <!-- STUDY STATS -->
