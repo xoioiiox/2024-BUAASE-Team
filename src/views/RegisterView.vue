@@ -1,5 +1,5 @@
 <template>
-    <div class="back-home" @click="goBackHome()">
+    <div class="back-home" @click="login">
 			<span class="font_13">乐词不疲</span>
 		</div>
   <div class="register-container">
