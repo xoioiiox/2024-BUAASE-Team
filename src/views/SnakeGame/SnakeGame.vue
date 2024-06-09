@@ -20,18 +20,17 @@
     <!--    </audio>-->
 
     <div class="sidebar">
-      <p>Level：1</p>
 
-      <p>sto_e</p>
+      <p>{{word.slice(0, -1).concat("_")}}</p>
 
-      <p>/stɔː(r)/</p>
+      <p></p>
 
       <p>(大型)百货商店；储存，储备；商店，店铺</p>
 
 
-      <p style="color: #d500f9">  : r </p>
+      <p style="color: #d500f9">  : {{specialChars[0]}} </p>
 
-      <p style="color: #5bf900">  : e</p>
+      <p style="color: #5bf900">  : {{ specialChars[1] }}</p>
 
     </div>
 
@@ -49,11 +48,14 @@ import { StateType } from './types';
 import axios from "axios";
 
 
+import { state } from '../../components/globalWord';
+import { updateGlobalVariable } from '../../components/globalWord';
+
 const audio = ref(null);
 
 
 // 定义响应式数据
-const word = ref('');
+const word = ref('store');
 const pronunciation = ref('');
 const definition = ref('');
 const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
@@ -62,7 +64,21 @@ const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
 onMounted(async () => {
   const response = await axios.get('/api/word/get-next-word/').then((response) => {
     if (response.status === 200) {//状态码200，请求正确
+      const newWord = response.data.word;
+
+      console.log(newWord)
+
+      console.log(state.myGlobalVariable)
+      updateGlobalVariable(newWord);
+
       word.value = response.data.word;
+
+      const myGlobalVariable = state.myGlobalVariable;
+
+      let str = word.value;
+      let letter = str.charAt(str.length-1);
+      let letter2 = getRandomLetter(letter);
+      specialChars.value = [letter, letter2];
     }
   }) .catch((error) => {
 
@@ -74,7 +90,14 @@ onMounted(async () => {
   // 根据实际情况可能需要更新specialChars
 });
 
-
+function getRandomLetter(givenLetter) {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let randomLetter;
+  do {
+    randomLetter = alphabet[Math.floor(Math.random() * 26)]; // 生成随机索引并获取字母
+  } while (randomLetter === givenLetter); // 如果随机字母与给定字母相同，继续循环
+  return randomLetter;
+}
 
 
 // 地图

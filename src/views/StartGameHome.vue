@@ -1,6 +1,14 @@
 <script setup>
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 import router from "@/router";
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
+
+onMounted(() => {
+  getCount();
+  getTasks()
+})
 
 import {onMounted, ref} from "vue";
 import axios from "axios";
@@ -24,7 +32,6 @@ const goToArchive = () => {
 
 }
 
-
 const goToDrawCard = () => {
   router.push({
     path: '/DrawView'
@@ -39,7 +46,8 @@ const getCount = () => {
   response.then(function (response) {
         if (response.status === 200) {
           //console.log(response.data)
-          Count.value = response.data.Count
+          Count.value = response.data.count
+
         } else {
           ElMessage({
             message: '获取剩余抽卡次数失败',
@@ -76,12 +84,11 @@ function filterTasks() {
 }
 
 
-
 </script>
 
 <template>
   <div>
-   <AfterHeaderNavigator></AfterHeaderNavigator>
+    <AfterHeaderNavigator></AfterHeaderNavigator>
   </div>
 
 
@@ -89,7 +96,8 @@ function filterTasks() {
 
 
 
-        <el-button type="primary" @click="goToArchive">成就展示</el-button>
+    <el-button type="primary" @click="goToArchive">成就展示</el-button>
+
 
         <div>
           <p class="circle-bordered">
@@ -101,7 +109,8 @@ function filterTasks() {
         </div>
 
 
-        <el-button type="primary" @click="goToRank">排行榜</el-button>
+
+    <el-button type="primary" @click="goToRank">排行榜</el-button>
 
 
 
@@ -110,9 +119,7 @@ function filterTasks() {
 
   <div class="flex-card-container">
     <!-- 按钮居中 -->
-
     <el-button type="primary" round class="center" @click="goToDrawCard">开始游戏</el-button>
-
     <!-- 卡片靠右 -->
     <el-card class="right">
       <template #header>
@@ -120,7 +127,9 @@ function filterTasks() {
           <span>每日任务列表</span>
         </div>
       </template>
-     <p v-for="task in filterTasks" :key="task.task_name" class="text item">
+
+      <p v-for="task in filterTasks" :key="task.task_name" class="text item">
+
         {{ task.task_name }} - {{ task.task_description }}
       </p>
     </el-card>

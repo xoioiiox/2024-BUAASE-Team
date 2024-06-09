@@ -22,7 +22,7 @@ import { computed, defineProps } from 'vue';
 const props = defineProps(['type', 'character']);
 
 
-console.log(props.character)
+// console.log(props.character)
 
 // 小格子的颜色
 const classes = computed(() => {
