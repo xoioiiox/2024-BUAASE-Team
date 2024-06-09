@@ -115,7 +115,7 @@ const getCount = () => {
 const CardContent = ref({
   event_description: "事件描述",
   event_name: "事件事件",
-  event_type: "道具类",
+  event_type: "任务类",
 });
 
 let onceAtime = true;
