@@ -171,7 +171,7 @@ const getAllBookRatio = () => {
 
 
 //获取到的新单词
-const newWord = ref('hello')
+const newWord = ref('')
 onMounted(() => {
 	getDayRatio();
 	getAllBookRatio();
