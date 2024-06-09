@@ -47,6 +47,7 @@ const word = ref({
 });
 
 // 释义选项列表
+const dict = ref('');
 let meanings = reactive(['中文1', '中文2', '中文3', '中文4']);
 let numbers = reactive([0, 1, 2, 3]);
 

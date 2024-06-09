@@ -53,6 +53,7 @@ const word = ref({
     examples: [{ part: 'n.', means: '释义' }], // 释义
 });
 
+const dict = ref('');
 let words = reactive(['abc', 'acb', 'bac', 'cba']);
 let numbers = reactive([0, 1, 2, 3]);
 
