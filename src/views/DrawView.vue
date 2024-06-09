@@ -101,7 +101,7 @@
     response.then(function (response) {
       if (response.status === 200) {
         //console.log(response.data)
-        Count.value = response.data.Count
+        Count.value = response.data.count
       } else {
         ElMessage({
           message: '获取剩余抽卡次数失败',
