@@ -77,13 +77,13 @@ export default {
 	data() {
 		return {
 			rankList: [
-				{username: 'a', level: '43', exp: '400'},
+				/*{username: 'a', level: '43', exp: '400'},
 				{username: 'weqwb', level: '37', exp: '400'},
 				{username: 'sc', level: '34', exp: '400'},
 				{username: 'd', level: '30', exp: '400'},
 				{username: 'wwwe', level: '23', exp: '400'},
 				{username: 'fwqqew', level: '28', exp: '400'},
-				{username: 'g', level: '9', exp: '400'},
+				{username: 'g', level: '9', exp: '400'},*/
 			],
 		}
 	},
