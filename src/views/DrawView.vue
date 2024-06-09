@@ -115,7 +115,7 @@ const getCount = () => {
 const CardContent = ref({
   event_description: "事件描述",
   event_name: "事件事件",
-  event_type: "任务类",
+  event_type: "道具型",
 });
 
 let onceAtime = true;
@@ -160,9 +160,9 @@ const DrawCard = (item) => {
 //点击前往完成相应的事件
 const fulfillEvent = () => {
   onceAtime = true;
-  if (CardContent.value.event_type == "道具类") {
+  if (CardContent.value.event_type == "道具型") {
     router.push({name: 'PropCard', query: {event_description: CardContent.value.event_description}});
-  } else if (CardContent.value.event_type == "任务类") {
+  } else if (CardContent.value.event_type == "任务型") {
     if (CardContent.value.event_name == "汉译英填空") {               //汉译英-填空事件
       router.push('/event1');
     } else if (CardContent.value.event_name == "汉译英选择") {        //汉译英-选择事件
