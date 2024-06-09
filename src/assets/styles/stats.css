@@ -1,0 +1,242 @@
+/*personal-side*/
+.stat-personal-side {
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  gap: 20px;
+  height: 620px;
+}
+
+.side-item {
+  color: #898989;
+  background-color: #f5f0f8;
+  width: 150px;
+  height: 75px;
+  text-align: center;
+  border-radius: 10px 0 0 10px;
+  padding: 10%;
+  font-size: 26px;
+  font-family: Poppins;
+  line-height: 30.5px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/*高亮标签*/
+.side-item-selected {
+  width: 200px;
+  padding: 20px 0;
+  background-color: #fffefe;
+  border: solid 2px #fbdd6f;
+  border-radius: 10px 0px 0px 10px;
+  box-shadow: 0px 4px 4px #ffd217;
+  cursor: pointer;
+  z-index: 99;
+
+  font-size: 30px;
+  font-family: Poppins;
+  line-height: 34px;
+  font-weight: 800;
+  color: #ffd033;
+  margin-left: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.side-item-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/*选择容器*/
+.stat-card-container {
+  max-width: 1000px;
+  width: 90%;
+  height: 620px;
+  margin-right: 100px;
+  padding: 28px 40px;
+  background-color: #fce6c6;
+  border-radius: 80px;
+  position: relative;
+}
+.stat-inner-card-container {
+  padding: 60px 50px;
+  background-color: #fff9ed;
+  border-radius: 80px;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+}
+
+/* personal center page header */
+.personal-page-header {
+  width: 280px;
+  height: 77px;
+  padding: 16px 0;
+  margin: 0 auto;
+  position: absolute;
+  top: -35px;
+  margin-left: calc(50% - 180px);
+
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+  background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
+
+  line-height: 45px;
+  font-size: 40px;
+  font-weight: 800;
+  font-style: Poppins;
+  color: #2c0b6c;
+}
+
+.stat-page {
+  /* border: 1px solid red; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.stat-windows {
+  border-radius: 4px;
+}
+
+/* Left column */
+.stat-study {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 5%;
+}
+
+/* DAILY STATS */
+.stat-daily-row {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffe05e;
+  border-radius: 24px;
+  /* max-height: 180px; */
+}
+
+.stat-daily-header {
+  border-bottom: 1px solid #2c0b6c;
+  width: 100%;
+  height: 45px;
+  padding: 12px 20px;
+  line-height: 20px;
+  color: #2e1a47;
+  font-weight: 600;
+}
+
+.stat-daily-cards {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-card {
+  height: 100%;
+  border-radius: 4px;
+  text-align: center;
+  background-color: inherit;
+  color: #2e1a47;
+}
+
+.stat-card-title {
+  display: inline-flex;
+  align-items: center;
+}
+
+.el-divider {
+  height: 70%;
+}
+
+.el-divider--vertical {
+  border-left: 1.4px solid #2e1a47;
+}
+
+.el-statistic {
+  --el-statistic-content-font-size: 28px;
+  --el-statistic-content-font-weight: 500;
+  --el-statistic-title-font-weight: 400;
+  --el-statistic-title-color: #2e1a47;
+  --el-statistic-content-color: #2e1a47;
+}
+
+.el-icon {
+  margin-bottom: 10px;
+}
+
+/* WEEKLY STATS */
+.stat-weekly-row {
+  border-radius: 24px;
+  width: 100%;
+  height: fit-content;
+  background-color: #fce6c6;
+}
+
+.stat-weeky-header {
+  border-bottom: 1px solid #d7a15b !important;
+  color: #986625 !important;
+}
+
+.stat-weekly-graph {
+  padding: 5%;
+}
+
+.el-calendar {
+  --el-calendar-cell-width: 36px;
+  --el-fill-color-blank: #fce6c6;
+  --el-calendar-border: 1px solid #d7a15b;
+  border-radius: 24px;
+}
+
+.el-calendar__header {
+  color: #986625 !important;
+  font-weight: 600;
+}
+
+.el-calendar-table thead th {
+  color: #986625 !important;
+}
+.el-calendar-table .el-calendar-day {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-calendar-table .el-calendar-day:hover {
+  background-color: #fbdfdc;
+}
+
+.is-checked {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  margin: auto;
+  border: 3px double #f43180;
+  border-radius: 50%;
+  font-size: 16px;
+  text-align: center;
+  background-color: #f769a3;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #fcc6dc,
+    #fcc6dc 7px,
+    transparent 0,
+    transparent 14px
+  );
+}
+
+.el-calendar-table td.is-selected {
+  background-color: #fccbc6;
+  color: #2c0b6c;
+}

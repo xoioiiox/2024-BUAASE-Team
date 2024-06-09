@@ -1,0 +1,75 @@
+/* GO BACK BUTTON */
+.saved-words-back {
+  height: 48px;
+  width: fit-content;
+  color: #e9a522;
+  padding: 2px;
+  font-size: 36px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 1;
+  cursor: pointer;
+}
+
+.saved-words-back .el-icon {
+  margin: 0;
+}
+
+.saved-words .el-empty {
+  border: 1px solid red;
+  height: calc(100% - 48px);
+  padding: 0;
+}
+
+/* SAVED WORD CARDS */
+.saved-words-list {
+  max-width: 800px;
+  width: 100%;
+  background-color: inherit;
+}
+
+.saved-words-card {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background-color: #f5e5d768;
+  box-shadow: rgba(0, 0, 0, 0.101) 0px 2px 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.word-card-body {
+  width: 100%;
+}
+
+.word-card-title {
+  width: fit-content;
+  line-height: 36px;
+  font-size: 24px;
+  font-weight: 500;
+  /* border: 1px solid red; */
+}
+
+.word-card-speak {
+  width: 40px;
+  height: 24px;
+}
+
+.word-card-star {
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.word-card-star-icon {
+  position: absolute;
+}
+
+/* .word-card-desc {
+  color: grey;
+  font-size: 14px;
+} */

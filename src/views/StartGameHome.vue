@@ -10,6 +10,15 @@ onMounted(() => {
   getTasks()
 })
 
+import {onMounted, ref} from "vue";
+import axios from "axios";
+import {ElMessage} from "element-plus";
+
+onMounted(() => {
+  getCount();
+  getTasks()
+})
+
 const goToRank  = () => {
   router.push({
     path: "/PersonalRank"
@@ -38,6 +47,7 @@ const getCount = () => {
         if (response.status === 200) {
           //console.log(response.data)
           Count.value = response.data.count
+
         } else {
           ElMessage({
             message: '获取剩余抽卡次数失败',
@@ -88,14 +98,16 @@ function filterTasks() {
 
     <el-button type="primary" @click="goToArchive">成就展示</el-button>
 
-    <div>
-      <p class="circle-bordered">
-        剩余 {{Count}} 次
-      </p>
+
+        <div>
+          <p class="circle-bordered">
+             剩余 {{Count}} 次
+          </p>
 
 
+    
+        </div>
 
-    </div>
 
 
     <el-button type="primary" @click="goToRank">排行榜</el-button>
@@ -115,7 +127,9 @@ function filterTasks() {
           <span>每日任务列表</span>
         </div>
       </template>
+
       <p v-for="task in filterTasks" :key="task.task_name" class="text item">
+
         {{ task.task_name }} - {{ task.task_description }}
       </p>
     </el-card>

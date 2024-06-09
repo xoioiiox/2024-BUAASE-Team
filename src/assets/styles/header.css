@@ -45,9 +45,17 @@
   box-shadow: 0px 0px 120px #ffd749;
 }
 
-.font_13 {
+.header-logo {
   font-size: 38px;
+  font-family: Poppins;
   line-height: 44.5px;
   color: #ffffff;
-  text-shadow: 0px 4px 10px #fbdd6f;
+  text-shadow: 0px 0px 8px #fbdd6f, 0px 0px 8px #fbdd6f;
+  font-weight: 400;
+}
+
+.header-logo:hover,
+.header-logo:active {
+  text-shadow: 0 0 5px #fff, 0 4px 10px #fbdd6f, 0 -4px 10px #fbdd6f;
+  cursor: pointer;
 }
