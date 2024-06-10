@@ -4,9 +4,6 @@
 			<span class="font_13">乐词不疲</span>
 		</div>
 		<el-row :gutter="20">
-			<div>
-				
-			</div>
 			<div class="header">
 				<div class="text-wrapper_10">
 					<span class="font_16 text_22">排行榜</span>
@@ -68,10 +65,11 @@ import yaml from 'js-yaml'
 import "../../assets/styles/center.css"
 
 export default {
-	components: {},
 	async created() {
-		await axios.get('/api/word/get-ranking-list-today/').then((res)=> {
-			this.rankList = res.data.rank_list
+		await axios.get('/api/word/get-ranking-list-today/')
+		.then((res)=>{
+			console.log(res)
+			this.rankList = res.data.ranking_list
 			console.log('rank', this.rankList)
 		})
 	},
