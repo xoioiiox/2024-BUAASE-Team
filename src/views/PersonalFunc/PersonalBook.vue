@@ -27,10 +27,6 @@
 					<span class="font_18 text_40">个人信息</span>
 				</div>
 			</div>
-			<!--div class="setting">
-					<el-button type="primary" @click="studySetting()">学习设置</el-button>
-					<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
-				</div-->
 				<div class="card-container">
 					<div class="inner-card-container">
 						<div class="section_34" @click="toSavedWords">
@@ -41,6 +37,10 @@
 							<div class="text-wrapper_15">
 								<span class="font_21 text_32">收藏生词本</span>
 							</div>
+						</div>
+						<div class="settings">
+							<div type="primary" @click="studySetting()" class="setting-bt">学习设置</div>
+							<div color="#626aef" type="primary" @click="wordBookSetting()" class="setting-bt">上传词书</div>
 						</div>
 						<div class="section_36"></div>
 						<div class="choosing">
@@ -342,8 +342,25 @@ export default {
 </script>
 
 <style scoped>
-.setting {
-	margin-left: 800px;
+.settings {
+	position: absolute;
+	bottom: 100px;
+	width: 200px;
+	margin-left: 10px;
+}
+.setting-bt {
+	width: 140px;
+	height: 40px;
+	background-color: #F4ECFF;
+	border: solid 2px #b4aecc;
+	border-radius: 15px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+	font-family: Poppins;
+	font-size: 18px;
 }
 /*标签位置*/
 .pos_80 {
