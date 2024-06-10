@@ -12,7 +12,7 @@
       </div>
       <div class="side-item-selected" @click="toAchieve">
         <img class="image_1" src="../../assets/personal-center/side-4.png" />
-        <span class="font_19 text_2 ml-11">成就展示</span>
+        <span>成就展示</span>
       </div>
       <div class="side-item" @click="toRank">
         <span>排行榜</span>
