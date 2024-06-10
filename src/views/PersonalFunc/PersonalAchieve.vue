@@ -36,6 +36,7 @@
 				</div-->
 				<div class="card-container">
 					<div class="inner-card-container">
+						<el-scrollbar style="height: 450px;">
 						<el-row :gutter="20">
 							<el-col v-for="(item, index) in achieveCards" :key="index" :span="6">
 								<el-card shadow="hover" :class="item.owned == true? 'achieveCard-y': 'achieveCard-g'">
@@ -44,6 +45,7 @@
 								</el-card>
 							</el-col>
 						</el-row>
+						</el-scrollbar>
 					</div>
 				</div>
 		</el-row>
@@ -68,6 +70,9 @@ export default {
 				/*{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
 				{name:'b', description: 'b this is ...', owned: true, datetime: '2024-10-21'},
 				{name:'a', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
 				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
 				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
 				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},*/
@@ -141,19 +146,21 @@ export default {
 /*成就卡片*/
 .achieveCard-y {
 	background-color: #fcdd64;
-  border-radius: 20px;
-  width: 180px;
-  height: 200px;
+	border-radius: 20px;
+	width: 180px;
+	height: 200px;
+	margin-bottom: 20px;
 }
 .achieveCard-g {
 	background-color: #00000040;
-  border-radius: 20px;
-  width: 180px;
-  height: 200px;
+	border-radius: 20px;
+	width: 180px;
+	height: 200px;
+	margin-bottom: 20px;
 }
 .achieve-title {
-  font-size: 28px;
-  font-family: Poppins;
-  font-weight: 800;
+	font-size: 28px;
+	font-family: Poppins;
+	font-weight: 800;
 }
 </style>
