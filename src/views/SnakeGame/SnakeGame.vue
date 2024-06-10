@@ -70,12 +70,12 @@ const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
 // 获取单词数据
 onMounted( () => {
   fetchWordData(); // 初始获取单词数据
-  queryWord();
+
 
   // 设置定时器，每10秒获取一次数据
   const intervalId = setInterval(() => {
     fetchWordData();
-    queryWord();
+ 
     }, 7000);
 
   // 销毁定时器，防止内存泄漏
@@ -94,6 +94,7 @@ async function fetchWordData() {
 
       word.value = response.data.word;
 
+      queryWord(word.value);
 
       let str = word.value;
       let letter = str.charAt(str.length-1);
@@ -107,10 +108,10 @@ async function fetchWordData() {
 
 }
 
-async function queryWord() {
+async function queryWord(newWord) {
   const response = await axios.get('/api/word/query-word-ch-dict/', {
     params: {
-      q: word.value
+      q: newWord
     }
   })
       .then((response) => {
