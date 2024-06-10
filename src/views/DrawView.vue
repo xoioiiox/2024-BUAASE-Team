@@ -130,7 +130,7 @@ const DrawCard = (item) => {
     onceAtime = false;
     item.status = 1;
     //router.push('/event1');
-    const response = axios.get('/api/word/get-event/');
+    const response = axios.get('/api/word/get-event');
     response.then(function (response) {
       if (response.status === 200) {
         console.log(response.data)
