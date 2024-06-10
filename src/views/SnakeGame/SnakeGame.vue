@@ -61,7 +61,7 @@ const pronunciation = ref('');
 const examples = ref([
   {
     part: '',
-    means: 'hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqohjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98i983087'
+    means: 'hjksadhldoxiwkjsdlapa'
   }
 ]);
 
@@ -92,7 +92,7 @@ async function fetchWordData() {
   const response = await axios.get('/api/word/get-random-word/').then((response) => {
     if (response.status === 200) {//状态码200，请求正确
 
-      word.value = response.data.word;
+      word.value = response.data.word[0];
 
       queryWord(word.value);
 
