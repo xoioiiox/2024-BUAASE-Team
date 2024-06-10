@@ -151,13 +151,12 @@ const getDakaDetail = () => {
     .then((res) => {
       if (res.status === 200) {
         console.log("get daka detail: ", res.data.daka);
-        dakaDetail.value = res.data.daka;
+        dakaDetail.value = res.data.daka.reverse();
       }
     })
     .catch((err) => {
       console.log("Error get daka detail: ", err);
       //today, yesterday ...
-      //dakaDetail.value = [true, true, true, false, false, true, false, true];
     });
   // .finally(() => console.log("dakaDetails in final: ", dakaDetail.value));
 };

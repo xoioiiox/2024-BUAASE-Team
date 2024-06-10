@@ -26,35 +26,34 @@
       <div class="personal-page-header">个人信息</div>
       <div class="inner-card-container">
         <el-row>
-          <el-col class="personal-info-left-area" :span="12">
+          <el-col :span="12" :offset="6" class="personal-info-area">
             <div class="personal-info-image"></div>
-            <div class="personal-info-user-name">
-              <span class="text-name">{{ this.infoForm.username }}</span>
-            </div>
-            <el-button
+            <el-row class="personal-info-profile-level">
+              <el-col :span="10" :offset="6"
+                >LV. {{ this.infoForm.level }}</el-col
+              >
+            </el-row>
+            <!-- <el-button
               class="personal-info-image-upload"
               type="text"
               @click="uploadAvatar()"
             >
               上转图片
               <el-icon :size="24" color="#D7A15B"><Upload /></el-icon>
-            </el-button>
-          </el-col>
-
-          <el-col :span="12" class="personal-info-right-area">
-            <el-row class="personal-info-profile-input">
-              <el-col :span="10" :offset="6"
-                >LV. {{ this.infoForm.level }}</el-col
-              >
-            </el-row>
+            </el-button> -->
             <div class="personal-info-profile-input">
+              <span class="text-name">{{ this.infoForm.username }}</span>
+            </div>
+
+            <!-- <div class="personal-info-profile-input">
               <span>手机号</span>
               <span> {{ this.infoForm.phone }}</span>
             </div>
             <div class="personal-info-profile-input">
               <span>微信号</span>
               <span>{{ this.infoForm.wechat }}</span>
-            </div>
+            </div> -->
+
             <div class="personal-info-profile-settings">
               <div class="personal-info-profile-button" @click="changePassword">
                 <span>修改密码</span>
