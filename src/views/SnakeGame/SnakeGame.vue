@@ -76,7 +76,7 @@ onMounted( () => {
   const intervalId = setInterval(() => {
     fetchWordData();
     queryWord();
-    }, 10000);
+    }, 7000);
 
   // 销毁定时器，防止内存泄漏
   onUnmounted(() => {
@@ -89,7 +89,7 @@ onMounted( () => {
 // 定义获取单词数据的函数
 async function fetchWordData() {
 
-  const response = await axios.get('/api/word/get-next-word/').then((response) => {
+  const response = await axios.get('/api/word/get-random-word/').then((response) => {
     if (response.status === 200) {//状态码200，请求正确
 
       word.value = response.data.word;
