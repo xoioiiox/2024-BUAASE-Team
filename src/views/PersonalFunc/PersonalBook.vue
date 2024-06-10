@@ -61,7 +61,7 @@
 										<div class="section_31" @click="ChooseThisBook(item)">
 											<img
 												class="image_29"
-												:src="`/src/assets/personal-center/planet${(index+1)%6+1}.svg`"
+												:src="images[(index+1)%6]"
 											/>
 											<div class="text-wrapper_16">
 												<span class="font_21 text_42">{{item}}</span>
@@ -183,7 +183,15 @@ export default {
 				{value: '20', label: '20'},
 			],
 			wordBooks: [],
-			curBook: ""
+			curBook: "",
+			images: [
+				new URL('/src/assets/personal-center/planet1.svg', import.meta.url).href,
+				new URL('/src/assets/personal-center/planet2.svg', import.meta.url).href,
+				new URL('/src/assets/personal-center/planet3.svg', import.meta.url).href,
+				new URL('/src/assets/personal-center/planet4.svg', import.meta.url).href,
+				new URL('/src/assets/personal-center/planet5.svg', import.meta.url).href,
+				new URL('/src/assets/personal-center/planet6.svg', import.meta.url).href,
+			]
 		}
 	},
 	methods: {
