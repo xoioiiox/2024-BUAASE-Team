@@ -126,7 +126,7 @@ const getWords = () => {
             word.value.theWord = response.data.words[0].word;
             dict.value = JSON.parse(response.data.words[0].meaning).result.trans_result[0].dict;
             console.log("node 1");
-            console.log("dict: " + response.data.words[0].meaning.result.trans_result[0].dict);
+            //console.log("dict: " + response.data.words[0].meaning.result.trans_result[0].dict);
             console.log("dict.value: " + dict.value);
             console.log("parse(dict.value): " + JSON.parse(dict.value));
             word.value.phonetic = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
@@ -137,7 +137,7 @@ const getWords = () => {
             console.log(" word.value.examples: " + word.value.examples);
 
             for (let i = 0; i < 4; i++) {
-                meanings[i] = JSON.parse(response.data.words[i].meaning.result.trans_result[0].dict)
+                meanings[i] = JSON.parse(JSON.parse(response.data.words[i].meaning).result.trans_result[0].dict)
                     .word_result.simple_means.symbols[0].parts[0]
                     .means;
             }
