@@ -124,7 +124,7 @@ const getWords = () => {
     })
         .then((response) => {
             word.value.theWord = response.data.words[0].word;
-            dict.value = response.data.words[0].meaning.result.trans_result[0].dict;
+            dict.value = JSON.parse(response.data.words[0].meaning).result.trans_result[0].dict;
             console.log("node 1");
             console.log("dict: " + response.data.words[0].meaning.result.trans_result[0].dict);
             console.log("dict.value: " + dict.value);
@@ -172,6 +172,15 @@ const startTimer = () => {
         } else {
             clearInterval(timer.value);
             timeLeft.value = '时间到！';
+
+            setTimeout(() => {
+                //跳转到抽卡界面
+                router.push('/DrawView');
+            }, 3000);
+            if (!(commited.value)) {
+                commited.value = true;
+                postResult();
+            }
         }
     }, 1000);
 }
