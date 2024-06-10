@@ -30,7 +30,7 @@
       <div class="inner-card-container">
         <el-scrollbar height="450px">
           <div class="scrollbar-card">
-            <div class="section_52">
+            <div class="section_52 rank-1">
               <div class="inner-text">
                 <span class="text_54 wd_300">NO.1</span>
                 <span class="text_50 wd_280">{{
@@ -119,6 +119,7 @@ export default {
   height: 100%;
   display: flex;
   justify-content: center;
+  color: #2c1c55;
 }
 
 .pos_79 {
@@ -179,14 +180,12 @@ export default {
   width: 80px;
 }
 .text_54 {
-  color: #000000;
   font-size: 58px;
   font-family: Poppins;
   font-weight: 800;
   line-height: 47.5px;
 }
 .text_50 {
-  color: #000000;
   font-size: 40px;
   font-family: Poppins;
   font-weight: 800;
@@ -202,7 +201,6 @@ export default {
   font-size: 36px;
   font-family: Poppins;
   font-weight: 800;
-  color: #000000;
 }
 /*layer2*/
 .font_16 {
@@ -210,7 +208,6 @@ export default {
   font-family: Poppins;
   line-height: 46px;
   font-weight: 800;
-  color: #2c0b6c;
 }
 .section_53 {
   margin-right: 40px;
@@ -225,7 +222,6 @@ export default {
   font-family: Poppins;
   line-height: 46px;
   font-weight: 800;
-  color: #000000;
   line-height: 36px;
   margin-left: 10px;
   margin-right: -20px;
@@ -246,14 +242,12 @@ export default {
   font-family: Poppins;
   line-height: 20.5px;
   font-weight: 800;
-  color: #000000;
 }
 .font_26 {
   font-size: 36px;
   font-family: Poppins;
   line-height: 27px;
   font-weight: 800;
-  color: #000000;
 }
 .section_54 {
   width: 95%;

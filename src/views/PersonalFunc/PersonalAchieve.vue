@@ -24,33 +24,41 @@
     <div class="card-container">
       <div class="personal-page-header">成就展示</div>
       <div class="inner-card-container">
-        <el-row :gutter="20">
-          <el-col v-for="(item, index) in achieveCards" :key="index" :span="6">
-            <el-card
-              class="achieve-card"
-              shadow="hover"
-              :class="item.owned == true ? 'achieve-card-y' : 'achieve-card-g'"
+        <el-scrollbar height="100%">
+          <el-row :gutter="20">
+            <el-col
+              v-for="(item, index) in achieveCards"
+              :key="index"
+              :span="6"
             >
-              <div
-                class="achieve-card-icon"
+              <el-card
+                class="achieve-card"
+                shadow="hover"
                 :class="
-                  item.owned == true
-                    ? 'achieve-card-y-icon'
-                    : 'achieve-card-g-icon'
+                  item.owned == true ? 'achieve-card-y' : 'achieve-card-g'
                 "
               >
-                <el-icon
-                  :size="48"
-                  :color="item.owned == true ? '#f88' : '#D3D3D3'"
-                  ><StarFilled
-                /></el-icon>
-              </div>
+                <div
+                  class="achieve-card-icon"
+                  :class="
+                    item.owned == true
+                      ? 'achieve-card-icon-y'
+                      : 'achieve-card-icon-g'
+                  "
+                >
+                  <el-icon
+                    :size="56"
+                    :color="item.owned == true ? '#F9911E' : '#b7a8b5'"
+                    ><StarFilled
+                  /></el-icon>
+                </div>
 
-              <p class="achieve-card-title">{{ item.name }}</p>
-              <p class="achieve-card-desc">{{ item.description }}</p>
-            </el-card>
-          </el-col>
-        </el-row>
+                <p class="achieve-card-title">{{ item.name }}</p>
+                <p class="achieve-card-desc">{{ item.description }}</p>
+              </el-card>
+            </el-col>
+          </el-row>
+        </el-scrollbar>
       </div>
     </div>
   </div>
@@ -72,15 +80,60 @@ export default {
   data() {
     return {
       achieveCards: [
-        /*{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
-				{name:'b', description: 'b this is ...', owned: true, datetime: '2024-10-21'},
-				{name:'a', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
-				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
-				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
-				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
-				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
-				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
-				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},*/
+        {
+          name: "小试牛刀",
+          description: "a this is ...",
+          owned: true,
+          datetime: "2023-10-21",
+        },
+        {
+          name: "b",
+          description: "b this is ...",
+          owned: true,
+          datetime: "2024-10-21",
+        },
+        {
+          name: "a",
+          description: "a this is ...",
+          owned: true,
+          datetime: "2023-10-21",
+        },
+        {
+          name: "b",
+          description: "b this is ...",
+          owned: false,
+          datetime: "2024-10-21",
+        },
+        {
+          name: "a",
+          description: "a this is ...",
+          owned: false,
+          datetime: "2023-10-21",
+        },
+        {
+          name: "b",
+          description: "b this is ...",
+          owned: false,
+          datetime: "2024-10-21",
+        },
+        {
+          name: "b",
+          description: "b this is ...",
+          owned: false,
+          datetime: "2024-10-21",
+        },
+        {
+          name: "a",
+          description: "a this is ...",
+          owned: false,
+          datetime: "2023-10-21",
+        },
+        {
+          name: "b",
+          description: "b this is ...",
+          owned: false,
+          datetime: "2024-10-21",
+        },
       ],
     };
   },
@@ -118,21 +171,44 @@ export default {
 }
 
 /*成就卡片*/
-.achieveCard-y {
+.achieve-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 200px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #3b276f;
+}
+
+.achieve-card-y {
   background-color: #fcdd64;
-  border-radius: 20px;
-  width: 180px;
-  height: 200px;
+  background-image: linear-gradient(#ffe65b, #ffc253);
 }
-.achieveCard-g {
-  background-color: #00000040;
-  border-radius: 20px;
-  width: 180px;
-  height: 200px;
+
+.achieve-card-g {
+  background-color: #d9cad7;
 }
-.achieve-card-g-icon {
-  border: 1px solid grey;
-  background-color: rgb(131, 131, 131);
+
+.achieve-card-icon {
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.achieve-card-icon-y {
+  border: 1px solid #f9911e;
+  background-color: #f6ecc9;
+  box-shadow: 0 0 10px #f6ecc9, 0 0 40px #f9911e;
+}
+
+.achieve-card-icon-g {
+  border: 1px solid #b7a8b5;
+  background-color: #d9cad7;
 }
 
 .achieve-card-title {

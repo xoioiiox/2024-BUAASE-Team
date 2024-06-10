@@ -3,19 +3,12 @@
   display: flex;
   justify-content: center;
 }
-.personal-info-left-area {
-  /* border: 1px solid red; */
+
+.personal-info-area {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 12px;
-}
-.personal-info-right-area {
-  /* border: 1px solid blue; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 /*头像*/
@@ -27,7 +20,11 @@
   border: solid 10px #d8a8aa;
 }
 
-.personal-info-image-upload {
+.personal-info-profile-level {
+  font-weight: 600;
+}
+
+/* .personal-info-image-upload {
   height: 40px;
   max-width: 200px;
   width: 100%;
@@ -38,12 +35,13 @@
   justify-content: center;
   align-items: center;
   color: #d7a15b;
-}
-.personal-info-image-upload:hover,
+} */
+
+/* .personal-info-image-upload:hover,
 .personal-info-image-upload:active {
   background-color: #ffda53;
   color: #9d9cf5;
-}
+} */
 
 .personal-info-user-name {
   max-width: 200px;
@@ -69,7 +67,6 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 30px;
   background-color: #ffe9d4;
   border-radius: 24px;
   height: 60px;
@@ -89,7 +86,7 @@
 }
 
 .personal-info-profile-button {
-  width: 120px;
+  width: 40%;
   height: 40px;
   display: flex;
   justify-content: center;
