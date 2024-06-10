@@ -6,17 +6,15 @@
 			<!-- 顶部区域 -->
 				<div>
 					<div class="demo-progress">
-						<el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
+						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
 					</div>
 				</div>
 				<!-- 展示主体区域 -->
 				<el-main>
 					<!-- 显示单词英语区域 -->
 					<div class="word-container-above">
-					<img
-						class="image_13 pos_42"
-						src="../assets/recite-bg.png"
-					/>
+					<div class="card-below-l"></div>
+					<div class="card-below-r"></div>
 					<el-card class="word-container">
 						<div class="detail-inner">
 							<!--收藏-->
@@ -97,7 +95,7 @@
 	const examples = ref([
 		{
 			part: '',
-			means: 'hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqohjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98i983087'
+			means: ''
 		}
 	]);
 
@@ -281,18 +279,6 @@
 		cursor: pointer;
 		font-size: 24px;
 	}
-	/*背景卡片*/
-	.image_13 {
-		border-radius: 24px;
-		filter: drop-shadow(0px 4px 2px #00000040);
-		width: 700px;
-		height: 400px;
-	}
-	.pos_42 {
-		position: absolute;
-		right: 230px;
-		bottom: 210px;
-	}
 	/*右箭头*/
 	.image_20 {
 		width: 70px;
@@ -303,7 +289,6 @@
 		right: 112px;
 		bottom: 360px;
 	}
-	
 	.choice-button {
 		width: 80%;
 		height: 100%;
@@ -393,6 +378,32 @@
 	}
 	.word-examples {
 		width: 600px;
+	}
+	.card-below-r {
+		position: absolute;
+		right: 280px;
+		bottom: 250px;
+		padding: 64px 0 90px;
+		background-color: #fefbf0;
+		border-radius: 24px;
+		box-shadow: 0px 6px 10px #00000066;
+		width: 400px;
+		height: 370px;
+		border: solid 1px #c8b058;
+		transform: rotate(3deg);
+	}
+	.card-below-l {
+		position: absolute;
+		left: 280px;
+		bottom: 250px;
+		padding: 64px 0 90px;
+		background-color: #fefbf0;
+		border-radius: 24px;
+		box-shadow: 0px 6px 10px #00000066;
+		width: 400px;
+		height: 370px;
+		border: solid 1px #c8b058;
+		transform: rotate(-3deg);
 	}
 	</style>
 	

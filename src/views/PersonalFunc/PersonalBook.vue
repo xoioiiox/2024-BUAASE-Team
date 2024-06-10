@@ -50,7 +50,7 @@
 										<div class="section_35">
 											<img
 												class="image_29"
-												src="../../assets/personal-center/ball.png"
+												src="../../assets/personal-center/planet1.svg"
 											/>
 											<div class="text-wrapper_16">
 												<span class="font_21 text_42">{{this.curBook}}</span>
@@ -61,7 +61,7 @@
 										<div class="section_31" @click="ChooseThisBook(item)">
 											<img
 												class="image_29"
-												src="../../assets/personal-center/ball2.png"
+												:src="`/src/assets/personal-center/planet${(index+1)%6+1}.svg`"
 											/>
 											<div class="text-wrapper_16">
 												<span class="font_21 text_42">{{item}}</span>
