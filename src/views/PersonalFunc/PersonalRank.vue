@@ -37,22 +37,22 @@
 					<div class="inner-card-container">
 						<el-scrollbar height="450px">
 						<div class="scrollbar-card">
-						<div v-if="this.rankList.length>=1" class="section_52">
+						<div class="section_52">
 							<div class="inner-text">
 								<span class="text_54 wd_300">NO.1</span>
 								<span class="text_50 wd_280">{{this.rankList[0].username}}</span>
-								<span class="text_50">LV.{{this.rankList[0].level}}</span>
+								<span class="text_50">{{this.rankList[0].exp}}</span>
 							</div>
 						</div>
-						<div v-if="this.rankList.length>=2" class="mt-22 section_53">
+						<div class="mt-22 section_53">
 							<span class="text_58 ml-20 wd_300">NO.2</span>
 							<span class="font_26 wd_300">{{this.rankList[1].username}}</span>
-							<span class="font_26">LV.{{this.rankList[1].level}}</span>
+							<span class="font_26">{{this.rankList[1].exp}}</span>
 						</div>
-						<div v-if="this.rankList.length>=3" v-for="(item, index) in rankList.slice(2)" :key="index" class="mt-22 section_54">
+						<div v-for="(item, index) in rankList.slice(2)" :key="index" class="mt-22 section_54">
 							<span class="font_26 ml-20 wd_280">NO.{{index + 3}}</span>
 							<span class="font_26 wd_280">{{item.username}}</span>
-							<span class="font_26">LV.{{item.level}}</span>
+							<span class="font_26">{{item.exp}}</span>
 						</div>
 						</div>
 						</el-scrollbar>
@@ -72,11 +72,18 @@ export default {
 	async created() {
 		await axios.get('/api/word/get-ranking-list-today/').then((res)=> {
 			this.rankList = res.data.rank_list
+			console.log('rank', this.rankList)
 		})
 	},
 	data() {
 		return {
-			rankList: [],
+			rankList: [				
+				/*{username: "mioo", exp: 0, ranking: 1},
+				{username: "ssd", exp: 0, ranking: 2},
+				{username: "rrt", exp: 0, ranking: 3},
+				{username: "ssd", exp: 0, ranking: 2},
+				{username: "rrt", exp: 0, ranking: 3},*/
+			],
 		}
 	},
 	methods: {
@@ -141,7 +148,7 @@ export default {
 	margin-left: 30px;
 }
 .scrollbar-card {
-	width: 96%;
+	width: 800px;
 }
 /*排行列表*/
 .ml-190 {
