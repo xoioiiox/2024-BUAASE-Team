@@ -1,4 +1,7 @@
 <template>
+  <div class="back-home" @click="back2home">
+    <span class="font_13">乐词不疲</span>
+  </div>
   <div class="common-layout">
     <el-container>
       <div aria-label="A complete example of page header">
@@ -20,15 +23,6 @@
           </el-col>
         </el-row>
       </el-header>
-      <el-main>
-        <!--剩余抽卡次数-->
-        <div class="flex-container">
-          <div>
-            <p class="circle-bordered">
-              剩余{{ Count }} 次
-            </p>
-          </div>
-        </div>
         <div class="box">
           <div v-for="(item, index) in list" :key="index">
             <div :class="'item'" @click="DrawCard(item)">
@@ -48,7 +42,10 @@
             </div>
           </div>
         </div>
-      </el-main>
+        <!--剩余抽卡次数-->
+        <div class="flex-container">
+          <div>剩余 {{ Count }} 次</div>
+        </div>
     </el-container>
   </div>
 </template>
@@ -199,6 +196,10 @@ onMounted(() => {
 
 <style scoped>
 .flex-container {
+  color: #FDF1C6;
+  font-size: 40px;
+  font-weight: 800;
+  margin-top: 30px;
   display: flex;
   /* 启用Flexbox布局 */
   align-items: center;
@@ -240,23 +241,22 @@ onMounted(() => {
   left: 55%;
   transform: translate(-50%, -50%);
   color: rgb(241, 235, 235);
-  font-size: 247.2px;
+  font-size: 200px;
 }
 
 
 .box {
+  margin-top: 100px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  width: 1100px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .item {
   position: relative;
   margin: 20px;
-  width: 247.2px;
-  height: 300px;
+  width: 280px;
+  height: 350px;
 }
 
 .card1,
@@ -269,14 +269,19 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 20px;
   text-align: center;
   transition: transform .4s
 }
 
 .card1 {
-  background-color: #ff8800;
+  background-color: #FFD749;
   color: #fff;
+  cursor: pointer;
+}
+
+.card1:hover {
+  box-shadow: 0px 0px 100px #C8B058;
 }
 
 .card2 {
