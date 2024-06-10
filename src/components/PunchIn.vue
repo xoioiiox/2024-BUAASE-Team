@@ -1,20 +1,28 @@
 <template>
-  <div class="study-card">
-    <h1>今日任务完成！</h1>
-    <p>您已连续打卡 <strong>{{ consecutiveDays }}</strong> 天</p>
-    <div>
-      <button class="share" @click="punch">打卡</button>
-      <Teleport to="body">
-        <ImagePreviewModal v-if="isOpened" @close="isOpened = !isOpened" :firstProp="consecutiveDays"
-          :secondProp="inspiration" />
-      </Teleport>
-    </div>
-    <div class="buttons">
-      <button class="choise" @click="goHome">返回首页</button>
-      <button class="choise" @click="nextSet">继续下一组</button>
-      <button class="choise" @click="playGame">趣味小游戏</button>
-    </div>
-  </div>
+	<div class="back-home" @click="goHome">
+		<span class="font_13">乐词不疲</span>
+	</div>
+	<div style="display:flex;justify-content: center;align-items: center;height: 100vh;">
+		<div class="study-card">
+			<div class="study-card-top">
+        <span class="top-text">Daily Goal Complete</span>
+      </div>
+      <div class="day-count">
+        <span class="punch-text">您已连续打卡 <strong>{{ consecutiveDays }}</strong> 天</span>
+      </div>
+			<div class="share" @click="punch">打卡</div>
+			<Teleport to="body">
+				<ImagePreviewModal v-if="isOpened" @close="isOpened = !isOpened" :firstProp="consecutiveDays"
+					:secondProp="inspiration" />
+			</Teleport>
+			<div class="buttons">
+				<!--button class="choise" @click="goHome">返回首页</button-->
+				<button class="choise" @click="nextSet">继续下一组</button>
+				<button class="choise" @click="playGame">趣味小游戏</button>
+			</div>
+		</div>
+	</div>
+	
 </template>
 
 <script setup>
@@ -22,6 +30,7 @@ import { onBeforeMount, reactive, ref } from 'vue';
 import ImagePreviewModal from './ImagePreviewModal.vue';
 import axios from 'axios';
 import { useRouter } from "vue-router";
+import '@fontsource/viga'
 
 const router = useRouter();
 
@@ -93,20 +102,56 @@ const nextSet = () => {
 
 const playGame = () => {
   // 打开趣味小游戏的逻辑
-  alert('趣味小游戏功能尚未实现。');
+  router.push('/StartGameHome')
 }
 
 
 </script>
 
 <style scoped>
-.study-card {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+.punch-text {
+	font-size: 18px;
 }
-
+.study-card {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  width: 400px;
+	height: 450px;
+	border-radius: 10px;
+	background-color: #FFFEFF;
+	box-shadow: 0 10px 0 #D3D8FF;
+}
+.study-card-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	position: absolute;
+	top: -20px;
+	width: 300px;
+	height: 80px;
+	background-image: linear-gradient(270deg, #3cf4c4 0%, #4fb1ff 100%);
+  border-radius: 12px;
+}
+.top-text {
+  font-family: Viga;
+  color: #2C0B6C;
+  font-size: 30px;
+  font-weight: 800;
+}
+.day-count {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 100px;
+  background-color: #C2FDFF;
+  color: #228AED;
+  width: 250px;
+  height: 40px;
+  border-radius: 20px;
+}
 .inspiration {
   color: #555;
   font-style: italic;
@@ -118,6 +163,7 @@ const playGame = () => {
 }
 
 .choise {
+  width: 130px;
   margin-top: 20px;
   padding: 10px 20px;
   border-radius: 5px;
@@ -144,19 +190,18 @@ const playGame = () => {
 }
 
 .share {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
+  position: absolute;
+  bottom: 50px;
+  width: 150px;
+  height: 60px;
+  border-radius: 30px;
+  box-shadow: 0 5px 0 #7031FC;
   cursor: pointer;
-  border: none;
-  flex: 1;
-  transition: background-color 0.1s ease;
-  background-color: #0366d6;
+  background-color: #9A4AFE;
   color: white;
-}
-
-.share:active {
-  background-color: #5c8db8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
 }
 </style>

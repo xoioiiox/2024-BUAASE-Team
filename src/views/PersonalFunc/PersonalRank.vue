@@ -205,7 +205,7 @@ export default {
 .section_53 {
 	margin-right: 40px;
 	padding: 20px 10px;
-	background-color: #FFE9D4;
+	background-color: #FFE3AD;
 	display: flex;
 	width: 100%;
 }
