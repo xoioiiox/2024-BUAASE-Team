@@ -6,17 +6,15 @@
 		<!-- 顶部区域 -->
 			<div class="centered-content">
 				<div class="demo-progress">
-					<el-progress :text-inside="true" :stroke-width="35" :percentage="IntRatio * 100" />
+					<el-progress color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="IntRatio * 100" />
 				</div>
 			</div>
 			<!-- 展示主体区域 -->
 			<el-main>
 				<!-- 显示单词英语区域 -->
 				<div class="word-container-above">
-				<img
-					class="image_13 pos_42"
-					src="../assets/recite-bg.png"
-				/>
+				<div class="card-below-l"></div>
+				<div class="card-below-r"></div>
 				<el-card class="word-container">
 					<!-- 单词 -->
 					<div class="timeNewRomanCard" align="center" style="margin-top: 40px;">{{ newWord }}</div>
@@ -316,18 +314,6 @@ const router = useRouter();
 	cursor: pointer;
 	font-size: 24px; /* 根据需要调整大小 */
 }
-/*背景卡片*/
-.image_13 {
-	border-radius: 24px;
-	filter: drop-shadow(0px 4px 2px #00000040);
-	width: 700px;
-	height: 400px;
-}
-.pos_42 {
-	position: absolute;
-	right: 230px;
-	bottom: 210px;
-}
 /*右箭头*/
 .image_20 {
 	width: 70px;
@@ -395,8 +381,6 @@ const router = useRouter();
 	z-index: 1; /*使得卡片显示在上层*/
 	display: flex;
 	justify-content: center;
-	/*height: 50vh;
-	margin-top: 25px;*/
 	padding: 64px 0 90px;
 	background-color: #fefbf0;
 	border-radius: 24px;
@@ -405,7 +389,32 @@ const router = useRouter();
 	height: 420px;
 	border: solid 1px #c8b058;
 }
-
+.card-below-r {
+	position: absolute;
+	right: 280px;
+	bottom: 250px;
+	padding: 64px 0 90px;
+	background-color: #fefbf0;
+	border-radius: 24px;
+	box-shadow: 0px 6px 10px #00000066;
+	width: 400px;
+	height: 370px;
+	border: solid 1px #c8b058;
+	transform: rotate(3deg);
+}
+.card-below-l {
+	position: absolute;
+	left: 280px;
+	bottom: 250px;
+	padding: 64px 0 90px;
+	background-color: #fefbf0;
+	border-radius: 24px;
+	box-shadow: 0px 6px 10px #00000066;
+	width: 400px;
+	height: 370px;
+	border: solid 1px #c8b058;
+	transform: rotate(-3deg);
+}
 .black-body {
 	font-family: '黑体', 'Heiti SC', sans-serif;
 }
