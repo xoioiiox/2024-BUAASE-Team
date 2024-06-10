@@ -14,7 +14,10 @@
         <span>成就展示</span>
       </div>
       <div class="side-item-selected" @click="toRank">
-        <img class="image_1" src="../../assets/personal-center/side-4.png" />
+        <img
+          class="side-item-icon"
+          src="../../assets/personal-center/side-4.png"
+        />
         <span>排行榜</span>
       </div>
       <div class="side-item" @click="toEditInfo">
@@ -31,17 +34,17 @@
               <div class="inner-text">
                 <span class="text_54 wd_300">NO.1</span>
                 <span class="text_50 wd_280">{{
-                  this.rankList[0].username
+                  this.rankList[0]?.username
                 }}</span>
-                <span class="text_50">LV.{{ this.rankList[0].level }}</span>
+                <span class="text_50">{{ this.rankList[0]?.exp }}</span>
               </div>
             </div>
             <div class="mt-22 section_53">
               <span class="text_58 ml-20 wd_300">NO.2</span>
               <span class="font_26 wd_300">{{
-                this.rankList[1].username
+                this.rankList[1]?.username
               }}</span>
-              <span class="font_26">LV.{{ this.rankList[1].level }}</span>
+              <span class="font_26">{{ this.rankList[1]?.exp }}</span>
             </div>
             <div
               v-for="(item, index) in rankList.slice(2)"
@@ -50,7 +53,7 @@
             >
               <span class="font_26 ml-20 wd_280">NO.{{ index + 3 }}</span>
               <span class="font_26 wd_280">{{ item.username }}</span>
-              <span class="font_26">LV.{{ item.level }}</span>
+              <span class="font_26">{{ item.exp }}</span>
             </div>
           </div>
         </el-scrollbar>
@@ -69,19 +72,19 @@ export default {
   components: { AfterHeaderNavigator },
   async created() {
     await axios.get("/api/word/get-ranking-list-today/").then((res) => {
-      this.rankList = res.data.rank_list;
+      console.log(res);
+      this.rankList = res.data.ranking_list;
+      console.log("rank", this.rankList);
     });
   },
   data() {
     return {
       rankList: [
-        { username: "a", level: "43", exp: "400" },
-        { username: "weqwb", level: "37", exp: "400" },
-        { username: "sc", level: "34", exp: "400" },
-        { username: "d", level: "30", exp: "400" },
-        { username: "wwwe", level: "23", exp: "400" },
-        { username: "fwqqew", level: "28", exp: "400" },
-        { username: "g", level: "9", exp: "400" },
+        /*{username: "mioo", exp: 0, ranking: 1},
+				{username: "ssd", exp: 0, ranking: 2},
+				{username: "rrt", exp: 0, ranking: 3},
+				{username: "ssd", exp: 0, ranking: 2},
+				{username: "rrt", exp: 0, ranking: 3},*/
       ],
     };
   },
@@ -153,7 +156,7 @@ export default {
   margin-left: 30px;
 }
 .scrollbar-card {
-  width: 96%;
+  width: 800px;
 }
 /*排行列表*/
 .ml-190 {

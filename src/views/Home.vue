@@ -56,11 +56,12 @@ export default {
     </div>
 
     <div class="home-buttons">
-      <el-button type="primary" round @click="goToWord">开始背单词</el-button>
-      <el-button type="primary" round @click="goToGame"
-        >Around the Words <br />
-        在游戏中学单词</el-button
-      >
+      <el-button type="primary" round @click="goToWord" class="home-button">
+        <span style="font-size: 22px;">开始背单词</span>
+      </el-button>
+      <el-button type="primary" round @click="goToGame" class="home-button">
+        <span style="font-size: 20px;">Around the Words <br />在游戏中学单词</span>
+      </el-button>
     </div>
   </div>
 </template>

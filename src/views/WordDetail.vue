@@ -6,44 +6,44 @@
 			<!-- 顶部区域 -->
 				<div>
 					<div class="demo-progress">
-						<el-progress :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
+						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
 					</div>
 				</div>
 				<!-- 展示主体区域 -->
 				<el-main>
 					<!-- 显示单词英语区域 -->
 					<div class="word-container-above">
-					<img
-						class="image_13 pos_42"
-						src="../assets/recite-bg.png"
-					/>
+					<div class="card-below-l"></div>
+					<div class="card-below-r"></div>
 					<el-card class="word-container">
-						<!--收藏-->
-						<div class="star-it" v-if="!disabled"  @click="addToVocab">
-							<el-icon class="star-init"><Star /></el-icon>
-						</div>
-						<div class="star-it" v-if="disabled">
-							<el-icon class="star-true"><StarFilled /></el-icon>
-						</div>
-						<!-- 单词 -->
-						<div class="timeNewRomanCard" style="margin-top: 10px;">
-							<span>{{ word }}</span>
-							<div  @click="playtts" style="cursor: pointer; margin-left: 20px;">
-								<svg width="36" height="36" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M17.9503 0L10.7487 10H0V30H10.7487L17.9503 40H21.4974V0H17.9503ZM26.8718 5V10C27.7854 10 28.699 10.1 29.5589 10.3C34.1809 11.4 37.6205 15.3 37.6205 20C37.6205 24.7 34.2346 28.6 29.5589 29.7C28.699 29.9 27.7854 30 26.8718 30V35C28.2153 35 29.4514 34.8 30.7413 34.55H30.9025C37.8892 32.9 42.9948 27 42.9948 20C42.9948 13 37.8892 7.1 30.9025 5.45C29.6664 5.15 28.2691 5 26.8718 5ZM26.8718 15V25C27.3554 25 27.8391 24.95 28.2153 24.85C30.5263 24.3 32.2461 22.3 32.2461 20C32.2461 17.7 30.5801 15.7 28.2153 15.15C27.7854 15.05 27.3017 15 26.8718 15Z" fill="black"/>
-								</svg>
-							</div>					
-						</div>
-						<div class="word-pronunciation">
-							<span>{{ pronunciation }}</span>
-						</div>
-						<div class="word-examples">
-							<h2>释义：</h2>
-							<ul>
-								<li v-for="example in examples" :key="example">
-									{{ example.part + ' ' + example.means }}
-								</li>
-							</ul>
+						<div class="detail-inner">
+							<!--收藏-->
+							<div class="star-it" v-if="!disabled"  @click="addToVocab">
+								<el-icon class="star-init"><Star /></el-icon>
+							</div>
+							<div class="star-it" v-if="disabled">
+								<el-icon class="star-true"><StarFilled /></el-icon>
+							</div>
+							<!-- 单词 -->
+							<div class="timeNewRomanCard" style="margin-top: 10px;">
+								<span>{{ word }}</span>
+								<div  @click="playtts" style="cursor: pointer; margin-left: 20px;">
+									<svg width="36" height="36" viewBox="0 0 43 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M17.9503 0L10.7487 10H0V30H10.7487L17.9503 40H21.4974V0H17.9503ZM26.8718 5V10C27.7854 10 28.699 10.1 29.5589 10.3C34.1809 11.4 37.6205 15.3 37.6205 20C37.6205 24.7 34.2346 28.6 29.5589 29.7C28.699 29.9 27.7854 30 26.8718 30V35C28.2153 35 29.4514 34.8 30.7413 34.55H30.9025C37.8892 32.9 42.9948 27 42.9948 20C42.9948 13 37.8892 7.1 30.9025 5.45C29.6664 5.15 28.2691 5 26.8718 5ZM26.8718 15V25C27.3554 25 27.8391 24.95 28.2153 24.85C30.5263 24.3 32.2461 22.3 32.2461 20C32.2461 17.7 30.5801 15.7 28.2153 15.15C27.7854 15.05 27.3017 15 26.8718 15Z" fill="black"/>
+									</svg>
+								</div>					
+							</div>
+							<div class="word-pronunciation">
+								<span>{{ pronunciation }}</span>
+							</div>
+							<div class="word-examples">
+								<h2>释义：</h2>
+								<ul>
+									<li v-for="example in examples" :key="example">
+										{{ example.part + ' ' + example.means }}
+									</li>
+								</ul>
+							</div>	
 						</div>
 					</el-card>
 					</div>
@@ -72,6 +72,7 @@
 							</div>
 						</el-col>
 					</el-row>
+					<div style="height: 100px;"></div>
 				</el-main>
 		</div>
 	</template>
@@ -278,18 +279,6 @@
 		cursor: pointer;
 		font-size: 24px;
 	}
-	/*背景卡片*/
-	.image_13 {
-		border-radius: 24px;
-		filter: drop-shadow(0px 4px 2px #00000040);
-		width: 700px;
-		height: 400px;
-	}
-	.pos_42 {
-		position: absolute;
-		right: 230px;
-		bottom: 210px;
-	}
 	/*右箭头*/
 	.image_20 {
 		width: 70px;
@@ -300,7 +289,6 @@
 		right: 112px;
 		bottom: 360px;
 	}
-	
 	.choice-button {
 		width: 80%;
 		height: 100%;
@@ -378,15 +366,44 @@
 	}
 	.star-init {
 		position: absolute;
-		font-size: 38px;
+		font-size: 44px;
 		color:#fbdd6f;
 		cursor: pointer;
 	}
 	.star-true {
 		position: absolute;
-		font-size: 38px;
+		font-size: 44px;
 		color:#fbdd6f;
 		cursor: pointer;
+	}
+	.word-examples {
+		width: 600px;
+	}
+	.card-below-r {
+		position: absolute;
+		right: 280px;
+		bottom: 250px;
+		padding: 64px 0 90px;
+		background-color: #fefbf0;
+		border-radius: 24px;
+		box-shadow: 0px 6px 10px #00000066;
+		width: 400px;
+		height: 370px;
+		border: solid 1px #c8b058;
+		transform: rotate(3deg);
+	}
+	.card-below-l {
+		position: absolute;
+		left: 280px;
+		bottom: 250px;
+		padding: 64px 0 90px;
+		background-color: #fefbf0;
+		border-radius: 24px;
+		box-shadow: 0px 6px 10px #00000066;
+		width: 400px;
+		height: 370px;
+		border: solid 1px #c8b058;
+		transform: rotate(-3deg);
 	}
 	</style>
 	

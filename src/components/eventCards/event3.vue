@@ -47,6 +47,7 @@ const word = ref({
 });
 
 // 释义选项列表
+const dict = ref('');
 let meanings = reactive(['中文1', '中文2', '中文3', '中文4']);
 let numbers = reactive([0, 1, 2, 3]);
 
@@ -110,7 +111,7 @@ function selectOption(index) {
 
     if (!(commited.value)) {
         commited.value = true;
-        postResult();
+        postResult(index);
     }
 }
 
@@ -123,15 +124,22 @@ const getWords = () => {
     })
         .then((response) => {
             word.value.theWord = response.data.words[0].word;
-            dict.value = response.data.words[0].meaning.result.trans_result[0].dict;
+            dict.value = JSON.parse(response.data.words[0].meaning).result.trans_result[0].dict;
+            console.log("node 1");
+            //console.log("dict: " + response.data.words[0].meaning.result.trans_result[0].dict);
+            console.log("dict.value: " + dict.value);
+            console.log("parse(dict.value): " + JSON.parse(dict.value));
             word.value.phonetic = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+            console.log("node 2");
+            console.log(" word.value.phonetic: " + word.value.phonetic);
             word.value.examples = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+            console.log("node 3");
+            console.log(" word.value.examples: " + word.value.examples);
 
-            meanings = meanings.splice(0, meanings.length);
             for (let i = 0; i < 4; i++) {
-                meanings.push(JSON.parse(response.data.words[i].meaning.result.trans_result[0].dict)
+                meanings[i] = JSON.parse(JSON.parse(response.data.words[i].meaning).result.trans_result[0].dict)
                     .word_result.simple_means.symbols[0].parts[0]
-                    .means);
+                    .means;
             }
             //startTimer();
             playAudio();
@@ -143,7 +151,7 @@ const getWords = () => {
     startTimer();
 }
 
-const postResult = () => {
+const postResult = (index) => {
     axios.post('/api/word/card/cur-event-result/', {
         event_name: '英译汉选择',
         event_result: (timeLeft != '时间到') && (numbers[index] == 0)
@@ -164,6 +172,15 @@ const startTimer = () => {
         } else {
             clearInterval(timer.value);
             timeLeft.value = '时间到！';
+
+            setTimeout(() => {
+                //跳转到抽卡界面
+                router.push('/DrawView');
+            }, 3000);
+            if (!(commited.value)) {
+                commited.value = true;
+                postResult();
+            }
         }
     }, 1000);
 }

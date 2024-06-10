@@ -72,42 +72,15 @@ export default {
   data() {
     return {
       achieveCards: [
-        {
-          name: "小试牛刀",
-          description: "a this is ...",
-          owned: true,
-          datetime: "2023-10-21",
-        },
-        {
-          name: "b",
-          description: "b this is ...",
-          owned: true,
-          datetime: "2024-10-21",
-        },
-        {
-          name: "a",
-          description: "a this is ...",
-          owned: true,
-          datetime: "2023-10-21",
-        },
-        {
-          name: "b",
-          description: "b this is ...",
-          owned: false,
-          datetime: "2024-10-21",
-        },
-        {
-          name: "a",
-          description: "a this is ...",
-          owned: false,
-          datetime: "2023-10-21",
-        },
-        {
-          name: "b",
-          description: "b this is ...",
-          owned: false,
-          datetime: "2024-10-21",
-        },
+        /*{name:'小试牛刀', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: true, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: true, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},
+				{name:'a', description: 'a this is ...', owned: false, datetime: '2023-10-21'},
+				{name:'b', description: 'b this is ...', owned: false, datetime: '2024-10-21'},*/
       ],
     };
   },
@@ -145,38 +118,17 @@ export default {
 }
 
 /*成就卡片*/
-.achieve-card {
+.achieveCard-y {
+  background-color: #fcdd64;
+  border-radius: 20px;
   width: 180px;
   height: 200px;
-  margin-bottom: 8px;
-  border-radius: 20px;
-  text-align: center;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
 }
-
-.achieve-card-y {
-  background-image: linear-gradient(180deg, #fbdd6f 0%, #ffd217 100%);
-  text-shadow: 0px 4px 10px #fff;
-  color: #2c0b6c;
-}
-.achieve-card-g {
+.achieveCard-g {
   background-color: #00000040;
-  color: grey;
-}
-
-.achieve-card-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin: 0 auto;
-}
-
-.achieve-card-y-icon {
-  border: 1px solid #fff;
-  background-color: #fff;
+  border-radius: 20px;
+  width: 180px;
+  height: 200px;
 }
 .achieve-card-g-icon {
   border: 1px solid grey;

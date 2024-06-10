@@ -24,10 +24,7 @@
         <span>个人信息</span>
       </div>
     </div>
-    <!--div class="setting">
-				<el-button type="primary" @click="studySetting()">学习设置</el-button>
-				<el-button color="#626aef" type="primary" @click="wordBookSetting()">上传词书</el-button>
-		</div-->
+
     <div class="card-container">
       <div class="personal-page-header">选择词书</div>
       <div class="inner-card-container personal-book-inner">
@@ -43,6 +40,19 @@
                 <span class="font_21 text_32">收藏生词本</span>
               </div>
             </div>
+            <div class="settings">
+              <div type="primary" @click="studySetting()" class="setting-bt">
+                学习设置
+              </div>
+              <div
+                color="#626aef"
+                type="primary"
+                @click="wordBookSetting()"
+                class="setting-bt"
+              >
+                上传词书
+              </div>
+            </div>
           </el-col>
           <el-col :span="1">
             <el-divider direction="vertical" />
@@ -55,7 +65,7 @@
                   <div class="book-card-current">
                     <img
                       class="image_29"
-                      src="../../assets/personal-center/ball.png"
+                      src="../../assets/personal-center/planet1.svg"
                     />
                     <div class="text-wrapper_16">
                       <span class="font_21 text_42">{{ this.curBook }}</span>
@@ -69,10 +79,7 @@
                   :span="8"
                 >
                   <div class="section_31" @click="ChooseThisBook(item)">
-                    <img
-                      class="image_29"
-                      src="../../assets/personal-center/ball2.png"
-                    />
+                    <img class="image_29" :src="images[(index + 1) % 6]" />
                     <div class="text-wrapper_16">
                       <span class="font_21 text_42">{{ item }}</span>
                     </div>
@@ -190,18 +197,22 @@ export default {
         { value: "15", label: "15" },
         { value: "20", label: "20" },
       ],
-      wordBooks: [
-        "大学英语四级",
-        "大学英语六级",
-        "六级高频词汇",
-        "四级高频词汇",
-        "25考研英语红宝书",
-        "1",
-        "2",
-        "3",
-        "4",
+      wordBooks: [],
+      curBook: "",
+      images: [
+        new URL("/src/assets/personal-center/planet1.svg", import.meta.url)
+          .href,
+        new URL("/src/assets/personal-center/planet2.svg", import.meta.url)
+          .href,
+        new URL("/src/assets/personal-center/planet3.svg", import.meta.url)
+          .href,
+        new URL("/src/assets/personal-center/planet4.svg", import.meta.url)
+          .href,
+        new URL("/src/assets/personal-center/planet5.svg", import.meta.url)
+          .href,
+        new URL("/src/assets/personal-center/planet6.svg", import.meta.url)
+          .href,
       ],
-      curBook: "大学英语四级",
     };
   },
   methods: {
@@ -359,12 +370,29 @@ export default {
   justify-content: center;
 }
 
-.personal-book-inner {
+/* .personal-book-inner {
   flex-direction: row !important;
-}
+} */
 
-.setting {
-  margin-left: 800px;
+.settings {
+  position: absolute;
+  bottom: 100px;
+  width: 200px;
+  margin-left: 10px;
+}
+.setting-bt {
+  width: 140px;
+  height: 40px;
+  background-color: #f4ecff;
+  border: solid 2px #b4aecc;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  font-family: Poppins;
+  font-size: 18px;
 }
 /*标签位置*/
 .pos_80 {
@@ -435,6 +463,7 @@ export default {
 }
 
 /*当前词书*/
+
 .book-card-current {
   display: flex;
   justify-content: center;
@@ -492,8 +521,8 @@ export default {
   border-radius: 5px;
   border: 1px solid #e0e0e0d4;
 }
-.curbook {
+/* .curbook {
   background-color: #d9ecff;
   border: 2px dashed #79bbff;
-}
+} */
 </style>

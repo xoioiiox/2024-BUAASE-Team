@@ -1,5 +1,5 @@
 <template>
-    <div class="back-home" @click="goBackHome()">
+    <div class="back-home" @click="login">
 			<span class="font_13">乐词不疲</span>
 		</div>
   <div class="register-container">
@@ -26,9 +26,9 @@
           <el-input v-model="registerForm.username" />
         </el-form-item>
         <!--输入手机号码-->
-        <el-form-item label="手机号" prop="phone">
+        <!--<el-form-item label="手机号" prop="phone">
           <el-input v-model="registerForm.phone" />
-        </el-form-item>
+        </el-form-item>-->
         <!--输入密码-->
         <el-form-item label="密码" prop="password">
           <el-input v-model="registerForm.password" type="password" autocomplete="off"/>
@@ -87,7 +87,7 @@ interface Form {
 
 const registerForm = reactive<Form>({
   username: '',
-  phone: '',
+  phone: '15101510151',
   password: '',
   confirmPassword: '',
 })

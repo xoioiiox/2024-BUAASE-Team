@@ -20,18 +20,18 @@
     <!--    </audio>-->
 
     <div class="sidebar">
-      <p>Level：1</p>
 
-      <p>sto_e</p>
+      <p>{{word.slice(0, -1).concat("_")}}</p>
 
-      <p>/stɔː(r)/</p>
+      <p>{{pronunciation}}</p>
 
-      <p>(大型)百货商店；储存，储备；商店，店铺</p>
+      <ul>
+        <li v-for="example in examples" :key="example">
+          {{ example.part + ' ' + example.means }}
+        </li>
+      </ul>
 
 
-      <p style="color: #d500f9">  : r </p>
-
-      <p style="color: #5bf900">  : e</p>
 
     </div>
 
@@ -44,37 +44,102 @@ import Map from '../../components/snakeGame/Map.vue';
 import Controller from '../../components/snakeGame/Controller.vue';
 import KeyBoard from '../../components/snakeGame/KeyBoard.vue';
 import { initGame } from './game';
-import {onMounted, reactive, ref} from 'vue';
+import {onMounted, reactive, ref, onUnmounted} from 'vue';
 import { StateType } from './types';
 import axios from "axios";
+
 
 
 const audio = ref(null);
 
 
 // 定义响应式数据
-const word = ref('');
+const word = ref('store');
+
+const dict = ref('');
 const pronunciation = ref('');
-const definition = ref('');
+const examples = ref([
+  {
+    part: '',
+    means: 'hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqohjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98hjksadhldoxiwkjsdlapaweknkdjsapofuPDCNEJHDOIWQnsdiuqoi98i983087'
+  }
+]);
+
 const specialChars = ref(['r', 'e']); // 假设需要传递的字符是固定的
 
 // 获取单词数据
-onMounted(async () => {
-  const response = await axios.get('/api/word/get-next-word/').then((response) => {
+onMounted( () => {
+  fetchWordData(); // 初始获取单词数据
+
+
+  // 设置定时器，每10秒获取一次数据
+  const intervalId = setInterval(() => {
+    fetchWordData();
+ 
+    }, 7000);
+
+  // 销毁定时器，防止内存泄漏
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
+
+});
+
+
+// 定义获取单词数据的函数
+async function fetchWordData() {
+
+  const response = await axios.get('/api/word/get-random-word/').then((response) => {
     if (response.status === 200) {//状态码200，请求正确
+
       word.value = response.data.word;
+
+      queryWord(word.value);
+
+      let str = word.value;
+      let letter = str.charAt(str.length-1);
+      let letter2 = getRandomLetter(letter);
+      specialChars.value = [letter, letter2];
     }
   }) .catch((error) => {
 
   })
-  // const data = await getWordData(); // 调api
-  // word.value = data.word;
-  // pronunciation.value = data.pronunciation;
-  // definition.value = data.definition;
-  // 根据实际情况可能需要更新specialChars
-});
 
 
+}
+
+async function queryWord(newWord) {
+  const response = await axios.get('/api/word/query-word-ch-dict/', {
+    params: {
+      q: newWord
+    }
+  })
+      .then((response) => {
+        console.log(response);
+
+        dict.value = response.data.result.trans_result[0].dict;
+        //console.log("dict:" + response.data.result.trans_result[0].dict);
+        pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+        console.log(JSON.parse(dict.value).word_result.simple_means);
+
+        examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
+        console.log(examples.value);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+}
+
+
+
+function getRandomLetter(givenLetter) {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let randomLetter;
+  do {
+    randomLetter = alphabet[Math.floor(Math.random() * 26)]; // 生成随机索引并获取字母
+  } while (randomLetter === givenLetter); // 如果随机字母与给定字母相同，继续循环
+  return randomLetter;
+}
 
 
 // 地图

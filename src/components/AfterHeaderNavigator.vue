@@ -51,13 +51,7 @@ export default {
 </script>
 
 <template class="header">
-  <el-menu
-    :default-active="activeIndex"
-    class="header-menu"
-    mode="horizontal"
-    :ellipsis="false"
-    @select="handleSelect"
-  >
+  <el-menu class="header-menu" mode="horizontal" :ellipsis="false">
     <div v-if="$route.name != 'Home'" class="header-logo" @click="goBackHome()">
       乐词不疲
     </div>
