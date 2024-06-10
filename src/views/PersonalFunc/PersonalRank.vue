@@ -37,19 +37,19 @@
 					<div class="inner-card-container">
 						<el-scrollbar height="450px">
 						<div class="scrollbar-card">
-						<div class="section_52">
+						<div v-if="this.rankList.length>=1" class="section_52">
 							<div class="inner-text">
 								<span class="text_54 wd_300">NO.1</span>
 								<span class="text_50 wd_280">{{this.rankList[0].username}}</span>
 								<span class="text_50">LV.{{this.rankList[0].level}}</span>
 							</div>
 						</div>
-						<div class="mt-22 section_53">
+						<div v-if="this.rankList.length>=2" class="mt-22 section_53">
 							<span class="text_58 ml-20 wd_300">NO.2</span>
 							<span class="font_26 wd_300">{{this.rankList[1].username}}</span>
 							<span class="font_26">LV.{{this.rankList[1].level}}</span>
 						</div>
-						<div v-for="(item, index) in rankList.slice(2)" :key="index" class="mt-22 section_54">
+						<div v-if="this.rankList.length>=3" v-for="(item, index) in rankList.slice(2)" :key="index" class="mt-22 section_54">
 							<span class="font_26 ml-20 wd_280">NO.{{index + 3}}</span>
 							<span class="font_26 wd_280">{{item.username}}</span>
 							<span class="font_26">LV.{{item.level}}</span>
@@ -76,15 +76,7 @@ export default {
 	},
 	data() {
 		return {
-			rankList: [
-				/*{username: 'a', level: '43', exp: '400'},
-				{username: 'weqwb', level: '37', exp: '400'},
-				{username: 'sc', level: '34', exp: '400'},
-				{username: 'd', level: '30', exp: '400'},
-				{username: 'wwwe', level: '23', exp: '400'},
-				{username: 'fwqqew', level: '28', exp: '400'},
-				{username: 'g', level: '9', exp: '400'},*/
-			],
+			rankList: [],
 		}
 	},
 	methods: {
