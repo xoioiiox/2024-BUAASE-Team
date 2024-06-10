@@ -21,16 +21,24 @@
 
     <div class="sidebar">
 
-      <p>{{word.slice(0, -1).concat("_")}}</p>
+      <div class="wordcss">
+        {{word.slice(0, -1).concat("_")}}
+      </div>
 
-      <p>{{pronunciation}}</p>
+<!--      <p></p>-->
 
+      <div class="pronunciationcss">
+        {{pronunciation}}
+      </div>
+
+
+      <div class="meancss">
       <ul>
         <li v-for="example in examples" :key="example">
           {{ example.part + ' ' + example.means }}
         </li>
       </ul>
-
+      </div>
 
 
     </div>
@@ -54,10 +62,10 @@ const audio = ref(null);
 
 
 // 定义响应式数据
-const word = ref('store');
+const word = ref('storestioresss');
 
 const dict = ref('');
-const pronunciation = ref('');
+const pronunciation = ref('ˈdɪfɪkəlt');
 const examples = ref([
   {
     part: '',
@@ -119,7 +127,8 @@ async function queryWord(newWord) {
 
         dict.value = response.data.result.trans_result[0].dict;
         //console.log("dict:" + response.data.result.trans_result[0].dict);
-        pronunciation.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am;
+
+        pronunciation.value = "/" + JSON.parse(dict.value).word_result.simple_means.symbols[0].ph_am + "/";
         console.log(JSON.parse(dict.value).word_result.simple_means);
 
         examples.value = JSON.parse(dict.value).word_result.simple_means.symbols[0].parts;
@@ -209,6 +218,26 @@ initGame(state.map, isLive);
   height: 660px;
   background-color: #fff; /* 设置背景颜色为白色 */
   /* 可以添加更多样式来美化侧边栏 */
+  .wordcss{
+    font-size: 34px; /* 增大字体大小 */
+    text-align: center; /* 居中显示 */
+    white-space: nowrap; /* 独占一行，不换行 */
+    margin-top: 40px;
+    margin-bottom: 30px;
+    width: 100%; /* 确保段落宽度占满侧边栏 */
+  }
+
+  .pronunciationcss{
+    font-size: 24px; /* 增大字体大小 */
+    text-align: center; /* 居中显示 */
+    white-space: nowrap; /* 独占一行，不换行 */
+    margin-bottom: 40px;
+    width: 100%; /* 确保段落宽度占满侧边栏 */
+  }
+  .meancss{
+    font-size: 20px; /* 增大字体大小 */
+  }
+
 }
 
 
