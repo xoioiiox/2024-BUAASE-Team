@@ -63,7 +63,6 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
 import { onMounted, ref, onUnmounted, watch } from "vue";
-import { tr } from "element-plus/es/locale";
 
 const route1 = useRoute();
 const enterTime = ref(null);
