@@ -3,6 +3,8 @@ import HeaderNavigator from "@/components/HeaderNavigator.vue";
 import AfterHeaderNavigator from "@/components/AfterHeaderNavigator.vue";
 import { useUserStore } from "@/stores/userStore.js";
 import "../assets/styles/home.css";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "Home",
@@ -10,6 +12,7 @@ export default {
   // 在Vue组件的生命周期钩子中使用store
   created() {
     this.userStore = useUserStore();
+    this.checkLogin();
     console.log(this.userStore.user);
     console.log(this.userStore.isLoggedIn);
   },
@@ -21,6 +24,21 @@ export default {
   },
 
   methods: {
+    async checkLogin(){
+      const response = await axios.get('/api/word/has-login/').then((response) => {
+        if (response.status === 200) {//状态码200，请求正确
+          if(response.data.has_login === true){
+            useUserStore().islogin();
+          } else {
+            useUserStore().islogout();
+          }
+        }
+      })
+          .catch((error) => {
+
+          })
+    },
+
     goToWord() {
       // 用户点击按钮时导航到需要登录权限的页面
       this.$router.push({
