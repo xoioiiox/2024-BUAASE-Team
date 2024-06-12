@@ -398,7 +398,7 @@ const router = useRouter();
 	border-radius: 24px;
 	box-shadow: 0px 6px 10px #00000066;
 	width: 400px;
-	height: 320px;
+	height: 370px;
 	border: solid 1px #c8b058;
 	transform: rotate(3deg);
 }
@@ -411,7 +411,7 @@ const router = useRouter();
 	border-radius: 24px;
 	box-shadow: 0px 6px 10px #00000066;
 	width: 400px;
-	height: 320px;
+	height: 370px;
 	border: solid 1px #c8b058;
 	transform: rotate(-3deg);
 }

@@ -6,7 +6,7 @@
 			<!-- 顶部区域 -->
 				<div>
 					<div class="demo-progress">
-						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="30" />
+						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
 					</div>
 				</div>
 				<!-- 展示主体区域 -->
