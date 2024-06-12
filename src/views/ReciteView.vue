@@ -186,10 +186,10 @@ const today = new Date();
 //跳转到打卡
 const toPunchIn = () => {
 	//保证背完当天单词后跳转到打卡界面 or 背完当前词书后不留在背单词界面
-	const response = axios.get('/api/word/get-daka-detail/', 
-	{
+	const response = axios.get('/api/word/get-daka-detail/', {
+	params:{
 		days: today.getDate()
-	});
+	}});
 	response.then(function (response) {
 		console.log(response.data)
 		//今天没有打卡   response.data.daka[0] == false
