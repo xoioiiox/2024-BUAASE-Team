@@ -63,6 +63,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage, ElNotification as notify } from 'element-plus'
 import axios from "axios";
 import { onMounted, ref, onUnmounted, watch } from "vue";
+import { tr } from "element-plus/es/locale";
 
 const route1 = useRoute();
 const enterTime = ref(null);
@@ -135,7 +136,7 @@ const getDayRatio = () => {
 			//console.log(response.data)
 			Ratio.value =  response.data.ratio
 			//保留前两位小数
-			IntRatio.value = Math.floor(Ratio.value * 100) / 100 - Math.floor(Ratio.value)
+			IntRatio.value = Math.floor(Ratio.value * 100) / 100
 			//不超过1
 			if (IntRatio.value >= 1){
 				IntRatio.value = 1;
@@ -180,20 +181,22 @@ onMounted(() => {
 
 //跳转到打卡
 const toPunchIn = () => {
-	/*if (Ratio.value >= 1 - 0.005 && Ratio.value <= 1 + 0.005) {
-		router.push('/PunchIn' );
-	} else if (BookRatio.value >= 1 - 0.00001 && BookRatio.value <= 1 + 0.00001) {
-		router.push('/PunchIn' );
-	}*/
 	//保证背完当天单词后跳转到打卡界面 or 背完当前词书后不留在背单词界面
-	if (IntRatio.value >= 1) {
-		router.push('/PunchIn' );
-	}  else if (IntBookRatio.value >= 1) {
-		router.push('/PunchIn' );
-	}
+	const response = axios.get('/api/word/get-daka-detail');
+	response.then(function (response) {
+		console.log(response.data)
+		//今天没有打卡   response.data.daka[0] == false
+		if (response.data.daka[0] == false) {
+			//并且今日任务已经完成
+			if (IntRatio.value >= 1) {
+		       router.push('/PunchIn' );
+	        }
+		}
+	})
 }
 
 
+const flage = ref(true)
 //获取一个新单词
 const getNextWord = async () => {
 	// 调用后端接口获取新单词
@@ -201,11 +204,21 @@ const getNextWord = async () => {
 	if (response.status === 200) {
 		//console.log(response.data)
 		newWord.value = response.data.word;
+
+
+
+		flage.value = response.data.existed;
+		if (flage.value==false) {
+			ElMessage({
+				message: '当前词书已背完，请更换词书',
+				type: 'success'
+			});
+			router.push('/StartWordHome');
+		}
+
+
+
 		console.log(newWord.value)
-		/*ElMessage({
-			message: '获取单词成功',
-			type: 'success'
-		});*/
 	} else {
 		ElMessage({
 			message: '获取单词失败',
