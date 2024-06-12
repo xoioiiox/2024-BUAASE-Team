@@ -99,7 +99,9 @@ const router = useRouter();
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (!value) {
     return callback(new Error('用户名不能为空'))
-  }else{
+  } else if(value.length > 8) {
+    return callback(new Error('用户名长度不能超过8个字符'))
+  } else{
     callback()
   }
 }
