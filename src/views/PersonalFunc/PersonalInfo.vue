@@ -29,8 +29,11 @@
           <el-col :span="12" :offset="6" class="personal-info-area">
             <div class="personal-info-image"></div>
             <el-row class="personal-info-profile-level">
-              <el-col :span="10" :offset="6"
-                >LV. {{ this.infoForm.level }}</el-col
+              <el-col :span="10" :offset="6"  style="display: flex; align-items: center;"
+                >
+                LV. <p> {{ this.infoForm.level }}
+                </p>
+              </el-col
               >
             </el-row>
             <!-- <el-button
