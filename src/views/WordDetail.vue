@@ -6,7 +6,7 @@
 			<!-- 顶部区域 -->
 				<div>
 					<div class="demo-progress">
-						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
+						<el-progress  color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="30" />
 					</div>
 				</div>
 				<!-- 展示主体区域 -->
@@ -382,7 +382,7 @@
 	.card-below-r {
 		position: absolute;
 		right: 280px;
-		bottom: 250px;
+		top: 200px;
 		padding: 64px 0 90px;
 		background-color: #fefbf0;
 		border-radius: 24px;
@@ -395,7 +395,7 @@
 	.card-below-l {
 		position: absolute;
 		left: 280px;
-		bottom: 250px;
+		top: 200px;
 		padding: 64px 0 90px;
 		background-color: #fefbf0;
 		border-radius: 24px;
@@ -404,6 +404,10 @@
 		height: 370px;
 		border: solid 1px #c8b058;
 		transform: rotate(-3deg);
+	}
+	::v-deep .el-progress-bar__innerText {
+		color: #2c0b6c;
+		font-size: 18px;
 	}
 	</style>
 	

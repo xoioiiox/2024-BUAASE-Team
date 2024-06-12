@@ -15,14 +15,14 @@
 				<div class="word-container-above">
 				<div class="card-below-l"></div>
 				<div class="card-below-r"></div>
-				<el-card class="word-container">
+				<div class="word-container">
 					<!-- 单词 -->
 					<div class="timeNewRomanCard" align="center" style="margin-top: 40px;">{{ newWord }}</div>
 					<!-- 音标 -->
 					<div class="black-body" align="center" style="margin-top: 10px;"></div>
 					<!-- 例句 -->
 					<div class="black-body" align="center" style="margin-top: 100px;"></div>
-				</el-card>
+				</div>
 				</div>
 				<img
 					class="image_20 pos_55"
@@ -392,7 +392,7 @@ const router = useRouter();
 .card-below-r {
 	position: absolute;
 	right: 280px;
-	bottom: 250px;
+	top: 200px;
 	padding: 64px 0 90px;
 	background-color: #fefbf0;
 	border-radius: 24px;
@@ -405,7 +405,7 @@ const router = useRouter();
 .card-below-l {
 	position: absolute;
 	left: 280px;
-	bottom: 250px;
+	top: 200px;
 	padding: 64px 0 90px;
 	background-color: #fefbf0;
 	border-radius: 24px;
@@ -417,5 +417,9 @@ const router = useRouter();
 }
 .black-body {
 	font-family: '黑体', 'Heiti SC', sans-serif;
+}
+::v-deep .el-progress-bar__innerText {
+	color: #2c0b6c;
+	font-size: 18px;
 }
 </style>
