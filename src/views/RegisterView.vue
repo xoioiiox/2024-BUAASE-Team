@@ -66,7 +66,7 @@ import {ElMessage, ElNotification} from 'element-plus'
 const showNotification = () => {
   ElNotification({
     title: 'Warning',
-    message: '本网站尚处于测试阶段，用户名与密码请不要与日常使用相似，以免造成损失 [手机号只需为1开头的11位号码]',
+    message: '本网站尚处于测试阶段，用户名与密码请不要与日常使用相似，以免造成损失',
     type: 'warning',
     duration: 5000
   });

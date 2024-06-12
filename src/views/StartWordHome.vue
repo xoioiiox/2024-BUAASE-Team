@@ -185,6 +185,7 @@ export default {
   text-align: center;
   display: block; /* 或者 inline-block */
   line-height: 100px; /* 根据父元素高度自定，使文本垂直居中 */
+  color: white;
 }
 
 .button-center {
