@@ -6,7 +6,7 @@
 		<!-- 顶部区域 -->
 			<div class="centered-content">
 				<div class="demo-progress">
-					<el-progress color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="IntRatio * 100" />
+					<el-progress color="#FBDD6F" :text-inside="true" :stroke-width="35" :percentage="Ratio * 100" />
 				</div>
 			</div>
 			<!-- 展示主体区域 -->
@@ -138,7 +138,9 @@ const getDayRatio = () => {
 			IntRatio.value = Math.floor(Ratio.value * 100) / 100
 			//不超过1
 			if (IntRatio.value >= 1){
-				IntRatio.value = 1;
+				Ratio.value = 1;
+			} else {
+				Ratio.value = IntRatio.value
 			}
 		} else {
 			ElMessage({
@@ -178,18 +180,31 @@ onMounted(() => {
 	getNextWord();
 })
 
+const dakaToday = ref(false)
+//获取今日打卡详情
+const today = new Date();
 //跳转到打卡
 const toPunchIn = () => {
 	//保证背完当天单词后跳转到打卡界面 or 背完当前词书后不留在背单词界面
-	const response = axios.get('/api/word/get-daka-detail');
+	const response = axios.get('/api/word/get-daka-detail', 
+	{
+		days: today.getDate()
+	});
 	response.then(function (response) {
 		console.log(response.data)
 		//今天没有打卡   response.data.daka[0] == false
+		dakaToday.value = response.data.daka[0];
 		if (response.data.daka[0] == false) {
 			//并且今日任务已经完成
-			if (IntRatio.value >= 1) {
+			if (IntRatio.value >= 1-0.000001 && IntRatio.value <= 1+0.000001) {
 		       router.push('/PunchIn' );
 	        }
+		} else {
+			//今天已经打卡过了
+			if((IntRatio.value >= 2-0.000001&&IntRatio.value <= 2+0.000001) || 
+			(IntRatio.value >= 3-0.000001&&IntRatio.value <= 3+0.000001)){
+				router.push('/StartWordHome' );
+			}
 		}
 	})
 }
@@ -212,7 +227,12 @@ const getNextWord = async () => {
 				message: '当前词书已背完，请更换词书',
 				type: 'success'
 			});
-			router.push('/StartWordHome');
+			//如果今日已打卡，回到主界面
+			if(dakaToday.value == true){
+			   router.push('/StartWordHome');
+			} else { //如果今日未打卡，则背完词书前往打卡界面
+			   router.push('/PunchIn');
+			}
 		}
 
 
