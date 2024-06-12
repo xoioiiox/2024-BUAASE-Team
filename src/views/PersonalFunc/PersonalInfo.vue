@@ -154,6 +154,10 @@ export default {
       this.infoForm.phone = res.data.phone;
       this.infoForm.wechat = res.data.wechat;
     });
+    await axios.get("/api/word/get-level/").then((res) => {
+      this.infoForm.level = res.data.level;
+    });
+
   },
   data() {
     return {
@@ -162,7 +166,7 @@ export default {
         username: "",
         phone: "",
         wechat: "",
-        level: "",
+        level: 0,
       },
       passwordDialog: false,
       infoDialog: false,
