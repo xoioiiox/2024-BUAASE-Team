@@ -153,7 +153,7 @@ function filterTasks() {
   bottom: 150px;
   right: 100px;
   width: 280px;
-  height: 400px;
+  height: 480px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +163,7 @@ function filterTasks() {
   background-color: #fff9ed;
   border-radius: 30px;
   width: 250px;
-  height: 380px;
+  height: 450px;
 }
 .task-head {
   position: absolute;
