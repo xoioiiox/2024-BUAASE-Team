@@ -90,7 +90,8 @@ function filterTasks() {
         </div>
         <el-scrollbar>
           <p v-for="task in Task" :key="task.task_name" class="task-item">
-            {{ task.task_name }} - {{ task.task_description }}
+<!--            {{ task.task_name }} - {{ task.task_description }}-->
+            {{ task.task_name }}
           </p>
         </el-scrollbar>
       </div>
