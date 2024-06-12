@@ -133,10 +133,6 @@ let onceAtime = true;
 
 //抽卡动作
 const DrawCard = (item) => {
-  if (Count.value <= 0) {
-    return;
-  }
-  //标记选中的卡片status为1，被翻了过来,保证只能翻过来一张
   if (onceAtime) {
     onceAtime = false;
     item.status = 1;
