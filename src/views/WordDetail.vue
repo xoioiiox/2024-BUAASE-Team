@@ -104,14 +104,31 @@
 		router.push('/')// 主页路由
 	}
 	
+
 	const Ratio = ref(0)
+	let IntRatio = ref(0)//只保留整数部分
 	const getDayRatio = () => {
 		const response = axios.get('/api/word/get-daily-ratio/');
 		console.log(response.data)
-		response.then(function (response) {
-			console.log(response.data)
-			Ratio.value = response.data.ratio
-		})
+	    response.then(function (response) {
+		if (response.status === 200) {
+			//console.log(response.data)
+			Ratio.value =  response.data.ratio
+			//保留前两位小数
+			IntRatio.value = Math.floor(Ratio.value * 100) / 100
+			//不超过1
+			if (response.data.ratio >= 1){
+				Ratio.value = 1;
+			} else {
+				Ratio.value = IntRatio.value
+			}
+		} else {
+			ElMessage({
+				message: '获取日常学习数据失败',
+				type: 'error'
+			})
+		}
+	   })
 	}
 	
 	const deleteWord = () => {
