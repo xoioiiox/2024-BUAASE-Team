@@ -21,7 +21,13 @@ export default {
       console.log(res)
       this.ratio = res.data.ratio * 100
 
-    })
+    });
+    await axios.get("/api/word/get-plan/").then((res) => {
+      this.settingForm.new_number = res.data.num;
+    });
+    await axios.get("/api/word/get-review-limit/").then((res) => {
+      this.settingForm.review_number = res.data.limit;
+    });
   },
 
   data() {
